@@ -69,12 +69,30 @@ def main():
     ap.add_argument("--dtype", default=None, help="override model dtype: float32|bfloat16|float16")
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--alpha", type=float, default=None, help="override the config's steering coefficient")
+    ap.add_argument("--alpha-mode", choices=["fixed", "q95"], default="fixed",
+                    help="fixed: add alpha * d_f; q95: add alpha * q95(natural activation of f) * d_f")
+    ap.add_argument("--context-split", choices=["none", "A", "B"], default="none",
+                    help="build each feature's context set from even (A) or odd (B) context indices only")
+    ap.add_argument("--random-directions", action="store_true",
+                    help="steer with random directions (norms matched to the decoder) instead of SAE features")
+    ap.add_argument("--dense-freq", type=float, default=0.10,
+                    help="downstream panel features firing more often than this are excluded from the *_nodense labels")
     args = ap.parse_args()
 
     cfg = yaml.safe_load(open(args.config))
     name = cfg["name"]
-    out_dir = args.out or os.path.join("results", name + ("_smoke" if args.smoke else "") +
-                                       ("_v1" if args.protocol == "v1" else ""))
+    ALPHA = float(args.alpha) if args.alpha is not None else float(cfg["alpha"])
+    suffix = ("_smoke" if args.smoke else "") + ("_v1" if args.protocol == "v1" else "")
+    if args.alpha is not None and args.alpha != float(cfg["alpha"]):
+        suffix += f"_alpha{args.alpha:g}"
+    if args.alpha_mode == "q95":
+        suffix += "_q95"
+    if args.context_split != "none":
+        suffix += f"_ctx{args.context_split}"
+    if args.random_directions:
+        suffix += "_random"
+    out_dir = args.out or os.path.join("results", name + suffix)
     os.makedirs(out_dir, exist_ok=True)
 
     if args.smoke:
@@ -83,7 +101,6 @@ def main():
         N_TEXTS, N_CONTEXTS, N_FEATURES = cfg["n_texts"], cfg["n_contexts"], cfg["n_features"]
         CTX_PER_TYPE, PANEL = cfg["ctx_per_type"], cfg["panel_size"]
     SEQ_LEN = cfg["seq_len"]
-    ALPHA = float(cfg["alpha"])
     TAU = float(cfg["tau"])
     EPS_FIRE = float(cfg["eps_fire"])
     TOPK_CROWD = int(cfg["topk_crowding"])
@@ -98,7 +115,8 @@ def main():
     print("config:", json.dumps(dict(name=name, protocol=args.protocol, smoke=args.smoke,
                                      N_TEXTS=N_TEXTS, N_CONTEXTS=N_CONTEXTS, N_FEATURES=N_FEATURES,
                                      CTX_PER_TYPE=CTX_PER_TYPE, PANEL=PANEL, SEQ_LEN=SEQ_LEN,
-                                     ALPHA=ALPHA, TAU=TAU, TOPK_CROWD=TOPK_CROWD,
+                                     ALPHA=ALPHA, alpha_mode=args.alpha_mode, context_split=args.context_split,
+                                     random_directions=args.random_directions, TAU=TAU, TOPK_CROWD=TOPK_CROWD,
                                      FREQ_BAND=[FREQ_LO, FREQ_HI], dtype=dtype_name, seed=SEED)))
 
     import transformer_lens
@@ -261,6 +279,22 @@ def main():
 
     down_freq = (down_clean > EPS_FIRE).float().mean(0)
     panel = torch.topk(down_freq, min(PANEL, down_clean.shape[1])).indices.to(device)
+    panel_nodense = (down_freq[panel.cpu()] <= args.dense_freq).to(device)      # mask over the panel
+    print(f"panel {panel.numel()} features; {int(panel_nodense.sum())} with firing frequency <= {args.dense_freq}")
+
+    # steering vectors: the sampled features' decoder rows, or random directions with matched norms
+    if args.random_directions:
+        rng_dir = np.random.default_rng(SEED + 1000)
+        g = torch.as_tensor(rng_dir.standard_normal((len(feats), d_model)), dtype=torch.float32)
+        norms = torch.as_tensor(rng_dir.choice(W_dec.norm(dim=-1).cpu().numpy(), size=len(feats)), dtype=torch.float32)
+        steer_vecs = (torch.nn.functional.normalize(g, dim=-1) * norms[:, None]).to(device)
+        sims_r = (torch.nn.functional.normalize(steer_vecs, dim=-1) @ Wn.T).abs()
+        top_r = torch.topk(sims_r, TOPK_CROWD, dim=-1).values
+        crowd_vec, crowdmax_vec = top_r.mean(-1).cpu().numpy(), top_r[:, 0].cpu().numpy()
+        del sims_r
+    else:
+        steer_vecs = W_dec[torch.as_tensor(feats).to(device)]
+        crowd_vec, crowdmax_vec = crowd[feats], crowd_max[feats]
 
     F = torch.as_tensor(feats)
     A = prim_clean[:, F].float()                                      # [N, 300] sampled feature acts
@@ -286,7 +320,7 @@ def main():
     del B, Bf, co, pi
 
     W_U = model.W_U.detach().float()                                  # [d_model, vocab]
-    r_f = W_dec[F.to(device)] @ W_U                                    # direct-logit vectors [300, vocab]
+    r_f = steer_vecs @ W_U                                             # direct-logit vectors [300, vocab]
     logit_l2 = r_f.norm(dim=-1).cpu().numpy()
     logit_linf = r_f.abs().max(-1).values.cpu().numpy()
     s = r_f.abs() / (r_f.abs().sum(-1, keepdim=True) + eps)
@@ -294,26 +328,41 @@ def main():
     logit_top10_mass = torch.topk(s, 10, dim=-1).values.sum(-1).cpu().numpy()
     del r_f, s
 
-    dec_norm = W_dec[F.to(device)].norm(dim=-1).cpu().numpy()
+    dec_norm = steer_vecs.norm(dim=-1).cpu().numpy()
     enc_vec = W_enc[:, F.to(device)].T                                 # [300, d_model]
     enc_norm = enc_vec.norm(dim=-1).cpu().numpy()
     enc_dec_cos = torch.nn.functional.cosine_similarity(enc_vec, W_dec[F.to(device)], dim=-1).cpu().numpy()
     tick("predictors: all done", "predictors_done")
 
     # ---- Phase 2: steering labels on the mixed context set ----
+    pool = np.arange(N)
+    if args.context_split == "A":
+        pool = pool[pool % 2 == 0]
+    elif args.context_split == "B":
+        pool = pool[pool % 2 == 1]
+
     def pick_contexts(fi):
-        a = prim_clean[:, fi].numpy()
+        if args.random_directions:
+            return rng.choice(pool, size=3 * CTX_PER_TYPE, replace=False)
+        a = prim_clean[pool, fi].numpy()
         order = np.argsort(-a)
         top = order[:CTX_PER_TYPE]
         low = order[-CTX_PER_TYPE:]
         mid = rng.choice(np.setdiff1d(order, np.concatenate([top, low])), size=CTX_PER_TYPE, replace=False)
-        return np.concatenate([top, mid, low])
+        return pool[np.concatenate([top, mid, low])]
 
-    def steered_forward(toks, d_f):
+    def feature_alpha(fi):
+        if args.alpha_mode == "fixed" or args.random_directions:
+            return ALPHA
+        a = prim_clean[:, fi].numpy()
+        firing = a[a > EPS_FIRE]
+        return float(ALPHA * (np.quantile(firing, 0.95) if len(firing) >= 2 else a.max()))
+
+    def steered_forward(toks, d_f, alpha_f):
         store = {}
 
         def steer(resid, hook):
-            resid[:, -1, :] = resid[:, -1, :] + ALPHA * d_f.to(resid.dtype)
+            resid[:, -1, :] = resid[:, -1, :] + alpha_f * d_f.to(resid.dtype)
             return resid
 
         def grab(resid, hook):
@@ -326,42 +375,60 @@ def main():
     rows = []
     n_ctx = 3 * CTX_PER_TYPE
     tick(f"steering {len(feats)} features x {n_ctx} contexts")
+    NA = float("nan")
     for n, fi in enumerate(feats):
         ctx = pick_contexts(fi)
         toks = all_toks[ctx].to(device)
-        d_f = W_dec[fi]
+        d_f = steer_vecs[n]
+        alpha_f = feature_alpha(fi)
         logit_c, cache = model.run_with_cache(toks, names_filter=[hook_d], return_type="logits")
         logit_c = logit_c[:, -1, :].float()
-        u_clean = encode_final(sae_d, cache[hook_d][:, -1, :])
+        h_clean = cache[hook_d][:, -1, :].detach().float()
+        u_clean = encode_final(sae_d, h_clean)
         del cache
-        logit_s, down_resid = steered_forward(toks, d_f)
+        logit_s, down_resid = steered_forward(toks, d_f, alpha_f)
+        down_resid = down_resid.float()
         u_steer = encode_final(sae_d, down_resid)
         du = (u_steer - u_clean)[:, panel].abs()                      # [n_ctx, PANEL]
         coll = (du > TAU).float().sum(-1).mean().item()               # C_{f,tau}
+        coll_nd = (du[:, panel_nodense] > TAU).float().sum(-1).mean().item()
+        dh = down_resid - h_clean                                      # downstream residual change
+        dh_norm = dh.norm(dim=-1)
+        drec = sae_d.decode(u_steer) - sae_d.decode(u_clean)          # the part of dh the downstream SAE sees
+        sae_frac = (drec.norm(dim=-1) / (dh_norm + 1e-8)).mean().item()
         dl = logit_s - logit_c                                         # [n_ctx, vocab]
         dl_norm = dl.norm(dim=-1)
         Ef = dl_norm.mean().item()                                     # E_f
         dl_mean = dl.mean(0, keepdim=True)
         cos = torch.nn.functional.cosine_similarity(dl, dl_mean.expand_as(dl), dim=-1)
+        dlc = dl - dl_mean
+        ev = torch.linalg.eigvalsh(dlc @ dlc.T).clamp(min=0)
+        pc1 = (ev.max() / (ev.sum() + 1e-12)).item()
         logp = torch.log_softmax(logit_c, -1)
         logq = torch.log_softmax(logit_s, -1)
         kl = (logp.exp() * (logp - logq)).sum(-1).mean().item()
+        rnd = args.random_directions
         rows.append({
-            "feature": int(fi),
-            "crowding": float(crowd[fi]), "crowd_max": float(crowd_max[fi]),
-            "dec_norm": float(dec_norm[n]), "enc_norm": float(enc_norm[n]), "enc_dec_cos": float(enc_dec_cos[n]),
-            "frequency": float(freq[fi]), "act_mag": float(act_mag[fi]),
-            "act_mean_firing": float(act_mean_firing[n]), "act_std": float(act_std[n]), "act_max": float(act_max[n]),
-            "act_kurtosis": float(act_kurt[n]), "bin_entropy": float(bin_entropy[n]), "act_entropy": float(act_entropy[n]),
-            "coact_entropy": float(coact_entropy[n]), "coact_count": float(coact_count[n]),
+            "feature": int(fi) if not rnd else int(n),
+            "crowding": float(crowd_vec[n]), "crowd_max": float(crowdmax_vec[n]),
+            "dec_norm": float(dec_norm[n]), "enc_norm": NA if rnd else float(enc_norm[n]),
+            "enc_dec_cos": NA if rnd else float(enc_dec_cos[n]),
+            "frequency": NA if rnd else float(freq[fi]), "act_mag": NA if rnd else float(act_mag[fi]),
+            "act_mean_firing": NA if rnd else float(act_mean_firing[n]), "act_std": NA if rnd else float(act_std[n]),
+            "act_max": NA if rnd else float(act_max[n]), "act_kurtosis": NA if rnd else float(act_kurt[n]),
+            "bin_entropy": NA if rnd else float(bin_entropy[n]), "act_entropy": NA if rnd else float(act_entropy[n]),
+            "coact_entropy": NA if rnd else float(coact_entropy[n]), "coact_count": NA if rnd else float(coact_count[n]),
             "logit_l2": float(logit_l2[n]), "logit_linf": float(logit_linf[n]),
             "logit_entropy": float(logit_entropy[n]), "logit_top10_mass": float(logit_top10_mass[n]),
             "collateral_raw": coll, "effect_l2": Ef, "collateral_ctilde": coll / (Ef + 1e-8),
+            "collateral_raw_nodense": coll_nd, "collateral_ctilde_nodense": coll_nd / (Ef + 1e-8),
+            "resid_delta_norm": dh_norm.mean().item(), "resid_sae_frac": sae_frac,
             "stab_signed": cos.mean().item(), "stab_abs": cos.abs().mean().item(),
+            "stab_anti_frac": (cos < 0).float().mean().item(), "effect_pc1_ratio": pc1,
             "kl_mean": kl, "kl_per_effect": kl / (Ef + 1e-8),
             "effect_cv": (dl_norm.std() / (dl_norm.mean() + 1e-8)).item(),
-            "ctx_mean_act": float(prim_clean[ctx, fi].mean().item()),
-            "intervention_value": ALPHA, "n_ctx": int(n_ctx),
+            "ctx_mean_act": NA if rnd else float(prim_clean[ctx, fi].mean().item()),
+            "intervention_value": alpha_f, "n_ctx": int(n_ctx),
         })
         if (n + 1) % max(1, len(feats) // 6) == 0:
             tick(f"  steered {n + 1}/{len(feats)}")
@@ -377,7 +444,10 @@ def main():
     from scipy.stats import rankdata, pearsonr
 
     def sp(x, y):
-        r_, p_ = st.spearmanr(df[x], df[y])
+        d_ = df[[x, y]].dropna()
+        if len(d_) < 3:
+            return float("nan"), float("nan")
+        r_, p_ = st.spearmanr(d_[x], d_[y])
         return round(float(r_), 4), float(p_)
 
     def partial(x, y, zs):
@@ -385,8 +455,11 @@ def main():
             Z1 = np.c_[np.ones(len(a)), Z]
             coef, *_ = np.linalg.lstsq(Z1, a, rcond=None)
             return a - Z1 @ coef
-        Z = np.c_[[rankdata(df[z]) for z in zs]].T
-        r_, p_ = pearsonr(resid(rankdata(df[x]), Z), resid(rankdata(df[y]), Z))
+        d_ = df[[x, y] + zs].dropna()
+        if len(d_) < 3:
+            return float("nan"), float("nan")
+        Z = np.c_[[rankdata(d_[z]) for z in zs]].T
+        r_, p_ = pearsonr(resid(rankdata(d_[x]), Z), resid(rankdata(d_[y]), Z))
         return round(float(r_), 4), float(p_)
 
     head = {}
@@ -394,14 +467,21 @@ def main():
         for pred in ["crowding", "frequency", "act_mag"]:
             head[f"rho_{pred}__{tgt}"] = sp(pred, tgt)[0]
         head[f"partial_crowding__{tgt}__given_freq_actmag"] = partial("crowding", tgt, ["frequency", "act_mag"])[0]
-    med = df["frequency"].median()
-    lo, hi = df[df.frequency <= med], df[df.frequency > med]
-    head["crowd_rho_lowfreq_half"] = round(float(st.spearmanr(lo.crowding, lo.collateral_raw)[0]), 4)
-    head["crowd_rho_highfreq_half"] = round(float(st.spearmanr(hi.crowding, hi.collateral_raw)[0]), 4)
+    if df["frequency"].notna().all():
+        med = df["frequency"].median()
+        lo, hi = df[df.frequency <= med], df[df.frequency > med]
+        head["crowd_rho_lowfreq_half"] = round(float(st.spearmanr(lo.crowding, lo.collateral_raw)[0]), 4)
+        head["crowd_rho_highfreq_half"] = round(float(st.spearmanr(hi.crowding, hi.collateral_raw)[0]), 4)
+    head["rho_crowding__collateral_raw_nodense"] = sp("crowding", "collateral_raw_nodense")[0]
+    head["rho_crowding__resid_delta_norm"] = sp("crowding", "resid_delta_norm")[0]
+    head["mean_resid_sae_frac"] = round(float(df["resid_sae_frac"].mean()), 4)
     print(json.dumps(head, indent=1))
 
     meta = {
         "setting": name, "protocol": args.protocol, "smoke": args.smoke, "seed": SEED, "config": cfg,
+        "variant": dict(alpha=ALPHA, alpha_mode=args.alpha_mode, context_split=args.context_split,
+                        random_directions=args.random_directions, dense_freq=args.dense_freq,
+                        n_panel_nodense=int(panel_nodense.sum())),
         "sizes": dict(n_texts=len(texts), n_contexts=N, seq_len=SEQ_LEN, n_features=len(feats), n_eligible=int(len(elig)),
                       ctx_per_type=CTX_PER_TYPE, n_ctx_per_feature=n_ctx, panel=int(panel.numel()),
                       d_sae_primary=int(d_sae), d_sae_downstream=int(down_clean.shape[1]),

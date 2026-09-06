@@ -43,11 +43,39 @@ PRED_SETS = {
     "full_all": ALL_PREDICTORS,
 }
 TARGETS = ["collateral_raw", "collateral_ctilde"]
+EXTRA_TARGETS = ["kl_mean", "kl_per_effect", "collateral_raw_nodense", "collateral_ctilde_nodense", "resid_delta_norm"]
 CONTROLS = {
     "none": [],
     "primary": ["effect_l2", "intervention_value", "act_mag", "frequency"],
     "robust": ["frequency", "act_mag"],
+    "effect_only": ["effect_l2"],
 }
+
+
+def holm(p):
+    """Holm step-down adjusted p-values."""
+    p = np.asarray(p, float)
+    m = len(p)
+    order = np.argsort(p)
+    adj = np.empty(m)
+    running = 0.0
+    for rank, i in enumerate(order):
+        running = max(running, (m - rank) * p[i])
+        adj[i] = min(1.0, running)
+    return adj
+
+
+def benjamini_hochberg(p):
+    """Benjamini-Hochberg q-values."""
+    p = np.asarray(p, float)
+    m = len(p)
+    order = np.argsort(p)[::-1]
+    q = np.empty(m)
+    running = 1.0
+    for rank, i in zip(range(m, 0, -1), order):
+        running = min(running, m * p[i] / rank)
+        q[i] = running
+    return q
 
 
 def rank_rows(x):
@@ -75,7 +103,8 @@ def partial_corr_batched(x, y, Z):
 
 
 def partial_spearman(df, pred, tgt, controls, n_boot, rng):
-    controls = [c for c in controls if c != pred and df[c].nunique() > 1]
+    controls = [c for c in controls if c != pred and c in df.columns and df[c].nunique(dropna=True) > 1]
+    df = df[[pred, tgt] + controls].dropna()
     n = len(df)
     x = df[pred].to_numpy(float)[None]
     y = df[tgt].to_numpy(float)[None]
@@ -99,7 +128,11 @@ def residualized_cv(df, tgt, controls, pred_set, n_splits=5, seed=0, alpha=1.0):
     from sklearn.linear_model import Ridge
     from sklearn.model_selection import KFold
     from sklearn.preprocessing import StandardScaler
-    controls = [c for c in controls if df[c].nunique() > 1]
+    controls = [c for c in controls if c in df.columns and df[c].nunique(dropna=True) > 1]
+    pred_set = [c for c in pred_set if c in df.columns and df[c].notna().all()]
+    if not pred_set:
+        return dict(cv_spearman_mean=float("nan"), cv_spearman_sd=float("nan"), oof_spearman=float("nan"), n_pred=0, controls=",".join(controls))
+    df = df[[tgt] + controls + pred_set].dropna()
     y = df[tgt].to_numpy(float)
     if controls:
         Z = np.c_[np.ones(len(df)), df[controls].to_numpy(float)]
@@ -144,9 +177,12 @@ def main():
     rng = np.random.default_rng(args.seed)
     rows, cv_rows = [], []
     for s, df in settings.items():
-        for tgt in TARGETS:
+        usable_preds = [p for p in ALL_PREDICTORS if p in df.columns and df[p].notna().sum() >= 30]
+        for tgt in TARGETS + [t for t in EXTRA_TARGETS if t in df.columns]:
             for cname, controls in CONTROLS.items():
-                for pred in ALL_PREDICTORS:
+                if any(c not in df.columns or df[c].isna().all() for c in controls):
+                    continue
+                for pred in usable_preds:
                     if pred in controls and cname != "none":
                         continue
                     r = partial_spearman(df, pred, tgt, controls, args.n_boot, rng)
@@ -156,6 +192,12 @@ def main():
                     cv_rows.append(dict(setting=s, target=tgt, control=cname, predictor_set=pset, **cv))
             print(f"  {s} {tgt}: done")
     part = pd.DataFrame(rows)
+    # multiple-comparison correction across predictors within each (setting, target, control)
+    part["p_holm"] = np.nan
+    part["q_bh"] = np.nan
+    for _, idx in part.groupby(["setting", "target", "control"]).groups.items():
+        part.loc[idx, "p_holm"] = holm(part.loc[idx, "p"].to_numpy())
+        part.loc[idx, "q_bh"] = benjamini_hochberg(part.loc[idx, "p"].to_numpy())
     cv = pd.DataFrame(cv_rows)
     part.to_csv(os.path.join(out, "partial_correlations.csv"), index=False)
     cv.to_csv(os.path.join(out, "residualized_cv_ridge.csv"), index=False)
@@ -172,12 +214,12 @@ def main():
         for _, r in sub.iterrows():
             lines.append(f"| {r.setting} | {r.control} | {r.rho:+.3f} | [{r.ci_lo:+.3f}, {r.ci_hi:+.3f}] | {r.p:.1e} | {r.controls or '-'} |")
         lines += ["", "### Strongest predictor per setting under the primary control (by |rho|)", "",
-                  "| setting | predictor | partial rho | 95% CI | p |", "|---|---|---|---|---|"]
+                  "| setting | predictor | partial rho | 95% CI | p | Holm p |", "|---|---|---|---|---|---|"]
         sub = part[(part.target == tgt) & (part.control == "primary")]
         for s in settings:
             top = sub[sub.setting == s].iloc[(-sub[sub.setting == s].rho.abs()).argsort()[:3]]
             for _, r in top.iterrows():
-                lines.append(f"| {s} | {r.predictor} | {r.rho:+.3f} | [{r.ci_lo:+.3f}, {r.ci_hi:+.3f}] | {r.p:.1e} |")
+                lines.append(f"| {s} | {r.predictor} | {r.rho:+.3f} | [{r.ci_lo:+.3f}, {r.ci_hi:+.3f}] | {r.p:.1e} | {r.p_holm:.1e} |")
         lines += ["", "### Table B3 analog: CV ridge Spearman on the residualized target (primary control)", "",
                   "| setting | predictor set | CV Spearman (mean over folds) | sd | pooled OOF |", "|---|---|---|---|---|"]
         sub = cv[(cv.target == tgt) & (cv.control == "primary")]

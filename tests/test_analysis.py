@@ -80,3 +80,20 @@ def test_result_files_are_complete():
         assert required <= set(df.columns), p
         assert not df[sorted(required)].isna().any().any(), p
         assert df.feature.is_unique, p
+
+
+def test_holm_and_bh_against_reference():
+    from residualize import benjamini_hochberg, holm
+    p = np.array([0.01, 0.04, 0.03, 0.20, 0.50])
+    # Holm: sort p, multiply by (m - rank), enforce monotonicity, cap at 1
+    assert np.allclose(holm(p), [0.05, 0.12, 0.12, 0.40, 0.50])
+    # BH: m * p / rank with step-up monotonicity
+    assert np.allclose(benjamini_hochberg(p), [0.05, 0.0667, 0.0667, 0.25, 0.50], atol=1e-4)
+    assert (holm(p) >= p).all() and (benjamini_hochberg(p) >= p).all()
+
+
+def test_partial_handles_missing_predictor_values():
+    df = make_df(5)
+    df.loc[:9, "frequency"] = np.nan
+    got = partial_spearman(df, "crowding", "collateral_raw", CONTROLS["robust"], 100, np.random.default_rng(0))
+    assert got["n"] == 290
