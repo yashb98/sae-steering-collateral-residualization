@@ -4,6 +4,7 @@
  "settings": [
   "gemma_2_2b",
   "gpt2_small",
+  "llama_3_1_8b",
   "pythia_70m_deduped"
  ],
  "controls": {

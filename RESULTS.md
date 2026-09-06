@@ -2,7 +2,7 @@
 
 Companion results for the revision of *Pre-Intervention Prediction of Sparse Autoencoder Steering Side Effects* (Duan, arXiv:2606.08365). All numbers below are read from `results/` by `analysis/make_results.py`; nothing is copied from the paper except where labelled as the paper's value.
 
-Settings included: GPT-2-small, Pythia-70M-deduped, Gemma-2-2B. Still to run: Llama-3.1-8B.
+Settings included: GPT-2-small, Pythia-70M-deduped, Gemma-2-2B, Llama-3.1-8B.
 
 ## Summary
 
@@ -11,8 +11,9 @@ Decoder crowding vs collateral after partialling out the paper's Section 3.8 nui
 | Setting | Crowding, raw count | Crowding, C-tilde | Strongest predictor (raw count) | Strongest predictor (C-tilde) |
 |---|---|---|---|---|
 | GPT-2-small | +0.475 [+0.373, +0.568] | +0.425 [+0.316, +0.524] | crowding (+0.48) | crowding (+0.42) |
-| Pythia-70M-deduped | -0.004 [-0.124, +0.114] | +0.001 [-0.119, +0.122] | logit_l2 (+0.34) | logit_l2 (+0.31) |
+| Pythia-70M-deduped | -0.004 [-0.120, +0.116] | +0.001 [-0.119, +0.124] | logit_l2 (+0.34) | logit_l2 (+0.31) |
 | Gemma-2-2B | +0.242 [+0.123, +0.357] | +0.252 [+0.133, +0.368] | enc_dec_cos (-0.45) | enc_dec_cos (-0.43) |
+| Llama-3.1-8B | +0.152 [+0.038, +0.265] | +0.166 [+0.051, +0.278] | logit_top10_mass (-0.29) | logit_top10_mass (-0.30) |
 
 Reading: crowding carries independent signal in GPT-2-small on both metrics. In Pythia-70M it carries none on either metric, and the direct-logit footprint leads instead. In Gemma-2-2B crowding predicts the raw count strongly before controls but its partial correlation shrinks once effect magnitude is held fixed, and encoder-decoder alignment is the strongest predictor after control. The dominant predictor changes with the setting, which is the paper's own Table 2 pattern, now seen on the collateral axis after the control the paper only ran on stability.
 
@@ -23,6 +24,7 @@ Reading: crowding carries independent signal in GPT-2-small on both metrics. In 
 | GPT-2-small | gpt2 | gpt2-small-res-jb `blocks.8.hook_resid_pre` | `blocks.10.hook_resid_pre` | 2048 | 7532 of 24576 | 71.79 / 60.01 | 2048 x 48 tokens, 36 short texts dropped | float32 | 104 s on NVIDIA GB10 |
 | Pythia-70M-deduped | pythia-70m-deduped | pythia-70m-deduped-res-sm `blocks.4.hook_resid_post` | `blocks.5.hook_resid_post` | 2048 | 4375 of 32768 | 68.33 / 118.56 | 2048 x 48 tokens, 36 short texts dropped | float32 | 89 s on NVIDIA GB10 |
 | Gemma-2-2B | google/gemma-2-2b | gemma-scope-2b-pt-res-canonical `layer_12/width_16k/canonical` at `blocks.12.hook_resid_post` | `layer_16/width_16k/canonical` at `blocks.16.hook_resid_post` | 2048 | 7517 of 16384 | 83.04 / 79.25 | 2048 x 48 tokens, 32 short texts dropped | float32 | 1151 s on NVIDIA GB10 |
+| Llama-3.1-8B | meta-llama/Llama-3.1-8B | llama_scope_lxr_8x `l16r_8x` at `blocks.16.hook_resid_post` | `l20r_8x` at `blocks.20.hook_resid_post` | 1024 | 2837 of 32768 | 32.18 / 31.42 | 2048 x 48 tokens, 27 short texts dropped | bfloat16 | 998 s on NVIDIA GB10 |
 
 Common: Wikitext-103 train split, 8,000 texts, 300 features sampled with seed 0 from the final-token firing-frequency band [0.002, 0.50], 16 contexts per type (top / random / low), additive steering alpha = 1.0 at the final token, tau = 0.05, epsilon_fire = 1e-6, crowding = top-20 mean absolute cosine, protocol v2 (no pad final tokens, whitespace-normalised dedup).
 
@@ -35,16 +37,18 @@ Spearman rho; partial correlations are rank-based (both sides OLS-residualised o
 | Setting | raw Spearman | partial, robust pair | partial, primary set | Paper Table 2 (for orientation) |
 |---|---|---|---|---|
 | GPT-2-small | +0.482 [+0.381, +0.574] | +0.517 [+0.418, +0.605] | +0.475 [+0.373, +0.568] | decoder crowding, downstream count, rho = 0.466 |
-| Pythia-70M-deduped | -0.022 [-0.136, +0.095] | -0.026 [-0.148, +0.097] | -0.004 [-0.124, +0.114] | direct-logit L2, downstream count, rho = 0.391 (crowding leads stability, rho = -0.360) |
+| Pythia-70M-deduped | -0.022 [-0.137, +0.093] | -0.026 [-0.147, +0.095] | -0.004 [-0.120, +0.116] | direct-logit L2, downstream count, rho = 0.391 (crowding leads stability, rho = -0.360) |
 | Gemma-2-2B | +0.512 [+0.411, +0.600] | +0.468 [+0.360, +0.567] | +0.242 [+0.123, +0.357] | encoder norm, signed stability, rho = 0.350 |
+| Llama-3.1-8B | +0.222 [+0.111, +0.328] | +0.182 [+0.069, +0.293] | +0.152 [+0.038, +0.265] | direct-logit L2, downstream count, rho = 0.464 |
 
 ### Target: C-tilde = C / (E_f + eps)
 
 | Setting | raw Spearman | partial, robust pair | partial, primary set | Paper Table 2 (for orientation) |
 |---|---|---|---|---|
 | GPT-2-small | +0.344 [+0.234, +0.447] | +0.355 [+0.245, +0.457] | +0.425 [+0.316, +0.524] | decoder crowding, downstream count, rho = 0.466 |
-| Pythia-70M-deduped | +0.031 [-0.083, +0.142] | +0.011 [-0.104, +0.129] | +0.001 [-0.119, +0.122] | direct-logit L2, downstream count, rho = 0.391 (crowding leads stability, rho = -0.360) |
+| Pythia-70M-deduped | +0.031 [-0.083, +0.142] | +0.011 [-0.107, +0.130] | +0.001 [-0.119, +0.124] | direct-logit L2, downstream count, rho = 0.391 (crowding leads stability, rho = -0.360) |
 | Gemma-2-2B | +0.069 [-0.052, +0.189] | +0.052 [-0.071, +0.177] | +0.252 [+0.133, +0.368] | encoder norm, signed stability, rho = 0.350 |
+| Llama-3.1-8B | +0.201 [+0.092, +0.306] | +0.183 [+0.073, +0.295] | +0.166 [+0.051, +0.278] | direct-logit L2, downstream count, rho = 0.464 |
 
 ## 3. Strongest predictors under the primary control
 
@@ -57,12 +61,15 @@ Top three predictors by absolute partial rho after the primary control, per sett
 | GPT-2-small | crowding | +0.475 [+0.373, +0.568] | 3.7e-18 |
 | GPT-2-small | enc_dec_cos | -0.401 [-0.499, -0.295] | 6.5e-13 |
 | GPT-2-small | crowd_max | +0.333 [+0.218, +0.444] | 4.1e-09 |
-| Pythia-70M-deduped | logit_l2 | +0.343 [+0.227, +0.450] | 1.3e-09 |
-| Pythia-70M-deduped | act_mean_firing | -0.207 [-0.314, -0.084] | 3.3e-04 |
-| Pythia-70M-deduped | coact_entropy | -0.202 [-0.297, -0.082] | 4.8e-04 |
+| Pythia-70M-deduped | logit_l2 | +0.343 [+0.227, +0.446] | 1.3e-09 |
+| Pythia-70M-deduped | act_mean_firing | -0.207 [-0.317, -0.086] | 3.3e-04 |
+| Pythia-70M-deduped | coact_entropy | -0.202 [-0.299, -0.085] | 4.8e-04 |
 | Gemma-2-2B | enc_dec_cos | -0.454 [-0.552, -0.342] | 1.6e-16 |
 | Gemma-2-2B | coact_entropy | -0.299 [-0.389, -0.196] | 1.6e-07 |
 | Gemma-2-2B | crowding | +0.242 [+0.123, +0.357] | 2.5e-05 |
+| Llama-3.1-8B | logit_top10_mass | -0.293 [-0.393, -0.191] | 2.6e-07 |
+| Llama-3.1-8B | logit_entropy | +0.243 [+0.128, +0.351] | 2.3e-05 |
+| Llama-3.1-8B | act_entropy | +0.159 [+0.047, +0.253] | 5.9e-03 |
 
 ### Target: C-tilde = C / (E_f + eps)
 
@@ -71,12 +78,15 @@ Top three predictors by absolute partial rho after the primary control, per sett
 | GPT-2-small | crowding | +0.425 [+0.316, +0.524] | 1.9e-14 |
 | GPT-2-small | enc_dec_cos | -0.399 [-0.498, -0.290] | 9.1e-13 |
 | GPT-2-small | coact_entropy | -0.345 [-0.439, -0.232] | 9.9e-10 |
-| Pythia-70M-deduped | logit_l2 | +0.311 [+0.195, +0.424] | 4.2e-08 |
-| Pythia-70M-deduped | coact_count | +0.198 [+0.087, +0.302] | 6.1e-04 |
-| Pythia-70M-deduped | act_mean_firing | -0.171 [-0.273, -0.058] | 3.2e-03 |
+| Pythia-70M-deduped | logit_l2 | +0.311 [+0.192, +0.423] | 4.2e-08 |
+| Pythia-70M-deduped | coact_count | +0.198 [+0.087, +0.306] | 6.1e-04 |
+| Pythia-70M-deduped | act_mean_firing | -0.171 [-0.274, -0.058] | 3.2e-03 |
 | Gemma-2-2B | enc_dec_cos | -0.427 [-0.520, -0.320] | 1.5e-14 |
 | Gemma-2-2B | coact_entropy | -0.311 [-0.401, -0.204] | 4.4e-08 |
 | Gemma-2-2B | crowding | +0.252 [+0.133, +0.368] | 1.1e-05 |
+| Llama-3.1-8B | logit_top10_mass | -0.298 [-0.397, -0.193] | 1.7e-07 |
+| Llama-3.1-8B | logit_entropy | +0.231 [+0.117, +0.341] | 6.1e-05 |
+| Llama-3.1-8B | crowding | +0.166 [+0.051, +0.278] | 4.2e-03 |
 
 ## 4. Table B3 analog: predictor sets on the residualized collateral target
 
@@ -89,6 +99,7 @@ The collateral label is OLS-residualised against the primary control set, then p
 | GPT-2-small | -0.015 (0.08) | -0.035 (0.06) | +0.458 (0.06) | +0.208 (0.10) | +0.182 (0.11) | +0.502 (0.08) | +0.493 (0.09) |
 | Pythia-70M-deduped | -0.018 (0.14) | -0.113 (0.10) | +0.011 (0.08) | +0.493 (0.08) | +0.184 (0.09) | +0.517 (0.05) | +0.522 (0.05) |
 | Gemma-2-2B | -0.144 (0.27) | -0.106 (0.29) | +0.468 (0.16) | +0.137 (0.15) | +0.168 (0.09) | +0.588 (0.11) | +0.590 (0.11) |
+| Llama-3.1-8B | -0.031 (0.11) | -0.080 (0.13) | +0.099 (0.04) | +0.300 (0.13) | +0.114 (0.05) | +0.263 (0.12) | +0.268 (0.07) |
 
 ### Target: C-tilde = C / (E_f + eps)
 
@@ -97,6 +108,7 @@ The collateral label is OLS-residualised against the primary control set, then p
 | GPT-2-small | -0.027 (0.08) | -0.029 (0.05) | +0.447 (0.07) | +0.216 (0.10) | +0.176 (0.11) | +0.498 (0.09) | +0.489 (0.10) |
 | Pythia-70M-deduped | -0.118 (0.09) | -0.116 (0.11) | +0.044 (0.09) | +0.426 (0.09) | +0.162 (0.09) | +0.477 (0.05) | +0.482 (0.05) |
 | Gemma-2-2B | -0.127 (0.24) | -0.095 (0.27) | +0.429 (0.16) | +0.104 (0.14) | +0.144 (0.14) | +0.578 (0.11) | +0.582 (0.11) |
+| Llama-3.1-8B | -0.037 (0.11) | -0.075 (0.09) | +0.160 (0.06) | +0.309 (0.13) | +0.164 (0.08) | +0.310 (0.07) | +0.296 (0.06) |
 
 ## 5. Feature-sample robustness (crowding)
 
@@ -122,6 +134,7 @@ Same contexts, different random sample of 300 features (seeds 0, 1, 2). Values a
 | Pythia-70M-deduped | collateral_raw | none | -0.022 | +0.059 | +0.028 | +0.021 | 0.041 |
 | Pythia-70M-deduped | collateral_raw | primary | -0.004 | +0.006 | -0.081 | -0.027 | 0.048 |
 | Pythia-70M-deduped | collateral_raw | robust | -0.026 | +0.051 | +0.019 | +0.015 | 0.039 |
+| Llama-3.1-8B | | seed 0 only so far | | | | | |
 
 ## 6. Regression gate against the published GPT-2-small notebook
 
@@ -167,8 +180,8 @@ GPT-2-small's crowding statistics agree to within 0.02 across machines. Pythia's
 - ridge alpha = 1.0 on standardised predictors, 5-fold KFold shuffle seed 0.
 - Feature sampling band [0.002, 0.50] on final-token firing frequency; the paper says only "the non-degenerate range".
 - Downstream panel = the most frequently active downstream features on the clean contexts (2048; 1024 for Llama).
-- Models loaded with TransformerLens default weight processing plus each SAE's `model_from_pretrained_kwargs`, in float32. TransformerLens centres writing weights only for LayerNorm models, so Gemma-2 and Llama residual streams match the Hugging Face values the Gemma Scope and Llama Scope SAEs were trained on; the mean L0 column above is the empirical check.
-- Direct-logit predictors use the model's unembedding as loaded (centred for GPT-2, Pythia and Llama; Gemma-2 keeps its logit softcap, so its unembedding is not centred).
+- Model loading per setting: GPT-2-small in float32 with TransformerLens weight processing on (default); Pythia-70M-deduped in float32 with TransformerLens weight processing on (default); Gemma-2-2B in float32 with TransformerLens weight processing on (default); Llama-3.1-8B in bfloat16 with TransformerLens weight processing off (from_pretrained_no_processing). Weight processing never changes the residual stream the SAEs read (TransformerLens centres writing weights only for LayerNorm models); the mean L0 column above is the empirical check that each SAE sees the activations it was trained on.
+- Direct-logit predictors, effect magnitude and stability use the unembedding as loaded: centred for GPT-2 and Pythia, uncentred for Gemma-2 (logit softcap) and for any setting loaded without processing.
 - Effect magnitude E_f and the stability cosines are computed on final-token logit differences in float32.
 
 ## Files

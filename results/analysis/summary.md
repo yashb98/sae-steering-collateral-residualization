@@ -15,9 +15,12 @@ Controls: primary = effect_l2 + intervention_value (dropped if constant) + act_m
 | gpt2_small | none | +0.482 | [+0.381, +0.574] | 7.6e-19 | - |
 | gpt2_small | primary | +0.475 | [+0.373, +0.568] | 3.7e-18 | effect_l2,act_mag,frequency |
 | gpt2_small | robust | +0.517 | [+0.418, +0.605] | 8.2e-22 | frequency,act_mag |
-| pythia_70m_deduped | none | -0.022 | [-0.136, +0.095] | 7.0e-01 | - |
-| pythia_70m_deduped | primary | -0.004 | [-0.124, +0.114] | 9.4e-01 | effect_l2,act_mag,frequency |
-| pythia_70m_deduped | robust | -0.026 | [-0.148, +0.097] | 6.6e-01 | frequency,act_mag |
+| llama_3_1_8b | none | +0.222 | [+0.111, +0.328] | 1.1e-04 | - |
+| llama_3_1_8b | primary | +0.152 | [+0.038, +0.265] | 8.7e-03 | effect_l2,act_mag,frequency |
+| llama_3_1_8b | robust | +0.182 | [+0.069, +0.293] | 1.6e-03 | frequency,act_mag |
+| pythia_70m_deduped | none | -0.022 | [-0.137, +0.093] | 7.0e-01 | - |
+| pythia_70m_deduped | primary | -0.004 | [-0.120, +0.116] | 9.4e-01 | effect_l2,act_mag,frequency |
+| pythia_70m_deduped | robust | -0.026 | [-0.147, +0.095] | 6.6e-01 | frequency,act_mag |
 
 ### Strongest predictor per setting under the primary control (by |rho|)
 
@@ -29,9 +32,12 @@ Controls: primary = effect_l2 + intervention_value (dropped if constant) + act_m
 | gpt2_small | crowding | +0.475 | [+0.373, +0.568] | 3.7e-18 |
 | gpt2_small | enc_dec_cos | -0.401 | [-0.499, -0.295] | 6.5e-13 |
 | gpt2_small | crowd_max | +0.333 | [+0.218, +0.444] | 4.1e-09 |
-| pythia_70m_deduped | logit_l2 | +0.343 | [+0.227, +0.450] | 1.3e-09 |
-| pythia_70m_deduped | act_mean_firing | -0.207 | [-0.314, -0.084] | 3.3e-04 |
-| pythia_70m_deduped | coact_entropy | -0.202 | [-0.297, -0.082] | 4.8e-04 |
+| llama_3_1_8b | logit_top10_mass | -0.293 | [-0.393, -0.191] | 2.6e-07 |
+| llama_3_1_8b | logit_entropy | +0.243 | [+0.128, +0.351] | 2.3e-05 |
+| llama_3_1_8b | act_entropy | +0.159 | [+0.047, +0.253] | 5.9e-03 |
+| pythia_70m_deduped | logit_l2 | +0.343 | [+0.227, +0.446] | 1.3e-09 |
+| pythia_70m_deduped | act_mean_firing | -0.207 | [-0.317, -0.086] | 3.3e-04 |
+| pythia_70m_deduped | coact_entropy | -0.202 | [-0.299, -0.085] | 4.8e-04 |
 
 ### Table B3 analog: CV ridge Spearman on the residualized target (primary control)
 
@@ -51,6 +57,13 @@ Controls: primary = effect_l2 + intervention_value (dropped if constant) + act_m
 | gpt2_small | coactivation_only | +0.182 | 0.106 | +0.166 |
 | gpt2_small | full_no_magnitude | +0.502 | 0.078 | +0.493 |
 | gpt2_small | full_all | +0.493 | 0.091 | +0.500 |
+| llama_3_1_8b | frequency_only | -0.031 | 0.111 | -0.185 |
+| llama_3_1_8b | actmag_only | -0.080 | 0.128 | -0.191 |
+| llama_3_1_8b | geometry_only | +0.099 | 0.038 | +0.061 |
+| llama_3_1_8b | direct_logit_only | +0.300 | 0.134 | +0.255 |
+| llama_3_1_8b | coactivation_only | +0.114 | 0.048 | +0.037 |
+| llama_3_1_8b | full_no_magnitude | +0.263 | 0.116 | +0.246 |
+| llama_3_1_8b | full_all | +0.268 | 0.070 | +0.258 |
 | pythia_70m_deduped | frequency_only | -0.018 | 0.140 | -0.185 |
 | pythia_70m_deduped | actmag_only | -0.113 | 0.099 | -0.204 |
 | pythia_70m_deduped | geometry_only | +0.011 | 0.081 | -0.020 |
@@ -71,9 +84,12 @@ Controls: primary = effect_l2 + intervention_value (dropped if constant) + act_m
 | gpt2_small | none | +0.344 | [+0.234, +0.447] | 9.2e-10 | - |
 | gpt2_small | primary | +0.425 | [+0.316, +0.524] | 1.9e-14 | effect_l2,act_mag,frequency |
 | gpt2_small | robust | +0.355 | [+0.245, +0.457] | 2.9e-10 | frequency,act_mag |
+| llama_3_1_8b | none | +0.201 | [+0.092, +0.306] | 4.5e-04 | - |
+| llama_3_1_8b | primary | +0.166 | [+0.051, +0.278] | 4.2e-03 | effect_l2,act_mag,frequency |
+| llama_3_1_8b | robust | +0.183 | [+0.073, +0.295] | 1.5e-03 | frequency,act_mag |
 | pythia_70m_deduped | none | +0.031 | [-0.083, +0.142] | 6.0e-01 | - |
-| pythia_70m_deduped | primary | +0.001 | [-0.119, +0.122] | 9.8e-01 | effect_l2,act_mag,frequency |
-| pythia_70m_deduped | robust | +0.011 | [-0.104, +0.129] | 8.5e-01 | frequency,act_mag |
+| pythia_70m_deduped | primary | +0.001 | [-0.119, +0.124] | 9.8e-01 | effect_l2,act_mag,frequency |
+| pythia_70m_deduped | robust | +0.011 | [-0.107, +0.130] | 8.5e-01 | frequency,act_mag |
 
 ### Strongest predictor per setting under the primary control (by |rho|)
 
@@ -85,9 +101,12 @@ Controls: primary = effect_l2 + intervention_value (dropped if constant) + act_m
 | gpt2_small | crowding | +0.425 | [+0.316, +0.524] | 1.9e-14 |
 | gpt2_small | enc_dec_cos | -0.399 | [-0.498, -0.290] | 9.1e-13 |
 | gpt2_small | coact_entropy | -0.345 | [-0.439, -0.232] | 9.9e-10 |
-| pythia_70m_deduped | logit_l2 | +0.311 | [+0.195, +0.424] | 4.2e-08 |
-| pythia_70m_deduped | coact_count | +0.198 | [+0.087, +0.302] | 6.1e-04 |
-| pythia_70m_deduped | act_mean_firing | -0.171 | [-0.273, -0.058] | 3.2e-03 |
+| llama_3_1_8b | logit_top10_mass | -0.298 | [-0.397, -0.193] | 1.7e-07 |
+| llama_3_1_8b | logit_entropy | +0.231 | [+0.117, +0.341] | 6.1e-05 |
+| llama_3_1_8b | crowding | +0.166 | [+0.051, +0.278] | 4.2e-03 |
+| pythia_70m_deduped | logit_l2 | +0.311 | [+0.192, +0.423] | 4.2e-08 |
+| pythia_70m_deduped | coact_count | +0.198 | [+0.087, +0.306] | 6.1e-04 |
+| pythia_70m_deduped | act_mean_firing | -0.171 | [-0.274, -0.058] | 3.2e-03 |
 
 ### Table B3 analog: CV ridge Spearman on the residualized target (primary control)
 
@@ -107,6 +126,13 @@ Controls: primary = effect_l2 + intervention_value (dropped if constant) + act_m
 | gpt2_small | coactivation_only | +0.176 | 0.114 | +0.159 |
 | gpt2_small | full_no_magnitude | +0.498 | 0.089 | +0.493 |
 | gpt2_small | full_all | +0.489 | 0.095 | +0.500 |
+| llama_3_1_8b | frequency_only | -0.037 | 0.108 | -0.172 |
+| llama_3_1_8b | actmag_only | -0.075 | 0.094 | -0.184 |
+| llama_3_1_8b | geometry_only | +0.160 | 0.055 | +0.143 |
+| llama_3_1_8b | direct_logit_only | +0.309 | 0.130 | +0.277 |
+| llama_3_1_8b | coactivation_only | +0.164 | 0.084 | +0.090 |
+| llama_3_1_8b | full_no_magnitude | +0.310 | 0.072 | +0.312 |
+| llama_3_1_8b | full_all | +0.296 | 0.061 | +0.297 |
 | pythia_70m_deduped | frequency_only | -0.118 | 0.090 | -0.187 |
 | pythia_70m_deduped | actmag_only | -0.116 | 0.112 | -0.182 |
 | pythia_70m_deduped | geometry_only | +0.044 | 0.092 | +0.005 |

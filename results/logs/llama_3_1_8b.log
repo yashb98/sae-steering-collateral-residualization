@@ -1,0 +1,33 @@
+config: {"name": "llama_3_1_8b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 1024, "SEQ_LEN": 48, "ALPHA": 1.0, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "bfloat16", "seed": 0}
+[    3.7s] device NVIDIA GB10; loading SAEs
+[    7.3s] SAEs loaded: primary d_sae=32768 (blocks.16.hook_resid_post), downstream d_sae=32768 (blocks.20.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+Loaded pretrained model meta-llama/Llama-3.1-8B into HookedTransformer
+[   29.5s] model loaded: meta-llama/Llama-3.1-8B d_model=4096 n_layers=32 norm=RMS dtype=bfloat16
+[   29.5s] streaming wikitext-103 train split
+[   42.6s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   43.3s] 2048 contexts x 48 tokens; short texts dropped (v2): 27; contexts whose final token is the pad token: 0
+[  166.7s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=32.2 downstream=31.4; primary features never firing=61.0%
+[  167.5s] predictors: crowding done
+eligible features: 2837 of 32768 | sampled: 300
+[  167.7s] predictors: all done
+[  167.7s] steering 300 features x 48 contexts
+[  301.1s]   steered 50/300
+[  433.3s]   steered 100/300
+[  567.0s]   steered 150/300
+[  710.4s]   steered 200/300
+[  854.2s]   steered 250/300
+[  998.1s]   steered 300/300
+[  998.1s] steering done
+{
+ "rho_crowding__collateral_raw": 0.2217,
+ "rho_frequency__collateral_raw": 0.1552,
+ "rho_act_mag__collateral_raw": 0.1836,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.182,
+ "rho_crowding__collateral_ctilde": 0.2013,
+ "rho_frequency__collateral_ctilde": 0.1438,
+ "rho_act_mag__collateral_ctilde": 0.1401,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.1831,
+ "crowd_rho_lowfreq_half": 0.1904,
+ "crowd_rho_highfreq_half": 0.2392
+}
+[  998.1s] wrote results/llama_3_1_8b/per_feature.csv, selection.json, meta.json
