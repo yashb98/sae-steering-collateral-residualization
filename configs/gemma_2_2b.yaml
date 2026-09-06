@@ -1,6 +1,6 @@
 # Gemma-2-2B, paper Appendix Table A1 / A2 (arXiv 2606.08365). Final logit softcap kept (Appendix E.5).
 name: gemma_2_2b
-model_name: gemma-2-2b
+model_name: google/gemma-2-2b
 sae_release: gemma-scope-2b-pt-res-canonical
 primary_sae_id: layer_12/width_16k/canonical
 downstream_sae_id: layer_16/width_16k/canonical

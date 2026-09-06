@@ -1,0 +1,27 @@
+config: {"name": "gpt2_small", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 2}
+[    3.6s] device NVIDIA GB10; loading SAEs
+[    6.6s] SAEs loaded: primary d_sae=24576 (blocks.8.hook_resid_pre), downstream d_sae=24576 (blocks.10.hook_resid_pre); model_from_pretrained_kwargs={'center_writing_weights': True}; prepend_bos=True
+Loaded pretrained model gpt2 into HookedTransformer
+[    8.5s] model loaded: gpt2 d_model=768 n_layers=12 norm=LNPre dtype=float32
+[    8.5s] streaming wikitext-103 train split
+[   14.8s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   15.4s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   21.3s] cached clean final-token activations: prim (2048, 24576) down (2048, 24576); mean L0 primary=71.8 downstream=60.0; primary features never firing=26.5%
+[   21.6s] predictors: crowding done
+eligible features: 7532 of 24576 | sampled: 300
+[   21.7s] predictors: all done
+[   21.7s] steering 300 features x 48 contexts
+[   93.0s] steering done
+{
+ "rho_crowding__collateral_raw": 0.4583,
+ "rho_frequency__collateral_raw": 0.2845,
+ "rho_act_mag__collateral_raw": 0.1709,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.4825,
+ "rho_crowding__collateral_ctilde": 0.2891,
+ "rho_frequency__collateral_ctilde": 0.1687,
+ "rho_act_mag__collateral_ctilde": 0.1299,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.2889,
+ "crowd_rho_lowfreq_half": 0.4462,
+ "crowd_rho_highfreq_half": 0.5131
+}
+[   93.0s] wrote results/gpt2_small_seed2/per_feature.csv, selection.json, meta.json

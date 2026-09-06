@@ -230,8 +230,11 @@ def main():
         del cache
     prim_clean = torch.cat(prim_clean)                       # [N, d_sae]  primary-site feature acts
     down_clean = torch.cat(down_clean)                       # [N, d_sae_down]
-    tick(f"cached clean final-token activations: prim {tuple(prim_clean.shape)} down {tuple(down_clean.shape)}",
-         "cache_done")
+    l0_p = (prim_clean > EPS_FIRE).float().sum(1).mean().item()
+    l0_d = (down_clean > EPS_FIRE).float().sum(1).mean().item()
+    dead_p = ((prim_clean > EPS_FIRE).float().sum(0) == 0).float().mean().item()
+    tick(f"cached clean final-token activations: prim {tuple(prim_clean.shape)} down {tuple(down_clean.shape)}; "
+         f"mean L0 primary={l0_p:.1f} downstream={l0_d:.1f}; primary features never firing={dead_p:.1%}", "cache_done")
 
     # ---- Phase 1: intervention-free predictors ----
     freq = (prim_clean > EPS_FIRE).float().mean(0).numpy()          # final-token firing frequency
@@ -400,7 +403,8 @@ def main():
         "setting": name, "protocol": args.protocol, "smoke": args.smoke, "seed": SEED, "config": cfg,
         "sizes": dict(n_texts=len(texts), n_contexts=N, seq_len=SEQ_LEN, n_features=len(feats), n_eligible=int(len(elig)),
                       ctx_per_type=CTX_PER_TYPE, n_ctx_per_feature=n_ctx, panel=int(panel.numel()),
-                      d_sae_primary=int(d_sae), d_sae_downstream=int(down_clean.shape[1])),
+                      d_sae_primary=int(d_sae), d_sae_downstream=int(down_clean.shape[1]),
+                      mean_l0_primary=round(l0_p, 2), mean_l0_downstream=round(l0_d, 2), frac_primary_never_firing=round(dead_p, 4)),
         "context_build": dict(dupes_removed=n_dupes, short_texts_dropped=n_short_dropped,
                               contexts_final_token_is_pad=n_final_pad, pad_token_id=pad_id),
         "sae": sae_meta, "dtype": dtype_name, "device": torch.cuda.get_device_name(0) if device == "cuda" else "cpu",
