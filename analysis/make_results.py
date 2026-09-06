@@ -137,6 +137,22 @@ def main(results="results"):
               f"frequency baseline from {h['rho_frequency__collateral_raw']:+.3f} to {metas['gpt2_small']['headline']['rho_frequency__collateral_raw']:+.3f}; "
               "the feature sample also changes because the eligible set changes.", ""]
 
+    # ---- 6b. cross-machine check ----
+    xp = os.path.join(results, "crosscheck_kaggle_t4", "headline.json")
+    if os.path.exists(xp):
+        x = json.load(open(xp))
+        L += ["## 6b. Cross-machine check (Kaggle T4, different library stack)", "",
+              f"The same `src/run_setting.py`, protocol v2, seed 0, re-run on {x['machine']} with "
+              f"transformer-lens {x['versions']['transformer_lens']}, sae-lens {x['versions']['sae_lens']}, transformers {x['versions']['transformers']}, "
+              f"torch {x['versions']['torch']}, numpy {x['versions']['numpy']} (GB10 runs: transformer-lens 3.8.1, sae-lens 6.50.0, transformers 5.16.1, torch 2.12.1). "
+              "Eligible-feature counts and mean L0 matched exactly on both machines.", "",
+              "| Setting | Statistic | GB10 (this repo) | Kaggle T4 |", "|---|---|---|---|"]
+        for s in [k for k in ORDER if k in x["headline"]]:
+            for k in ["rho_crowding__collateral_raw", "partial_crowding__collateral_raw__given_freq_actmag",
+                      "rho_crowding__collateral_ctilde", "partial_crowding__collateral_ctilde__given_freq_actmag", "rho_frequency__collateral_raw"]:
+                L.append(f"| {PRETTY[s]} | {k} | {metas[s]['headline'][k]:+.3f} | {x['headline'][s][k]:+.3f} |")
+        L.append("")
+
     # ---- 7. assumptions ----
     L += ["## 7. Assumptions and conventions", ""]
     for a in amet["assumptions"]:

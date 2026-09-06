@@ -1,0 +1,99 @@
+{
+ "setting": "gemma_2_2b",
+ "protocol": "v2",
+ "smoke": true,
+ "seed": 0,
+ "config": {
+  "name": "gemma_2_2b",
+  "model_name": "google/gemma-2-2b",
+  "sae_release": "gemma-scope-2b-pt-res-canonical",
+  "primary_sae_id": "layer_12/width_16k/canonical",
+  "downstream_sae_id": "layer_16/width_16k/canonical",
+  "primary_hook": "blocks.12.hook_resid_post",
+  "downstream_hook": "blocks.16.hook_resid_post",
+  "panel_size": 2048,
+  "dtype": "float32",
+  "model_batch": 16,
+  "n_texts": 8000,
+  "n_contexts": 2048,
+  "seq_len": 48,
+  "n_features": 300,
+  "ctx_per_type": 16,
+  "alpha": 1.0,
+  "tau": 0.05,
+  "eps_fire": 1e-06,
+  "topk_crowding": 20,
+  "freq_band": [
+   0.002,
+   0.5
+  ],
+  "min_text_chars": 200
+ },
+ "sizes": {
+  "n_texts": 600,
+  "n_contexts": 128,
+  "seq_len": 48,
+  "n_features": 12,
+  "n_eligible": 5074,
+  "ctx_per_type": 4,
+  "n_ctx_per_feature": 12,
+  "panel": 256,
+  "d_sae_primary": 16384,
+  "d_sae_downstream": 16384,
+  "mean_l0_primary": 83.64,
+  "mean_l0_downstream": 78.33,
+  "frac_primary_never_firing": 0.6901
+ },
+ "context_build": {
+  "dupes_removed": 0,
+  "short_texts_dropped": 2,
+  "contexts_final_token_is_pad": 0,
+  "pad_token_id": 0
+ },
+ "sae": {
+  "primary": {
+   "hook_name": "blocks.12.hook_resid_post",
+   "d_sae": 16384,
+   "d_in": 2304,
+   "architecture": "<bound method JumpReLUSAEConfig.architecture of <class 'sae_lens.saes.jumprelu_sae.JumpReLUSAEConfig'>>",
+   "prepend_bos": true,
+   "model_from_pretrained_kwargs": {}
+  },
+  "downstream": {
+   "hook_name": "blocks.16.hook_resid_post",
+   "d_sae": 16384,
+   "d_in": 2304,
+   "architecture": "<bound method JumpReLUSAEConfig.architecture of <class 'sae_lens.saes.jumprelu_sae.JumpReLUSAEConfig'>>"
+  }
+ },
+ "dtype": "float32",
+ "device": "NVIDIA GB10",
+ "versions": {
+  "python": "3.12.11",
+  "torch": "2.12.1+cu130",
+  "transformers": "5.16.1",
+  "transformer_lens": "3.8.1",
+  "sae_lens": "6.50.0",
+  "numpy": "2.5.1"
+ },
+ "timings_s": {
+  "saes_loaded": 6.0,
+  "model_loaded": 15.1,
+  "cache_done": 27.8,
+  "predictors_done": 28.1,
+  "steering_done": 41.1
+ },
+ "wall_clock_s": 41.2,
+ "headline": {
+  "rho_crowding__collateral_raw": 0.7552,
+  "rho_frequency__collateral_raw": 0.3154,
+  "rho_act_mag__collateral_raw": 0.1049,
+  "partial_crowding__collateral_raw__given_freq_actmag": 0.9351,
+  "rho_crowding__collateral_ctilde": 0.5874,
+  "rho_frequency__collateral_ctilde": 0.2957,
+  "rho_act_mag__collateral_ctilde": -0.007,
+  "partial_crowding__collateral_ctilde__given_freq_actmag": 0.8108,
+  "crowd_rho_lowfreq_half": 0.8571,
+  "crowd_rho_highfreq_half": 0.9
+ }
+}

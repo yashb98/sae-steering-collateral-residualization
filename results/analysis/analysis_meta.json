@@ -2,6 +2,7 @@
  "n_boot": 10000,
  "seed": 0,
  "settings": [
+  "gemma_2_2b",
   "gpt2_small",
   "pythia_70m_deduped"
  ],

@@ -2,7 +2,7 @@
 
 Companion results for the revision of *Pre-Intervention Prediction of Sparse Autoencoder Steering Side Effects* (Duan, arXiv:2606.08365). All numbers below are read from `results/` by `analysis/make_results.py`; nothing is copied from the paper except where labelled as the paper's value.
 
-Settings included: GPT-2-small, Pythia-70M-deduped. Still to run: Gemma-2-2B, Llama-3.1-8B.
+Settings included: GPT-2-small, Pythia-70M-deduped, Gemma-2-2B. Still to run: Llama-3.1-8B.
 
 ## 1. Setup per setting
 
@@ -10,6 +10,7 @@ Settings included: GPT-2-small, Pythia-70M-deduped. Still to run: Gemma-2-2B, Ll
 |---|---|---|---|---|---|---|---|---|---|
 | GPT-2-small | gpt2 | gpt2-small-res-jb `blocks.8.hook_resid_pre` | `blocks.10.hook_resid_pre` | 2048 | 7532 of 24576 | 71.79 / 60.01 | 2048 x 48 tokens, 36 short texts dropped | float32 | 104 s on NVIDIA GB10 |
 | Pythia-70M-deduped | pythia-70m-deduped | pythia-70m-deduped-res-sm `blocks.4.hook_resid_post` | `blocks.5.hook_resid_post` | 2048 | 4375 of 32768 | 68.33 / 118.56 | 2048 x 48 tokens, 36 short texts dropped | float32 | 89 s on NVIDIA GB10 |
+| Gemma-2-2B | google/gemma-2-2b | gemma-scope-2b-pt-res-canonical `layer_12/width_16k/canonical` at `blocks.12.hook_resid_post` | `layer_16/width_16k/canonical` at `blocks.16.hook_resid_post` | 2048 | 7517 of 16384 | 83.04 / 79.25 | 2048 x 48 tokens, 32 short texts dropped | float32 | 1151 s on NVIDIA GB10 |
 
 Common: Wikitext-103 train split, 8,000 texts, 300 features sampled with seed 0 from the final-token firing-frequency band [0.002, 0.50], 16 contexts per type (top / random / low), additive steering alpha = 1.0 at the final token, tau = 0.05, epsilon_fire = 1e-6, crowding = top-20 mean absolute cosine, protocol v2 (no pad final tokens, whitespace-normalised dedup).
 
@@ -21,15 +22,17 @@ Spearman rho; partial correlations are rank-based (both sides OLS-residualised o
 
 | Setting | raw Spearman | partial, robust pair | partial, primary set | Paper Table 2 (for orientation) |
 |---|---|---|---|---|
-| GPT-2-small | +0.482 [+0.381, +0.569] | +0.517 [+0.418, +0.604] | +0.475 [+0.372, +0.567] | decoder crowding, downstream count, rho = 0.466 |
-| Pythia-70M-deduped | -0.022 [-0.137, +0.092] | -0.026 [-0.144, +0.097] | -0.004 [-0.126, +0.116] | direct-logit L2, downstream count, rho = 0.391 (crowding leads stability, rho = -0.360) |
+| GPT-2-small | +0.482 [+0.381, +0.574] | +0.517 [+0.418, +0.605] | +0.475 [+0.373, +0.568] | decoder crowding, downstream count, rho = 0.466 |
+| Pythia-70M-deduped | -0.022 [-0.136, +0.095] | -0.026 [-0.148, +0.097] | -0.004 [-0.124, +0.114] | direct-logit L2, downstream count, rho = 0.391 (crowding leads stability, rho = -0.360) |
+| Gemma-2-2B | +0.512 [+0.411, +0.600] | +0.468 [+0.360, +0.567] | +0.242 [+0.123, +0.357] | encoder norm, signed stability, rho = 0.350 |
 
 ### Target: C-tilde = C / (E_f + eps)
 
 | Setting | raw Spearman | partial, robust pair | partial, primary set | Paper Table 2 (for orientation) |
 |---|---|---|---|---|
-| GPT-2-small | +0.344 [+0.232, +0.446] | +0.355 [+0.246, +0.457] | +0.425 [+0.319, +0.527] | decoder crowding, downstream count, rho = 0.466 |
-| Pythia-70M-deduped | +0.031 [-0.082, +0.144] | +0.011 [-0.107, +0.128] | +0.001 [-0.118, +0.122] | direct-logit L2, downstream count, rho = 0.391 (crowding leads stability, rho = -0.360) |
+| GPT-2-small | +0.344 [+0.234, +0.447] | +0.355 [+0.245, +0.457] | +0.425 [+0.316, +0.524] | decoder crowding, downstream count, rho = 0.466 |
+| Pythia-70M-deduped | +0.031 [-0.083, +0.142] | +0.011 [-0.104, +0.129] | +0.001 [-0.119, +0.122] | direct-logit L2, downstream count, rho = 0.391 (crowding leads stability, rho = -0.360) |
+| Gemma-2-2B | +0.069 [-0.052, +0.189] | +0.052 [-0.071, +0.177] | +0.252 [+0.133, +0.368] | encoder norm, signed stability, rho = 0.350 |
 
 ## 3. Strongest predictors under the primary control
 
@@ -39,23 +42,29 @@ Top three predictors by absolute partial rho after the primary control, per sett
 
 | Setting | Predictor | partial rho [95% CI] | p |
 |---|---|---|---|
-| GPT-2-small | crowding | +0.475 [+0.372, +0.567] | 3.7e-18 |
-| GPT-2-small | enc_dec_cos | -0.401 [-0.498, -0.293] | 6.5e-13 |
-| GPT-2-small | crowd_max | +0.333 [+0.216, +0.442] | 4.1e-09 |
-| Pythia-70M-deduped | logit_l2 | +0.343 [+0.230, +0.448] | 1.3e-09 |
-| Pythia-70M-deduped | act_mean_firing | -0.207 [-0.314, -0.087] | 3.3e-04 |
-| Pythia-70M-deduped | coact_entropy | -0.202 [-0.303, -0.083] | 4.8e-04 |
+| GPT-2-small | crowding | +0.475 [+0.373, +0.568] | 3.7e-18 |
+| GPT-2-small | enc_dec_cos | -0.401 [-0.499, -0.295] | 6.5e-13 |
+| GPT-2-small | crowd_max | +0.333 [+0.218, +0.444] | 4.1e-09 |
+| Pythia-70M-deduped | logit_l2 | +0.343 [+0.227, +0.450] | 1.3e-09 |
+| Pythia-70M-deduped | act_mean_firing | -0.207 [-0.314, -0.084] | 3.3e-04 |
+| Pythia-70M-deduped | coact_entropy | -0.202 [-0.297, -0.082] | 4.8e-04 |
+| Gemma-2-2B | enc_dec_cos | -0.454 [-0.552, -0.342] | 1.6e-16 |
+| Gemma-2-2B | coact_entropy | -0.299 [-0.389, -0.196] | 1.6e-07 |
+| Gemma-2-2B | crowding | +0.242 [+0.123, +0.357] | 2.5e-05 |
 
 ### Target: C-tilde = C / (E_f + eps)
 
 | Setting | Predictor | partial rho [95% CI] | p |
 |---|---|---|---|
-| GPT-2-small | crowding | +0.425 [+0.319, +0.527] | 1.9e-14 |
-| GPT-2-small | enc_dec_cos | -0.399 [-0.496, -0.292] | 9.1e-13 |
-| GPT-2-small | coact_entropy | -0.345 [-0.442, -0.235] | 9.9e-10 |
-| Pythia-70M-deduped | logit_l2 | +0.311 [+0.194, +0.420] | 4.2e-08 |
-| Pythia-70M-deduped | coact_count | +0.198 [+0.088, +0.305] | 6.1e-04 |
-| Pythia-70M-deduped | act_mean_firing | -0.171 [-0.272, -0.059] | 3.2e-03 |
+| GPT-2-small | crowding | +0.425 [+0.316, +0.524] | 1.9e-14 |
+| GPT-2-small | enc_dec_cos | -0.399 [-0.498, -0.290] | 9.1e-13 |
+| GPT-2-small | coact_entropy | -0.345 [-0.439, -0.232] | 9.9e-10 |
+| Pythia-70M-deduped | logit_l2 | +0.311 [+0.195, +0.424] | 4.2e-08 |
+| Pythia-70M-deduped | coact_count | +0.198 [+0.087, +0.302] | 6.1e-04 |
+| Pythia-70M-deduped | act_mean_firing | -0.171 [-0.273, -0.058] | 3.2e-03 |
+| Gemma-2-2B | enc_dec_cos | -0.427 [-0.520, -0.320] | 1.5e-14 |
+| Gemma-2-2B | coact_entropy | -0.311 [-0.401, -0.204] | 4.4e-08 |
+| Gemma-2-2B | crowding | +0.252 [+0.133, +0.368] | 1.1e-05 |
 
 ## 4. Table B3 analog: predictor sets on the residualized collateral target
 
@@ -67,6 +76,7 @@ The collateral label is OLS-residualised against the primary control set, then p
 |---|---|---|---|---|---|---|---|
 | GPT-2-small | -0.015 (0.08) | -0.035 (0.06) | +0.458 (0.06) | +0.208 (0.10) | +0.182 (0.11) | +0.502 (0.08) | +0.493 (0.09) |
 | Pythia-70M-deduped | -0.018 (0.14) | -0.113 (0.10) | +0.011 (0.08) | +0.493 (0.08) | +0.184 (0.09) | +0.517 (0.05) | +0.522 (0.05) |
+| Gemma-2-2B | -0.144 (0.27) | -0.106 (0.29) | +0.468 (0.16) | +0.137 (0.15) | +0.168 (0.09) | +0.588 (0.11) | +0.590 (0.11) |
 
 ### Target: C-tilde = C / (E_f + eps)
 
@@ -74,6 +84,7 @@ The collateral label is OLS-residualised against the primary control set, then p
 |---|---|---|---|---|---|---|---|
 | GPT-2-small | -0.027 (0.08) | -0.029 (0.05) | +0.447 (0.07) | +0.216 (0.10) | +0.176 (0.11) | +0.498 (0.09) | +0.489 (0.10) |
 | Pythia-70M-deduped | -0.118 (0.09) | -0.116 (0.11) | +0.044 (0.09) | +0.426 (0.09) | +0.162 (0.09) | +0.477 (0.05) | +0.482 (0.05) |
+| Gemma-2-2B | -0.127 (0.24) | -0.095 (0.27) | +0.429 (0.16) | +0.104 (0.14) | +0.144 (0.14) | +0.578 (0.11) | +0.582 (0.11) |
 
 ## 5. Feature-sample robustness (crowding)
 
@@ -81,6 +92,12 @@ Same contexts, different random sample of 300 features (seeds 0, 1, 2). Values a
 
 | Setting | Target | Control | seed 0 | seed 1 | seed 2 | mean | sd |
 |---|---|---|---|---|---|---|---|
+| Gemma-2-2B | collateral_ctilde | none | +0.069 | +nan | +nan | +0.069 | nan |
+| Gemma-2-2B | collateral_ctilde | primary | +0.252 | +nan | +nan | +0.252 | nan |
+| Gemma-2-2B | collateral_ctilde | robust | +0.052 | +nan | +nan | +0.052 | nan |
+| Gemma-2-2B | collateral_raw | none | +0.512 | +nan | +nan | +0.512 | nan |
+| Gemma-2-2B | collateral_raw | primary | +0.242 | +nan | +nan | +0.242 | nan |
+| Gemma-2-2B | collateral_raw | robust | +0.468 | +nan | +nan | +0.468 | nan |
 | GPT-2-small | collateral_ctilde | none | +0.344 | +0.313 | +0.289 | +0.315 | 0.028 |
 | GPT-2-small | collateral_ctilde | primary | +0.425 | +0.365 | +0.351 | +0.380 | 0.039 |
 | GPT-2-small | collateral_ctilde | robust | +0.355 | +0.306 | +0.289 | +0.316 | 0.034 |
@@ -111,6 +128,23 @@ Same contexts, different random sample of 300 features (seeds 0, 1, 2). Values a
 | crowd_rho_highfreq_half | +0.449 | +0.450 |
 
 Protocol v1 leaves 33 of 2048 contexts with a pad token in the final position (short texts are right-padded). Protocol v2, used for every reported setting, drops texts shorter than 48 tokens instead. On GPT-2-small this moves crowding vs raw count from +0.554 (v1) to +0.482 (v2) and the frequency baseline from +0.229 to +0.110; the feature sample also changes because the eligible set changes.
+
+## 6b. Cross-machine check (Kaggle T4, different library stack)
+
+The same `src/run_setting.py`, protocol v2, seed 0, re-run on Kaggle, Tesla T4 with transformer-lens 2.18.0, sae-lens 5.11.0, transformers 4.57.6, torch 2.10.0+cu128, numpy 1.26.4 (GB10 runs: transformer-lens 3.8.1, sae-lens 6.50.0, transformers 5.16.1, torch 2.12.1). Eligible-feature counts and mean L0 matched exactly on both machines.
+
+| Setting | Statistic | GB10 (this repo) | Kaggle T4 |
+|---|---|---|---|
+| GPT-2-small | rho_crowding__collateral_raw | +0.482 | +0.487 |
+| GPT-2-small | partial_crowding__collateral_raw__given_freq_actmag | +0.517 | +0.509 |
+| GPT-2-small | rho_crowding__collateral_ctilde | +0.344 | +0.359 |
+| GPT-2-small | partial_crowding__collateral_ctilde__given_freq_actmag | +0.355 | +0.361 |
+| GPT-2-small | rho_frequency__collateral_raw | +0.110 | +0.028 |
+| Pythia-70M-deduped | rho_crowding__collateral_raw | -0.022 | -0.077 |
+| Pythia-70M-deduped | partial_crowding__collateral_raw__given_freq_actmag | -0.026 | -0.080 |
+| Pythia-70M-deduped | rho_crowding__collateral_ctilde | +0.031 | -0.089 |
+| Pythia-70M-deduped | partial_crowding__collateral_ctilde__given_freq_actmag | +0.011 | -0.077 |
+| Pythia-70M-deduped | rho_frequency__collateral_raw | +0.175 | +0.111 |
 
 ## 7. Assumptions and conventions
 

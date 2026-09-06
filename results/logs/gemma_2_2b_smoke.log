@@ -1,0 +1,34 @@
+config: {"name": "gemma_2_2b", "protocol": "v2", "smoke": true, "N_TEXTS": 600, "N_CONTEXTS": 128, "N_FEATURES": 12, "CTX_PER_TYPE": 4, "PANEL": 256, "SEQ_LEN": 48, "ALPHA": 1.0, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.6s] device NVIDIA GB10; loading SAEs
+[    6.0s] SAEs loaded: primary d_sae=16384 (blocks.12.hook_resid_post), downstream d_sae=16384 (blocks.16.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+WARNING:root:You tried to specify center_unembed=True for a model using logit softcap, but this can't be done! Softcapping is not invariant upon adding a constant Setting center_unembed=False instead.
+Loaded pretrained model google/gemma-2-2b into HookedTransformer
+[   15.1s] model loaded: google/gemma-2-2b d_model=2304 n_layers=26 norm=RMSPre dtype=float32
+[   15.1s] streaming wikitext-103 train split
+[   22.2s] collected 600 texts (dupes removed: 0); tokenising and caching clean activations
+[   22.2s] 128 contexts x 48 tokens; short texts dropped (v2): 2; contexts whose final token is the pad token: 0
+[   27.8s] cached clean final-token activations: prim (128, 16384) down (128, 16384); mean L0 primary=83.6 downstream=78.3; primary features never firing=69.0%
+[   28.0s] predictors: crowding done
+eligible features: 5074 of 16384 | sampled: 12
+[   28.1s] predictors: all done
+[   28.1s] steering 12 features x 12 contexts
+[   30.3s]   steered 2/12
+[   32.5s]   steered 4/12
+[   34.6s]   steered 6/12
+[   36.8s]   steered 8/12
+[   38.9s]   steered 10/12
+[   41.1s]   steered 12/12
+[   41.1s] steering done
+{
+ "rho_crowding__collateral_raw": 0.7552,
+ "rho_frequency__collateral_raw": 0.3154,
+ "rho_act_mag__collateral_raw": 0.1049,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.9351,
+ "rho_crowding__collateral_ctilde": 0.5874,
+ "rho_frequency__collateral_ctilde": 0.2957,
+ "rho_act_mag__collateral_ctilde": -0.007,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.8108,
+ "crowd_rho_lowfreq_half": 0.8571,
+ "crowd_rho_highfreq_half": 0.9
+}
+[   41.2s] wrote results/gemma_2_2b_smoke/per_feature.csv, selection.json, meta.json
