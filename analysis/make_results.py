@@ -13,6 +13,7 @@ import pandas as pd
 ORDER = ["gpt2_small", "pythia_70m_deduped", "gemma_2_2b", "llama_3_1_8b"]
 PRETTY = {"gpt2_small": "GPT-2-small", "pythia_70m_deduped": "Pythia-70M-deduped",
           "gemma_2_2b": "Gemma-2-2B", "llama_3_1_8b": "Llama-3.1-8B"}
+TARGETS_ORDER = ["collateral_raw", "collateral_ctilde"]
 TGT = {"collateral_raw": "raw downstream count C_{f,0.05}", "collateral_ctilde": "C-tilde = C / (E_f + eps)"}
 KAGGLE = {"rho_crowding__collateral_raw": 0.548, "partial_crowding__collateral_raw__given_freq_actmag": 0.569,
           "rho_crowding__collateral_ctilde": 0.421, "partial_crowding__collateral_ctilde__given_freq_actmag": 0.416,
@@ -51,6 +52,28 @@ def main(results="results"):
           "`analysis/make_results.py`; nothing is copied from the paper except where labelled as the paper's value.", "",
           f"Settings included: {', '.join(PRETTY[s] for s in settings)}."
           + ("" if len(settings) == 4 else f" Still to run: {', '.join(PRETTY[s] for s in ORDER if s not in settings)}."), ""]
+
+    # ---- 0. summary ----
+    L += ["## Summary", "",
+          "Decoder crowding vs collateral after partialling out the paper's Section 3.8 nuisance set plus firing frequency "
+          "(partial Spearman, 95% bootstrap CI), and the strongest predictor under that control:", "",
+          "| Setting | Crowding, raw count | Crowding, C-tilde | Strongest predictor (raw count) | Strongest predictor (C-tilde) |",
+          "|---|---|---|---|---|"]
+    for s in settings:
+        cells = []
+        for tgt in TARGETS_ORDER:
+            r = part[(part.setting == s) & (part.target == tgt) & (part.predictor == "crowding") & (part.control == "primary")].iloc[0]
+            cells.append(fmt(r))
+        for tgt in TARGETS_ORDER:
+            sub = part[(part.setting == s) & (part.target == tgt) & (part.control == "primary")]
+            top = sub.iloc[(-sub.rho.abs()).argsort()[:1]].iloc[0]
+            cells.append(f"{top.predictor} ({top.rho:+.2f})")
+        L.append(f"| {PRETTY[s]} | " + " | ".join(cells) + " |")
+    L += ["", "Reading: crowding carries independent signal in GPT-2-small on both metrics. In Pythia-70M it carries none on either metric, "
+          "and the direct-logit footprint leads instead. In Gemma-2-2B crowding predicts the raw count strongly before controls but its "
+          "partial correlation shrinks once effect magnitude is held fixed, and encoder-decoder alignment is the strongest predictor after "
+          "control. The dominant predictor changes with the setting, which is the paper's own Table 2 pattern, now seen on the collateral "
+          "axis after the control the paper only ran on stability.", ""]
 
     # ---- 1. setup ----
     L += ["## 1. Setup per setting", "",

@@ -4,6 +4,18 @@ Companion results for the revision of *Pre-Intervention Prediction of Sparse Aut
 
 Settings included: GPT-2-small, Pythia-70M-deduped, Gemma-2-2B. Still to run: Llama-3.1-8B.
 
+## Summary
+
+Decoder crowding vs collateral after partialling out the paper's Section 3.8 nuisance set plus firing frequency (partial Spearman, 95% bootstrap CI), and the strongest predictor under that control:
+
+| Setting | Crowding, raw count | Crowding, C-tilde | Strongest predictor (raw count) | Strongest predictor (C-tilde) |
+|---|---|---|---|---|
+| GPT-2-small | +0.475 [+0.373, +0.568] | +0.425 [+0.316, +0.524] | crowding (+0.48) | crowding (+0.42) |
+| Pythia-70M-deduped | -0.004 [-0.124, +0.114] | +0.001 [-0.119, +0.122] | logit_l2 (+0.34) | logit_l2 (+0.31) |
+| Gemma-2-2B | +0.242 [+0.123, +0.357] | +0.252 [+0.133, +0.368] | enc_dec_cos (-0.45) | enc_dec_cos (-0.43) |
+
+Reading: crowding carries independent signal in GPT-2-small on both metrics. In Pythia-70M it carries none on either metric, and the direct-logit footprint leads instead. In Gemma-2-2B crowding predicts the raw count strongly before controls but its partial correlation shrinks once effect magnitude is held fixed, and encoder-decoder alignment is the strongest predictor after control. The dominant predictor changes with the setting, which is the paper's own Table 2 pattern, now seen on the collateral axis after the control the paper only ran on stability.
+
 ## 1. Setup per setting
 
 | Setting | Model | Primary SAE / hook | Downstream SAE / hook | Panel | Eligible features | Mean L0 (primary / downstream) | Contexts, texts dropped | dtype | Wall clock |
