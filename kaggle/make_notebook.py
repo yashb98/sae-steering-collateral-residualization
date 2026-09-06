@@ -35,8 +35,10 @@ from scipy import stats
 warnings.filterwarnings("ignore")
 
 # ---- data location: the Kaggle dataset when attached, otherwise a local results/ directory ----
-cands = glob.glob("/kaggle/input/*/results") + glob.glob("/kaggle/input/*") + ["results", "../results"]
-DATA = next(p for p in cands if os.path.exists(os.path.join(p, "gpt2_small", "per_feature.csv")))
+hits = glob.glob("/kaggle/input/**/gpt2_small/per_feature.csv", recursive=True) + glob.glob("results/gpt2_small/per_feature.csv") + glob.glob("../results/gpt2_small/per_feature.csv")
+if not hits:
+    raise FileNotFoundError("results dataset not found; /kaggle/input contains: " + str(glob.glob("/kaggle/input/**", recursive=True)[:40]))
+DATA = os.path.dirname(os.path.dirname(hits[0]))
 print("data:", DATA)
 
 ORDER = ["gpt2_small", "pythia_70m_deduped", "gemma_2_2b", "llama_3_1_8b"]
