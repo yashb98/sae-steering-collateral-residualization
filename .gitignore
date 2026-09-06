@@ -7,3 +7,4 @@ hf_cache/
 results/**/logs/*.tmp
 results/*_smoke*/
 results/logs/*smoke*
+.pytest_cache/
