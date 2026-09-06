@@ -5,3 +5,5 @@ hf_cache/
 *.pt
 *.safetensors
 results/**/logs/*.tmp
+results/*_smoke*/
+results/logs/*smoke*
