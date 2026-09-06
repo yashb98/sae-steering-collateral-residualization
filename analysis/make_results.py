@@ -187,6 +187,21 @@ def main(results="results"):
               "value on both machines sits inside the roughly +/-0.12 bootstrap interval around zero, so the stable finding there is the "
               "null itself, not any particular value. The weak frequency baselines also shift between machines for the same reason.", ""]
 
+    # ---- 6c. precision check ----
+    bp = os.path.join(results, "llama_3_1_8b_bf16", "meta.json")
+    if os.path.exists(bp) and "llama_3_1_8b" in metas:
+        bm = json.load(open(bp)); fm = metas["llama_3_1_8b"]
+        L += ["## 6c. Precision check (Llama-3.1-8B in bfloat16 vs float32)", "",
+              f"The Llama setting was run twice with the same seed and contexts: once with the model in bfloat16 "
+              f"({bm['wall_clock_s']:.0f} s) and once in float32 ({fm['wall_clock_s']:.0f} s, the reported run). "
+              "SAE encoding is in float32 in both cases; only the model forward pass differs.", "",
+              "| Statistic | bfloat16 | float32 (reported) |", "|---|---|---|"]
+        for k in ["rho_crowding__collateral_raw", "partial_crowding__collateral_raw__given_freq_actmag",
+                  "rho_crowding__collateral_ctilde", "partial_crowding__collateral_ctilde__given_freq_actmag",
+                  "rho_frequency__collateral_raw", "rho_act_mag__collateral_raw"]:
+            L.append(f"| {k} | {bm['headline'][k]:+.3f} | {fm['headline'][k]:+.3f} |")
+        L.append("")
+
     # ---- 7. assumptions ----
     L += ["## 7. Assumptions and conventions", ""]
     for a in amet["assumptions"]:
