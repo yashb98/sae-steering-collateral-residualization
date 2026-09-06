@@ -1,0 +1,22 @@
+# Llama-3.1-8B, paper Appendix Table F1 (arXiv 2606.08365)
+name: llama_3_1_8b
+model_name: meta-llama/Llama-3.1-8B
+sae_release: llama_scope_lxr_8x
+primary_sae_id: l16r_8x
+downstream_sae_id: l20r_8x
+primary_hook: blocks.16.hook_resid_post
+downstream_hook: blocks.20.hook_resid_post
+panel_size: 1024            # Table F1 and Evan Duan, email 2026-08-26: Llama panel = 1,024
+dtype: float32
+model_batch: 16
+n_texts: 8000               # Table A2: 8,000 distinct texts
+n_contexts: 2048            # Table A2: 2,048 contexts
+seq_len: 48                 # Table A2: context length 48
+n_features: 300             # Table A2: 300 features
+ctx_per_type: 16            # Table A2: 16 contexts per type (top / random / low)
+alpha: 1.0                  # Section 3.3: fixed_global_add, alpha = 1.0
+tau: 0.05                   # Section 3.4: collateral threshold
+eps_fire: 1.0e-6            # Section 3.2
+topk_crowding: 20           # Evan Duan, email 2026-08-26: TOPK_CROWDING = 20
+freq_band: [0.002, 0.50]    # ours: the "non-degenerate range" of Section 3.2 is not quantified in the paper
+min_text_chars: 200
