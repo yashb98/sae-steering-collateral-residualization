@@ -18,6 +18,9 @@
   "robust": [
    "frequency",
    "act_mag"
+  ],
+  "effect_only": [
+   "effect_l2"
   ]
  },
  "predictor_sets": {

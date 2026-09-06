@@ -1,17 +1,18 @@
-config: {"name": "pythia_70m_deduped", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
-[    3.6s] device NVIDIA GB10; loading SAEs
-[    8.8s] SAEs loaded: primary d_sae=32768 (blocks.4.hook_resid_post), downstream d_sae=32768 (blocks.5.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=False
+config: {"name": "pythia_70m_deduped", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.5s] device NVIDIA GB10; loading SAEs
+[    6.6s] SAEs loaded: primary d_sae=32768 (blocks.4.hook_resid_post), downstream d_sae=32768 (blocks.5.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=False
 Loaded pretrained model pythia-70m-deduped into HookedTransformer
-[   13.8s] model loaded: pythia-70m-deduped d_model=512 n_layers=6 norm=LNPre dtype=float32
-[   13.8s] streaming wikitext-103 train split
-[   58.9s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
-[   59.6s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
-[   63.7s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=68.3 downstream=118.6; primary features never firing=79.2%
-[   64.1s] predictors: crowding done
+[    8.5s] model loaded: pythia-70m-deduped d_model=512 n_layers=6 norm=LNPre dtype=float32
+[    8.5s] streaming wikitext-103 train split
+[   14.8s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   15.4s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   19.6s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=68.3 downstream=118.6; primary features never firing=79.2%
+[   20.1s] predictors: crowding done
 eligible features: 4375 of 32768 | sampled: 300
-[   64.3s] predictors: all done
-[   64.3s] steering 300 features x 48 contexts
-[   89.2s] steering done
+panel 2048 features; 1969 with firing frequency <= 0.1
+[   20.2s] predictors: all done
+[   20.2s] steering 300 features x 48 contexts
+[   44.0s] steering done
 {
  "rho_crowding__collateral_raw": -0.0225,
  "rho_frequency__collateral_raw": 0.1749,
@@ -22,6 +23,9 @@ eligible features: 4375 of 32768 | sampled: 300
  "rho_act_mag__collateral_ctilde": 0.2835,
  "partial_crowding__collateral_ctilde__given_freq_actmag": 0.011,
  "crowd_rho_lowfreq_half": 0.1068,
- "crowd_rho_highfreq_half": -0.1567
+ "crowd_rho_highfreq_half": -0.1567,
+ "rho_crowding__collateral_raw_nodense": -0.0926,
+ "rho_crowding__resid_delta_norm": 0.1443,
+ "mean_resid_sae_frac": 0.7776
 }
-[   89.2s] wrote results/pythia_70m_deduped/per_feature.csv, selection.json, meta.json
+[   44.0s] wrote results/pythia_70m_deduped_new/per_feature.csv, selection.json, meta.json

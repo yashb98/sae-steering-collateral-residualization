@@ -30,6 +30,14 @@
   ],
   "min_text_chars": 200
  },
+ "variant": {
+  "alpha": 1.0,
+  "alpha_mode": "fixed",
+  "context_split": "none",
+  "random_directions": false,
+  "dense_freq": 0.1,
+  "n_panel_nodense": 1005
+ },
  "sizes": {
   "n_texts": 8000,
   "n_contexts": 2048,
@@ -79,13 +87,13 @@
   "numpy": "2.5.1"
  },
  "timings_s": {
-  "saes_loaded": 7.3,
-  "model_loaded": 29.5,
-  "cache_done": 166.7,
-  "predictors_done": 167.7,
-  "steering_done": 998.1
+  "saes_loaded": 7.1,
+  "model_loaded": 30.1,
+  "cache_done": 147.9,
+  "predictors_done": 148.9,
+  "steering_done": 890.8
  },
- "wall_clock_s": 998.1,
+ "wall_clock_s": 890.8,
  "headline": {
   "rho_crowding__collateral_raw": 0.2217,
   "rho_frequency__collateral_raw": 0.1552,
@@ -96,6 +104,9 @@
   "rho_act_mag__collateral_ctilde": 0.1401,
   "partial_crowding__collateral_ctilde__given_freq_actmag": 0.1831,
   "crowd_rho_lowfreq_half": 0.1904,
-  "crowd_rho_highfreq_half": 0.2392
+  "crowd_rho_highfreq_half": 0.2392,
+  "rho_crowding__collateral_raw_nodense": 0.2418,
+  "rho_crowding__resid_delta_norm": 0.1716,
+  "mean_resid_sae_frac": 1.186
  }
 }

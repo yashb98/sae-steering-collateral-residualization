@@ -1,0 +1,31 @@
+config: {"name": "pythia_70m_deduped", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 2.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.5s] device NVIDIA GB10; loading SAEs
+[    6.5s] SAEs loaded: primary d_sae=32768 (blocks.4.hook_resid_post), downstream d_sae=32768 (blocks.5.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=False
+Loaded pretrained model pythia-70m-deduped into HookedTransformer
+[    8.6s] model loaded: pythia-70m-deduped d_model=512 n_layers=6 norm=LNPre dtype=float32
+[    8.6s] streaming wikitext-103 train split
+[   15.0s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   15.6s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   19.6s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=68.3 downstream=118.6; primary features never firing=79.2%
+[   20.0s] predictors: crowding done
+eligible features: 4375 of 32768 | sampled: 300
+panel 2048 features; 1969 with firing frequency <= 0.1
+[   20.1s] predictors: all done
+[   20.1s] steering 300 features x 48 contexts
+[   43.7s] steering done
+{
+ "rho_crowding__collateral_raw": -0.0462,
+ "rho_frequency__collateral_raw": 0.2844,
+ "rho_act_mag__collateral_raw": 0.1989,
+ "partial_crowding__collateral_raw__given_freq_actmag": -0.0598,
+ "rho_crowding__collateral_ctilde": 0.0562,
+ "rho_frequency__collateral_ctilde": 0.4327,
+ "rho_act_mag__collateral_ctilde": 0.3422,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.0293,
+ "crowd_rho_lowfreq_half": 0.1172,
+ "crowd_rho_highfreq_half": -0.1968,
+ "rho_crowding__collateral_raw_nodense": -0.0895,
+ "rho_crowding__resid_delta_norm": 0.124,
+ "mean_resid_sae_frac": 0.7937
+}
+[   43.8s] wrote results/pythia_70m_deduped_alpha2/per_feature.csv, selection.json, meta.json

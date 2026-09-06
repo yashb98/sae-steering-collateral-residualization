@@ -1,0 +1,109 @@
+{
+ "setting": "pythia_70m_deduped",
+ "protocol": "v2",
+ "smoke": false,
+ "seed": 0,
+ "config": {
+  "name": "pythia_70m_deduped",
+  "model_name": "pythia-70m-deduped",
+  "sae_release": "pythia-70m-deduped-res-sm",
+  "primary_sae_id": "blocks.4.hook_resid_post",
+  "downstream_sae_id": "blocks.5.hook_resid_post",
+  "primary_hook": "blocks.4.hook_resid_post",
+  "downstream_hook": "blocks.5.hook_resid_post",
+  "panel_size": 2048,
+  "dtype": "float32",
+  "model_batch": 32,
+  "n_texts": 8000,
+  "n_contexts": 2048,
+  "seq_len": 48,
+  "n_features": 300,
+  "ctx_per_type": 16,
+  "alpha": 1.0,
+  "tau": 0.05,
+  "eps_fire": 1e-06,
+  "topk_crowding": 20,
+  "freq_band": [
+   0.002,
+   0.5
+  ],
+  "min_text_chars": 200
+ },
+ "variant": {
+  "alpha": 1.0,
+  "alpha_mode": "fixed",
+  "context_split": "none",
+  "random_directions": true,
+  "dense_freq": 0.1,
+  "n_panel_nodense": 1969
+ },
+ "sizes": {
+  "n_texts": 8000,
+  "n_contexts": 2048,
+  "seq_len": 48,
+  "n_features": 300,
+  "n_eligible": 4375,
+  "ctx_per_type": 16,
+  "n_ctx_per_feature": 48,
+  "panel": 2048,
+  "d_sae_primary": 32768,
+  "d_sae_downstream": 32768,
+  "mean_l0_primary": 68.33,
+  "mean_l0_downstream": 118.56,
+  "frac_primary_never_firing": 0.7923
+ },
+ "context_build": {
+  "dupes_removed": 0,
+  "short_texts_dropped": 36,
+  "contexts_final_token_is_pad": 0,
+  "pad_token_id": 1
+ },
+ "sae": {
+  "primary": {
+   "hook_name": "blocks.4.hook_resid_post",
+   "d_sae": 32768,
+   "d_in": 512,
+   "architecture": "<bound method StandardSAEConfig.architecture of <class 'sae_lens.saes.standard_sae.StandardSAEConfig'>>",
+   "prepend_bos": false,
+   "model_from_pretrained_kwargs": {}
+  },
+  "downstream": {
+   "hook_name": "blocks.5.hook_resid_post",
+   "d_sae": 32768,
+   "d_in": 512,
+   "architecture": "<bound method StandardSAEConfig.architecture of <class 'sae_lens.saes.standard_sae.StandardSAEConfig'>>"
+  }
+ },
+ "dtype": "float32",
+ "tl_processing": "default",
+ "device": "NVIDIA GB10",
+ "versions": {
+  "python": "3.12.11",
+  "torch": "2.12.1+cu130",
+  "transformers": "5.16.1",
+  "transformer_lens": "3.8.1",
+  "sae_lens": "6.50.0",
+  "numpy": "2.5.1"
+ },
+ "timings_s": {
+  "saes_loaded": 6.9,
+  "model_loaded": 8.9,
+  "cache_done": 20.2,
+  "predictors_done": 20.7,
+  "steering_done": 44.4
+ },
+ "wall_clock_s": 44.4,
+ "headline": {
+  "rho_crowding__collateral_raw": -0.0137,
+  "rho_frequency__collateral_raw": NaN,
+  "rho_act_mag__collateral_raw": NaN,
+  "partial_crowding__collateral_raw__given_freq_actmag": NaN,
+  "rho_crowding__collateral_ctilde": -0.024,
+  "rho_frequency__collateral_ctilde": NaN,
+  "rho_act_mag__collateral_ctilde": NaN,
+  "partial_crowding__collateral_ctilde__given_freq_actmag": NaN,
+  "rho_crowding__collateral_raw_nodense": -0.025,
+  "rho_crowding__resid_delta_norm": -0.0283,
+  "mean_resid_sae_frac": 0.6641
+ }
+}

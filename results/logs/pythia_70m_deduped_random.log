@@ -1,0 +1,29 @@
+config: {"name": "pythia_70m_deduped", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": true, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.6s] device NVIDIA GB10; loading SAEs
+[    6.9s] SAEs loaded: primary d_sae=32768 (blocks.4.hook_resid_post), downstream d_sae=32768 (blocks.5.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=False
+Loaded pretrained model pythia-70m-deduped into HookedTransformer
+[    8.9s] model loaded: pythia-70m-deduped d_model=512 n_layers=6 norm=LNPre dtype=float32
+[    8.9s] streaming wikitext-103 train split
+[   15.5s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   16.1s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   20.2s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=68.3 downstream=118.6; primary features never firing=79.2%
+[   20.6s] predictors: crowding done
+eligible features: 4375 of 32768 | sampled: 300
+panel 2048 features; 1969 with firing frequency <= 0.1
+[   20.7s] predictors: all done
+[   20.7s] steering 300 features x 48 contexts
+[   44.4s] steering done
+{
+ "rho_crowding__collateral_raw": -0.0137,
+ "rho_frequency__collateral_raw": NaN,
+ "rho_act_mag__collateral_raw": NaN,
+ "partial_crowding__collateral_raw__given_freq_actmag": NaN,
+ "rho_crowding__collateral_ctilde": -0.024,
+ "rho_frequency__collateral_ctilde": NaN,
+ "rho_act_mag__collateral_ctilde": NaN,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": NaN,
+ "rho_crowding__collateral_raw_nodense": -0.025,
+ "rho_crowding__resid_delta_norm": -0.0283,
+ "mean_resid_sae_frac": 0.6641
+}
+[   44.4s] wrote results/pythia_70m_deduped_random/per_feature.csv, selection.json, meta.json

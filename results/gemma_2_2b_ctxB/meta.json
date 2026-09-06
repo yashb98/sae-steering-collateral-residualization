@@ -1,0 +1,111 @@
+{
+ "setting": "gemma_2_2b",
+ "protocol": "v2",
+ "smoke": false,
+ "seed": 0,
+ "config": {
+  "name": "gemma_2_2b",
+  "model_name": "google/gemma-2-2b",
+  "sae_release": "gemma-scope-2b-pt-res-canonical",
+  "primary_sae_id": "layer_12/width_16k/canonical",
+  "downstream_sae_id": "layer_16/width_16k/canonical",
+  "primary_hook": "blocks.12.hook_resid_post",
+  "downstream_hook": "blocks.16.hook_resid_post",
+  "panel_size": 2048,
+  "dtype": "float32",
+  "model_batch": 16,
+  "n_texts": 8000,
+  "n_contexts": 2048,
+  "seq_len": 48,
+  "n_features": 300,
+  "ctx_per_type": 16,
+  "alpha": 1.0,
+  "tau": 0.05,
+  "eps_fire": 1e-06,
+  "topk_crowding": 20,
+  "freq_band": [
+   0.002,
+   0.5
+  ],
+  "min_text_chars": 200
+ },
+ "variant": {
+  "alpha": 1.0,
+  "alpha_mode": "fixed",
+  "context_split": "B",
+  "random_directions": false,
+  "dense_freq": 0.1,
+  "n_panel_nodense": 2011
+ },
+ "sizes": {
+  "n_texts": 8000,
+  "n_contexts": 2048,
+  "seq_len": 48,
+  "n_features": 300,
+  "n_eligible": 7517,
+  "ctx_per_type": 16,
+  "n_ctx_per_feature": 48,
+  "panel": 2048,
+  "d_sae_primary": 16384,
+  "d_sae_downstream": 16384,
+  "mean_l0_primary": 83.04,
+  "mean_l0_downstream": 79.25,
+  "frac_primary_never_firing": 0.2858
+ },
+ "context_build": {
+  "dupes_removed": 0,
+  "short_texts_dropped": 32,
+  "contexts_final_token_is_pad": 0,
+  "pad_token_id": 0
+ },
+ "sae": {
+  "primary": {
+   "hook_name": "blocks.12.hook_resid_post",
+   "d_sae": 16384,
+   "d_in": 2304,
+   "architecture": "<bound method JumpReLUSAEConfig.architecture of <class 'sae_lens.saes.jumprelu_sae.JumpReLUSAEConfig'>>",
+   "prepend_bos": true,
+   "model_from_pretrained_kwargs": {}
+  },
+  "downstream": {
+   "hook_name": "blocks.16.hook_resid_post",
+   "d_sae": 16384,
+   "d_in": 2304,
+   "architecture": "<bound method JumpReLUSAEConfig.architecture of <class 'sae_lens.saes.jumprelu_sae.JumpReLUSAEConfig'>>"
+  }
+ },
+ "dtype": "float32",
+ "tl_processing": "default",
+ "device": "NVIDIA GB10",
+ "versions": {
+  "python": "3.12.11",
+  "torch": "2.12.1+cu130",
+  "transformers": "5.16.1",
+  "transformer_lens": "3.8.1",
+  "sae_lens": "6.50.0",
+  "numpy": "2.5.1"
+ },
+ "timings_s": {
+  "saes_loaded": 5.9,
+  "model_loaded": 13.5,
+  "cache_done": 99.2,
+  "predictors_done": 99.6,
+  "steering_done": 1076.6
+ },
+ "wall_clock_s": 1076.6,
+ "headline": {
+  "rho_crowding__collateral_raw": 0.5423,
+  "rho_frequency__collateral_raw": 0.3512,
+  "rho_act_mag__collateral_raw": 0.4499,
+  "partial_crowding__collateral_raw__given_freq_actmag": 0.5058,
+  "rho_crowding__collateral_ctilde": 0.1,
+  "rho_frequency__collateral_ctilde": 0.4271,
+  "rho_act_mag__collateral_ctilde": 0.3904,
+  "partial_crowding__collateral_ctilde__given_freq_actmag": 0.0892,
+  "crowd_rho_lowfreq_half": 0.6443,
+  "crowd_rho_highfreq_half": 0.4704,
+  "rho_crowding__collateral_raw_nodense": 0.5522,
+  "rho_crowding__resid_delta_norm": 0.6373,
+  "mean_resid_sae_frac": 2.2254
+ }
+}

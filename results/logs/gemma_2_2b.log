@@ -1,24 +1,19 @@
-config: {"name": "gemma_2_2b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
-[    3.6s] device NVIDIA GB10; loading SAEs
-[    6.0s] SAEs loaded: primary d_sae=16384 (blocks.12.hook_resid_post), downstream d_sae=16384 (blocks.16.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+config: {"name": "gemma_2_2b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.5s] device NVIDIA GB10; loading SAEs
+[    6.4s] SAEs loaded: primary d_sae=16384 (blocks.12.hook_resid_post), downstream d_sae=16384 (blocks.16.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
 WARNING:root:You tried to specify center_unembed=True for a model using logit softcap, but this can't be done! Softcapping is not invariant upon adding a constant Setting center_unembed=False instead.
 Loaded pretrained model google/gemma-2-2b into HookedTransformer
-[   13.9s] model loaded: google/gemma-2-2b d_model=2304 n_layers=26 norm=RMSPre dtype=float32
-[   13.9s] streaming wikitext-103 train split
-[   21.5s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
-[   22.0s] 2048 contexts x 48 tokens; short texts dropped (v2): 32; contexts whose final token is the pad token: 0
-[  102.7s] cached clean final-token activations: prim (2048, 16384) down (2048, 16384); mean L0 primary=83.0 downstream=79.2; primary features never firing=28.6%
-[  102.9s] predictors: crowding done
+[   15.3s] model loaded: google/gemma-2-2b d_model=2304 n_layers=26 norm=RMSPre dtype=float32
+[   15.3s] streaming wikitext-103 train split
+[   22.1s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   22.7s] 2048 contexts x 48 tokens; short texts dropped (v2): 32; contexts whose final token is the pad token: 0
+[  100.6s] cached clean final-token activations: prim (2048, 16384) down (2048, 16384); mean L0 primary=83.0 downstream=79.2; primary features never firing=28.6%
+[  100.8s] predictors: crowding done
 eligible features: 7517 of 16384 | sampled: 300
-[  103.1s] predictors: all done
-[  103.1s] steering 300 features x 48 contexts
-[  274.9s]   steered 50/300
-[  447.5s]   steered 100/300
-[  623.5s]   steered 150/300
-[  796.3s]   steered 200/300
-[  970.6s]   steered 250/300
-[ 1151.3s]   steered 300/300
-[ 1151.3s] steering done
+panel 2048 features; 2011 with firing frequency <= 0.1
+[  100.9s] predictors: all done
+[  100.9s] steering 300 features x 48 contexts
+[ 1078.9s] steering done
 {
  "rho_crowding__collateral_raw": 0.5121,
  "rho_frequency__collateral_raw": 0.3794,
@@ -29,6 +24,9 @@ eligible features: 7517 of 16384 | sampled: 300
  "rho_act_mag__collateral_ctilde": 0.4291,
  "partial_crowding__collateral_ctilde__given_freq_actmag": 0.0523,
  "crowd_rho_lowfreq_half": 0.6479,
- "crowd_rho_highfreq_half": 0.4137
+ "crowd_rho_highfreq_half": 0.4137,
+ "rho_crowding__collateral_raw_nodense": 0.5154,
+ "rho_crowding__resid_delta_norm": 0.6257,
+ "mean_resid_sae_frac": 2.2892
 }
-[ 1151.3s] wrote results/gemma_2_2b/per_feature.csv, selection.json, meta.json
+[ 1078.9s] wrote results/gemma_2_2b_new/per_feature.csv, selection.json, meta.json

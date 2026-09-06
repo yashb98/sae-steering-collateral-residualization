@@ -1,0 +1,32 @@
+config: {"name": "gemma_2_2b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "A", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.5s] device NVIDIA GB10; loading SAEs
+[    7.7s] SAEs loaded: primary d_sae=16384 (blocks.12.hook_resid_post), downstream d_sae=16384 (blocks.16.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+WARNING:root:You tried to specify center_unembed=True for a model using logit softcap, but this can't be done! Softcapping is not invariant upon adding a constant Setting center_unembed=False instead.
+Loaded pretrained model google/gemma-2-2b into HookedTransformer
+[   17.4s] model loaded: google/gemma-2-2b d_model=2304 n_layers=26 norm=RMSPre dtype=float32
+[   17.4s] streaming wikitext-103 train split
+[   24.4s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   25.0s] 2048 contexts x 48 tokens; short texts dropped (v2): 32; contexts whose final token is the pad token: 0
+[  103.3s] cached clean final-token activations: prim (2048, 16384) down (2048, 16384); mean L0 primary=83.0 downstream=79.2; primary features never firing=28.6%
+[  103.5s] predictors: crowding done
+eligible features: 7517 of 16384 | sampled: 300
+panel 2048 features; 2011 with firing frequency <= 0.1
+[  103.7s] predictors: all done
+[  103.7s] steering 300 features x 48 contexts
+[ 1080.0s] steering done
+{
+ "rho_crowding__collateral_raw": 0.526,
+ "rho_frequency__collateral_raw": 0.3433,
+ "rho_act_mag__collateral_raw": 0.4666,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.4732,
+ "rho_crowding__collateral_ctilde": 0.1912,
+ "rho_frequency__collateral_ctilde": 0.4674,
+ "rho_act_mag__collateral_ctilde": 0.4441,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.1826,
+ "crowd_rho_lowfreq_half": 0.6636,
+ "crowd_rho_highfreq_half": 0.4185,
+ "rho_crowding__collateral_raw_nodense": 0.5352,
+ "rho_crowding__resid_delta_norm": 0.6337,
+ "mean_resid_sae_frac": 2.4837
+}
+[ 1080.1s] wrote results/gemma_2_2b_ctxA/per_feature.csv, selection.json, meta.json

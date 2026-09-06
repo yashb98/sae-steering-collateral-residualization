@@ -29,6 +29,14 @@
   ],
   "min_text_chars": 200
  },
+ "variant": {
+  "alpha": 1.0,
+  "alpha_mode": "fixed",
+  "context_split": "none",
+  "random_directions": false,
+  "dense_freq": 0.1,
+  "n_panel_nodense": 2011
+ },
  "sizes": {
   "n_texts": 8000,
   "n_contexts": 2048,
@@ -67,6 +75,7 @@
   }
  },
  "dtype": "float32",
+ "tl_processing": "default",
  "device": "NVIDIA GB10",
  "versions": {
   "python": "3.12.11",
@@ -77,13 +86,13 @@
   "numpy": "2.5.1"
  },
  "timings_s": {
-  "saes_loaded": 6.0,
-  "model_loaded": 13.9,
-  "cache_done": 102.7,
-  "predictors_done": 103.1,
-  "steering_done": 1151.3
+  "saes_loaded": 6.4,
+  "model_loaded": 15.3,
+  "cache_done": 100.6,
+  "predictors_done": 100.9,
+  "steering_done": 1078.9
  },
- "wall_clock_s": 1151.3,
+ "wall_clock_s": 1078.9,
  "headline": {
   "rho_crowding__collateral_raw": 0.5121,
   "rho_frequency__collateral_raw": 0.3794,
@@ -94,6 +103,9 @@
   "rho_act_mag__collateral_ctilde": 0.4291,
   "partial_crowding__collateral_ctilde__given_freq_actmag": 0.0523,
   "crowd_rho_lowfreq_half": 0.6479,
-  "crowd_rho_highfreq_half": 0.4137
+  "crowd_rho_highfreq_half": 0.4137,
+  "rho_crowding__collateral_raw_nodense": 0.5154,
+  "rho_crowding__resid_delta_norm": 0.6257,
+  "mean_resid_sae_frac": 2.2892
  }
 }
