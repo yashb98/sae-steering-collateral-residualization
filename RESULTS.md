@@ -104,6 +104,12 @@ Same contexts, different random sample of 300 features (seeds 0, 1, 2). Values a
 
 | Setting | Target | Control | seed 0 | seed 1 | seed 2 | mean | sd |
 |---|---|---|---|---|---|---|---|
+| Gemma-2-2B | collateral_ctilde | none | +0.069 | +0.099 | +0.087 | +0.085 | 0.015 |
+| Gemma-2-2B | collateral_ctilde | primary | +0.252 | +0.209 | +0.222 | +0.228 | 0.022 |
+| Gemma-2-2B | collateral_ctilde | robust | +0.052 | +0.086 | +0.128 | +0.088 | 0.038 |
+| Gemma-2-2B | collateral_raw | none | +0.512 | +0.531 | +0.462 | +0.502 | 0.036 |
+| Gemma-2-2B | collateral_raw | primary | +0.242 | +0.217 | +0.233 | +0.231 | 0.013 |
+| Gemma-2-2B | collateral_raw | robust | +0.468 | +0.468 | +0.439 | +0.458 | 0.017 |
 | GPT-2-small | collateral_ctilde | none | +0.344 | +0.313 | +0.289 | +0.315 | 0.028 |
 | GPT-2-small | collateral_ctilde | primary | +0.425 | +0.365 | +0.351 | +0.380 | 0.039 |
 | GPT-2-small | collateral_ctilde | robust | +0.355 | +0.306 | +0.289 | +0.316 | 0.034 |
@@ -116,7 +122,6 @@ Same contexts, different random sample of 300 features (seeds 0, 1, 2). Values a
 | Pythia-70M-deduped | collateral_raw | none | -0.022 | +0.059 | +0.028 | +0.021 | 0.041 |
 | Pythia-70M-deduped | collateral_raw | primary | -0.004 | +0.006 | -0.081 | -0.027 | 0.048 |
 | Pythia-70M-deduped | collateral_raw | robust | -0.026 | +0.051 | +0.019 | +0.015 | 0.039 |
-| Gemma-2-2B | | seed 0 only so far | | | | | |
 
 ## 6. Regression gate against the published GPT-2-small notebook
 
