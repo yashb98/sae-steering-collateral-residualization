@@ -200,7 +200,7 @@ for ax, (tgt, name) in zip(axes, [("collateral_raw", "collateral count C"), ("co
 axes[0].set_ylabel("Spearman rho (partial where controlled)")
 h, l = axes[0].get_legend_handles_labels()
 fig.legend(h, l, loc="upper left", bbox_to_anchor=(0.01, 0.93), ncol=3, fontsize=9)
-fig.suptitle("Decoder crowding survives the control in GPT-2-small, is null in Pythia, and loses most of its raw-count signal to effect magnitude in Gemma", x=0.01, ha="left", color=INK, fontsize=12)
+fig.suptitle("Decoder crowding survives the control in GPT-2-small, is null in Pythia, loses most of its raw-count signal to effect magnitude in Gemma, and keeps a small share in Llama", x=0.01, ha="left", color=INK, fontsize=12)
 plt.tight_layout(rect=(0, 0, 1, 0.88))
 plt.show()'''
 
