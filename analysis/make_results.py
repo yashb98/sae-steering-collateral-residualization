@@ -136,11 +136,21 @@ def main(results="results"):
         L += ["## 5. Feature-sample robustness (crowding)", "",
               "Same contexts, different random sample of 300 features (seeds 0, 1, 2). Values are crowding vs collateral rho.", "",
               "| Setting | Target | Control | seed 0 | seed 1 | seed 2 | mean | sd |", "|---|---|---|---|---|---|---|---|"]
+        import math
+        def cell(v):
+            return "" if v is None or (isinstance(v, float) and math.isnan(v)) else f"{v:+.3f}"
+        single = []
         for _, r in seeds.iterrows():
             if r.setting not in settings:
                 continue
-            L.append(f"| {PRETTY[r.setting]} | {r.target} | {r.control} | {r.get('0', float('nan')):+.3f} | {r.get('1', float('nan')):+.3f} | "
-                     f"{r.get('2', float('nan')):+.3f} | {r['mean']:+.3f} | {r['sd']:.3f} |")
+            if r.n_seeds < 2:
+                if r.setting not in single:
+                    single.append(r.setting)
+                continue
+            L.append(f"| {PRETTY[r.setting]} | {r.target} | {r.control} | {cell(r.get('0'))} | {cell(r.get('1'))} | "
+                     f"{cell(r.get('2'))} | {r['mean']:+.3f} | {r['sd']:.3f} |")
+        if single:
+            L.append(f"| {', '.join(PRETTY[s] for s in single)} | | seed 0 only so far | | | | | |")
         L.append("")
 
     # ---- 6. gate + protocol ----
@@ -149,7 +159,8 @@ def main(results="results"):
         gm = json.load(open(g)); h = gm["headline"]
         L += ["## 6. Regression gate against the published GPT-2-small notebook", "",
               "`src/run_setting.py --protocol v1` reproduces the Kaggle notebook's context construction exactly. Same seed, same "
-              "eligible-feature count (" + str(gm["sizes"]["n_eligible"]) + "). Differences are GPU floating-point noise (T4 vs GB10).", "",
+              "eligible-feature count (" + str(gm["sizes"]["n_eligible"]) + "). The remaining differences (at most 0.02) come from a different GPU "
+              "(T4 vs GB10) and different TransformerLens / SAELens versions; the eligible set and hence the feature sample are the same.", "",
               "| Statistic | Kaggle notebook (Aug 7 version) | this code, protocol v1 |", "|---|---|---|"]
         for k, v in KAGGLE.items():
             L.append(f"| {k} | {v:+.3f} | {h[k]:+.3f} |")
@@ -174,7 +185,9 @@ def main(results="results"):
             for k in ["rho_crowding__collateral_raw", "partial_crowding__collateral_raw__given_freq_actmag",
                       "rho_crowding__collateral_ctilde", "partial_crowding__collateral_ctilde__given_freq_actmag", "rho_frequency__collateral_raw"]:
                 L.append(f"| {PRETTY[s]} | {k} | {metas[s]['headline'][k]:+.3f} | {x['headline'][s][k]:+.3f} |")
-        L.append("")
+        L += ["", "GPT-2-small's crowding statistics agree to within 0.02 across machines. Pythia's move by up to 0.12, but every Pythia "
+              "value on both machines sits inside the roughly +/-0.12 bootstrap interval around zero, so the stable finding there is the "
+              "null itself, not any particular value. The weak frequency baselines also shift between machines for the same reason.", ""]
 
     # ---- 7. assumptions ----
     L += ["## 7. Assumptions and conventions", ""]

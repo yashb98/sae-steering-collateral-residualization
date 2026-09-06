@@ -104,12 +104,6 @@ Same contexts, different random sample of 300 features (seeds 0, 1, 2). Values a
 
 | Setting | Target | Control | seed 0 | seed 1 | seed 2 | mean | sd |
 |---|---|---|---|---|---|---|---|
-| Gemma-2-2B | collateral_ctilde | none | +0.069 | +nan | +nan | +0.069 | nan |
-| Gemma-2-2B | collateral_ctilde | primary | +0.252 | +nan | +nan | +0.252 | nan |
-| Gemma-2-2B | collateral_ctilde | robust | +0.052 | +nan | +nan | +0.052 | nan |
-| Gemma-2-2B | collateral_raw | none | +0.512 | +nan | +nan | +0.512 | nan |
-| Gemma-2-2B | collateral_raw | primary | +0.242 | +nan | +nan | +0.242 | nan |
-| Gemma-2-2B | collateral_raw | robust | +0.468 | +nan | +nan | +0.468 | nan |
 | GPT-2-small | collateral_ctilde | none | +0.344 | +0.313 | +0.289 | +0.315 | 0.028 |
 | GPT-2-small | collateral_ctilde | primary | +0.425 | +0.365 | +0.351 | +0.380 | 0.039 |
 | GPT-2-small | collateral_ctilde | robust | +0.355 | +0.306 | +0.289 | +0.316 | 0.034 |
@@ -122,10 +116,11 @@ Same contexts, different random sample of 300 features (seeds 0, 1, 2). Values a
 | Pythia-70M-deduped | collateral_raw | none | -0.022 | +0.059 | +0.028 | +0.021 | 0.041 |
 | Pythia-70M-deduped | collateral_raw | primary | -0.004 | +0.006 | -0.081 | -0.027 | 0.048 |
 | Pythia-70M-deduped | collateral_raw | robust | -0.026 | +0.051 | +0.019 | +0.015 | 0.039 |
+| Gemma-2-2B | | seed 0 only so far | | | | | |
 
 ## 6. Regression gate against the published GPT-2-small notebook
 
-`src/run_setting.py --protocol v1` reproduces the Kaggle notebook's context construction exactly. Same seed, same eligible-feature count (7469). Differences are GPU floating-point noise (T4 vs GB10).
+`src/run_setting.py --protocol v1` reproduces the Kaggle notebook's context construction exactly. Same seed, same eligible-feature count (7469). The remaining differences (at most 0.02) come from a different GPU (T4 vs GB10) and different TransformerLens / SAELens versions; the eligible set and hence the feature sample are the same.
 
 | Statistic | Kaggle notebook (Aug 7 version) | this code, protocol v1 |
 |---|---|---|
@@ -157,6 +152,8 @@ The same `src/run_setting.py`, protocol v2, seed 0, re-run on Kaggle, Tesla T4 w
 | Pythia-70M-deduped | rho_crowding__collateral_ctilde | +0.031 | -0.089 |
 | Pythia-70M-deduped | partial_crowding__collateral_ctilde__given_freq_actmag | +0.011 | -0.077 |
 | Pythia-70M-deduped | rho_frequency__collateral_raw | +0.175 | +0.111 |
+
+GPT-2-small's crowding statistics agree to within 0.02 across machines. Pythia's move by up to 0.12, but every Pythia value on both machines sits inside the roughly +/-0.12 bootstrap interval around zero, so the stable finding there is the null itself, not any particular value. The weak frequency baselines also shift between machines for the same reason.
 
 ## 7. Assumptions and conventions
 
