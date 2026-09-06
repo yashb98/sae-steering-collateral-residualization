@@ -147,7 +147,18 @@ def main():
     tick(f"SAEs loaded: primary d_sae={sae_p.cfg.d_sae} ({hook_p}), downstream d_sae={sae_d.cfg.d_sae} ({hook_d}); "
          f"model_from_pretrained_kwargs={model_kwargs}; prepend_bos={prepend_bos}", "saes_loaded")
 
-    model = HookedTransformer.from_pretrained(cfg["model_name"], device=device, dtype=dtype, **model_kwargs).eval()
+    # transformers 5 renamed GPT-NeoX's output head from embed_out to lm_head; TransformerLens
+    # 3.8's NeoX converter still reads embed_out, so pre-load the HF model and alias the head.
+    hf_model = None
+    if "pythia" in cfg["model_name"].lower():
+        from transformers import AutoModelForCausalLM
+        hf_name = cfg.get("hf_model_name", "EleutherAI/" + cfg["model_name"])
+        hf_model = AutoModelForCausalLM.from_pretrained(hf_name, torch_dtype=dtype)
+        if not hasattr(hf_model, "embed_out") and hasattr(hf_model, "lm_head"):
+            hf_model.embed_out = hf_model.lm_head
+    model = HookedTransformer.from_pretrained(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype,
+                                              **model_kwargs).eval()
+    del hf_model
     tick(f"model loaded: {cfg['model_name']} d_model={model.cfg.d_model} n_layers={model.cfg.n_layers} "
          f"norm={model.cfg.normalization_type} dtype={dtype_name}", "model_loaded")
     W_dec = sae_p.W_dec.detach().float()                    # [d_sae, d_model]

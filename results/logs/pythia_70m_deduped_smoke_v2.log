@@ -1,47 +1,33 @@
 config: {"name": "pythia_70m_deduped", "protocol": "v2", "smoke": true, "N_TEXTS": 600, "N_CONTEXTS": 128, "N_FEATURES": 12, "CTX_PER_TYPE": 4, "PANEL": 256, "SEQ_LEN": 48, "ALPHA": 1.0, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
-[    3.4s] device NVIDIA GB10; loading SAEs
-[    6.5s] SAEs loaded: primary d_sae=32768 (blocks.4.hook_resid_post), downstream d_sae=32768 (blocks.5.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=False
-Traceback (most recent call last):
-  File "/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 399, in http_get
-    import hf_transfer  # type: ignore[no-redef]
-    ^^^^^^^^^^^^^^^^^^
-ModuleNotFoundError: No module named 'hf_transfer'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py", line 406, in <module>
-    main()
-  File "/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py", line 150, in main
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/yashb98/venvs/duan/lib/python3.12/site-packages/transformer_lens/HookedTransformer.py", line 1469, in from_pretrained
-    model = cls(
-            ^^^^
-  File "/home/yashb98/venvs/duan/lib/python3.12/site-packages/transformer_lens/HookedTransformer.py", line 208, in __init__
-    AutoTokenizer.from_pretrained(
-  File "/home/yashb98/venvs/duan/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 1089, in from_pretrained
-    tokenizer_config = get_tokenizer_config(pretrained_model_name_or_path, **kwargs)
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/yashb98/venvs/duan/lib/python3.12/site-packages/transformers/models/auto/tokenization_auto.py", line 921, in get_tokenizer_config
-    resolved_config_file = cached_file(
-                           ^^^^^^^^^^^^
-  File "/home/yashb98/venvs/duan/lib/python3.12/site-packages/transformers/utils/hub.py", line 322, in cached_file
-    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/yashb98/venvs/duan/lib/python3.12/site-packages/transformers/utils/hub.py", line 567, in cached_files
-    raise e
-  File "/home/yashb98/venvs/duan/lib/python3.12/site-packages/transformers/utils/hub.py", line 479, in cached_files
-    hf_hub_download(
-  File "/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 114, in _inner_fn
-    return fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1014, in hf_hub_download
-    return _hf_hub_download_to_cache_dir(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1175, in _hf_hub_download_to_cache_dir
-    _download_to_tmp_and_move(
-  File "/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1742, in _download_to_tmp_and_move
-    http_get(
-  File "/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 401, in http_get
-    raise ValueError(
-ValueError: Fast download using 'hf_transfer' is enabled (HF_HUB_ENABLE_HF_TRANSFER=1) but 'hf_transfer' package is not available in your environment. Try `pip install hf_transfer`.
+[    3.5s] device NVIDIA GB10; loading SAEs
+[    6.7s] SAEs loaded: primary d_sae=32768 (blocks.4.hook_resid_post), downstream d_sae=32768 (blocks.5.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=False
+Loaded pretrained model pythia-70m-deduped into HookedTransformer
+[   10.2s] model loaded: pythia-70m-deduped d_model=512 n_layers=6 norm=LNPre dtype=float32
+[   10.2s] streaming wikitext-103 train split
+[   16.4s] collected 600 texts (dupes removed: 0); tokenising and caching clean activations
+[   16.5s] 128 contexts x 48 tokens; short texts dropped (v2): 2; contexts whose final token is the pad token: 0
+[   17.0s] cached clean final-token activations: prim (128, 32768) down (128, 32768)
+[   17.5s] predictors: crowding done
+eligible features: 3144 of 32768 | sampled: 12
+[   17.5s] predictors: all done
+[   17.5s] steering 12 features x 12 contexts
+[   17.6s]   steered 2/12
+[   17.6s]   steered 4/12
+[   17.7s]   steered 6/12
+[   17.7s]   steered 8/12
+[   17.8s]   steered 10/12
+[   17.9s]   steered 12/12
+[   17.9s] steering done
+{
+ "rho_crowding__collateral_raw": 0.1156,
+ "rho_frequency__collateral_raw": -0.4272,
+ "rho_act_mag__collateral_raw": 0.4378,
+ "partial_crowding__collateral_raw__given_freq_actmag": -0.1122,
+ "rho_crowding__collateral_ctilde": -0.2028,
+ "rho_frequency__collateral_ctilde": -0.5746,
+ "rho_act_mag__collateral_ctilde": 0.2308,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": -0.4795,
+ "crowd_rho_lowfreq_half": 0.381,
+ "crowd_rho_highfreq_half": 0.2
+}
+[   17.9s] wrote results/pythia_70m_deduped_smoke/per_feature.csv, selection.json, meta.json

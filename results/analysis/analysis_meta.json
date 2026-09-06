@@ -1,0 +1,89 @@
+{
+ "n_boot": 10000,
+ "seed": 0,
+ "settings": [
+  "gpt2_small",
+  "pythia_70m_deduped"
+ ],
+ "controls": {
+  "none": [],
+  "primary": [
+   "effect_l2",
+   "intervention_value",
+   "act_mag",
+   "frequency"
+  ],
+  "robust": [
+   "frequency",
+   "act_mag"
+  ]
+ },
+ "predictor_sets": {
+  "frequency_only": [
+   "frequency"
+  ],
+  "actmag_only": [
+   "act_mag"
+  ],
+  "geometry_only": [
+   "crowding",
+   "crowd_max",
+   "dec_norm",
+   "enc_norm",
+   "enc_dec_cos"
+  ],
+  "direct_logit_only": [
+   "logit_l2",
+   "logit_linf",
+   "logit_entropy",
+   "logit_top10_mass"
+  ],
+  "coactivation_only": [
+   "coact_entropy",
+   "coact_count"
+  ],
+  "full_no_magnitude": [
+   "crowding",
+   "crowd_max",
+   "dec_norm",
+   "enc_norm",
+   "enc_dec_cos",
+   "frequency",
+   "bin_entropy",
+   "act_entropy",
+   "act_kurtosis",
+   "coact_entropy",
+   "coact_count",
+   "logit_l2",
+   "logit_linf",
+   "logit_entropy",
+   "logit_top10_mass"
+  ],
+  "full_all": [
+   "crowding",
+   "crowd_max",
+   "dec_norm",
+   "enc_norm",
+   "enc_dec_cos",
+   "frequency",
+   "bin_entropy",
+   "act_entropy",
+   "act_kurtosis",
+   "act_mag",
+   "act_mean_firing",
+   "act_std",
+   "act_max",
+   "coact_entropy",
+   "coact_count",
+   "logit_l2",
+   "logit_linf",
+   "logit_entropy",
+   "logit_top10_mass"
+  ]
+ },
+ "assumptions": [
+  "natural activation a-bar_f := act_mag (mean final-token activation over all contexts)",
+  "intervention value c_f is constant under fixed_global_add (alpha = 1.0) and is dropped",
+  "ridge alpha = 1.0 on standardised predictors, 5-fold KFold shuffle seed 0"
+ ]
+}
