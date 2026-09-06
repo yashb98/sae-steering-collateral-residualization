@@ -1,25 +1,17 @@
 #!/usr/bin/env python
-"""Collateral-side residualization across settings (the analysis promised for the revision).
+"""Collateral-side residualization across settings.
 
-For every setting with results/<setting>/per_feature.csv, and for both collateral metrics
-(raw downstream count C_{f,0.05} and C-tilde = C / (E_f + eps)), this reports:
+For every results/<setting>/per_feature.csv and both collateral metrics (raw downstream count
+and C-tilde = C / (E_f + eps)):
 
-1. Partial Spearman correlations of every pre-intervention predictor with the collateral label,
-   after partialling out a nuisance set from both sides (rank-transform, OLS-residualise on the
-   ranked nuisance variables with an intercept, Pearson on the residuals). Nuisance sets:
-     none      raw Spearman
-     primary   the paper's Section 3.8 set (effect magnitude E_f, intervention value c_f,
-               natural activation a-bar_f) plus firing frequency. Under fixed_global_add with a
-               fixed alpha, c_f is constant and is dropped automatically. a-bar_f is taken as the
-               mean final-token activation over all contexts (act_mag), an assumption recorded
-               in the output.
-     robust    the narrower (frequency, activation magnitude) pair used in the GPT-2-small note.
-   Every coefficient carries a bootstrap 95% CI (features resampled with replacement).
-
-2. A Table B3 analog: the collateral label is residualised (OLS, raw values) against the same
-   nuisance sets, then predicted from each predictor family with 5-fold cross-validated ridge
-   regression on standardised predictors; the score is the Spearman correlation between the
-   held-out predictions and the residualised label, averaged over folds.
+1. Partial Spearman correlation of each predictor with the label, rank-based, with both sides
+   OLS-residualised on the ranked controls. Control sets: none (raw Spearman); primary
+   (effect magnitude E_f, intervention value, natural activation, firing frequency; constant
+   columns are dropped); robust (frequency and activation magnitude). Bootstrap 95% CIs over
+   features.
+2. Table B3 analog: the label is OLS-residualised on the same controls, then predicted from
+   each predictor family by 5-fold cross-validated ridge; score = Spearman between held-out
+   predictions and the residualised label.
 
 Outputs go to results/analysis/.
 """
@@ -68,7 +60,7 @@ def partial_corr_batched(x, y, Z):
     B, n = x.shape
     ones = np.ones((B, n, 1))
     D = np.concatenate([ones, Z], axis=2) if Z.shape[2] else ones
-    # residualise via batched least squares (normal equations with a tiny ridge for stability)
+    # batched least squares via normal equations (tiny ridge for numerical stability)
     DtD = np.einsum("bnk,bnl->bkl", D, D) + 1e-9 * np.eye(D.shape[2])[None]
     inv = np.linalg.inv(DtD)
     def resid(v):

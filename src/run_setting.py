@@ -1,21 +1,13 @@
 #!/usr/bin/env python
-"""Phase 1 + Phase 2 for one model/SAE setting of arXiv 2606.08365 (Duan, 2026).
+"""Predictors and steering labels for one model/SAE setting of arXiv 2606.08365.
 
-Computes intervention-free predictors for 300 sampled SAE features and then measures their
-steering labels (collateral spread, effect magnitude, stability, KL shift) with additive
-steering at the final token, alpha = 1.0. Everything is computed here from scratch; no number
-is copied from the paper. Output: results/<name>/per_feature.csv plus meta.json.
+Computes the intervention-free predictors for 300 sampled SAE features, steers each one
+additively at the final token (alpha = 1.0) and measures collateral, effect magnitude,
+stability and KL shift. Writes results/<name>/per_feature.csv, selection.json, meta.json.
 
-This generalises the GPT-2-small Kaggle notebook
-(kaggle.com/code/yashbishnoi98/sae-steering-side-effects-reproduced) to a per-setting config.
-
-Protocols for building the 2,048 contexts:
-  v1  exact replication of the notebook: texts are tokenised in batches of 32, a batch is
-      skipped only if its LONGEST text is shorter than seq_len, and shorter texts inside a kept
-      batch are right-padded. Used only as the regression gate on GPT-2-small.
-  v2  per-context filter: a text is kept only if it has at least seq_len real tokens (BOS
-      included), so the final token is never a pad token; texts are also deduplicated after
-      whitespace normalisation (paper Section 3.2). Used for all reported settings.
+Protocols: v1 rebuilds the contexts exactly as the original GPT-2-small notebook did (used
+only as a regression gate); v2 keeps texts with at least seq_len real tokens and deduplicates
+them, and is used for every reported setting.
 """
 import argparse
 import json
@@ -123,7 +115,7 @@ def main():
     assert torch.cuda.is_available() or device == "cpu", "no CUDA device found"
     tick(f"device {torch.cuda.get_device_name(0) if device == 'cuda' else 'cpu'}; loading SAEs")
 
-    # ---- SAEs first, so the model can be loaded with the kwargs the SAE release expects ----
+    # ---- SAEs first: the model is loaded with the kwargs the SAE release expects ----
     def load_sae(sae_id):
         out = SAE.from_pretrained(release=cfg["sae_release"], sae_id=sae_id, device=device)
         sae = out[0] if isinstance(out, (tuple, list)) else out
@@ -147,8 +139,7 @@ def main():
     tick(f"SAEs loaded: primary d_sae={sae_p.cfg.d_sae} ({hook_p}), downstream d_sae={sae_d.cfg.d_sae} ({hook_d}); "
          f"model_from_pretrained_kwargs={model_kwargs}; prepend_bos={prepend_bos}", "saes_loaded")
 
-    # transformers 5 renamed GPT-NeoX's output head from embed_out to lm_head; TransformerLens
-    # 3.8's NeoX converter still reads embed_out, so pre-load the HF model and alias the head.
+    # transformers 5 renamed NeoX's embed_out to lm_head; TransformerLens still reads embed_out.
     hf_model = None
     if "pythia" in cfg["model_name"].lower():
         from transformers import AutoModelForCausalLM
@@ -372,7 +363,7 @@ def main():
     json.dump({"features": [int(x) for x in feats], "panel": [int(x) for x in panel.cpu().numpy()]},
               open(os.path.join(out_dir, "selection.json"), "w"))
 
-    # ---- quick headline, same statistics as the notebook, for the regression gate ----
+    # ---- headline statistics (regression gate) ----
     from scipy.stats import rankdata, pearsonr
 
     def sp(x, y):

@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-"""Build RESULTS.md and a LaTeX table from the analysis CSVs and the per-setting meta.json files.
-
-Every number in the write-up is read from results/, so regenerating after a new setting lands is
-one command: python analysis/make_results.py
+"""Build RESULTS.md and the LaTeX table from results/. Every number in the write-up is read
+from the CSVs and meta.json files, so a new setting only needs this script re-run.
 """
 import glob
 import json
