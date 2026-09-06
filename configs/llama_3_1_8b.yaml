@@ -7,7 +7,8 @@ downstream_sae_id: l20r_8x
 primary_hook: blocks.16.hook_resid_post
 downstream_hook: blocks.20.hook_resid_post
 panel_size: 1024            # Table F1 and Evan Duan, email 2026-08-26: Llama panel = 1,024
-dtype: float32
+dtype: bfloat16             # float32 and default TransformerLens processing exceed 119 GB on the GB10 for this model
+tl_processing: none         # HookedTransformer.from_pretrained_no_processing (fold_ln and unembed centring off)
 model_batch: 16
 n_texts: 8000               # Table A2: 8,000 distinct texts
 n_contexts: 2048            # Table A2: 2,048 contexts

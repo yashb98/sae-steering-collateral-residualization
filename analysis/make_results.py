@@ -208,10 +208,12 @@ def main(results="results"):
         L.append(f"- {a}.")
     L += ["- Feature sampling band [0.002, 0.50] on final-token firing frequency; the paper says only \"the non-degenerate range\".",
           "- Downstream panel = the most frequently active downstream features on the clean contexts (2048; 1024 for Llama).",
-          "- Models loaded with TransformerLens default weight processing plus each SAE's `model_from_pretrained_kwargs`, in float32. "
-          "TransformerLens centres writing weights only for LayerNorm models, so Gemma-2 and Llama residual streams match the "
-          "Hugging Face values the Gemma Scope and Llama Scope SAEs were trained on; the mean L0 column above is the empirical check.",
-          "- Direct-logit predictors use the model's unembedding as loaded (centred for GPT-2, Pythia and Llama; Gemma-2 keeps its logit softcap, so its unembedding is not centred).",
+          "- Model loading per setting: " + "; ".join(f"{PRETTY[s]} in {metas[s]['dtype']} with TransformerLens weight processing "
+          + ("off (from_pretrained_no_processing)" if metas[s].get("tl_processing") == "none" else "on (default)") for s in settings) + ". "
+          "Weight processing never changes the residual stream the SAEs read (TransformerLens centres writing weights only for LayerNorm models); "
+          "the mean L0 column above is the empirical check that each SAE sees the activations it was trained on.",
+          "- Direct-logit predictors, effect magnitude and stability use the unembedding as loaded: centred for GPT-2 and Pythia, uncentred for Gemma-2 "
+          "(logit softcap) and for any setting loaded without processing.",
           "- Effect magnitude E_f and the stability cosines are computed on final-token logit differences in float32.", ""]
     L += ["## Files", "", "- `results/<setting>/per_feature.csv`: one row per sampled feature, all predictors and labels.",
           "- `results/<setting>/selection.json`: sampled feature indices and downstream panel indices.",

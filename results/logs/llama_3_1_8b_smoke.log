@@ -1,3 +1,3 @@
 config: {"name": "llama_3_1_8b", "protocol": "v2", "smoke": true, "N_TEXTS": 600, "N_CONTEXTS": 128, "N_FEATURES": 12, "CTX_PER_TYPE": 4, "PANEL": 256, "SEQ_LEN": 48, "ALPHA": 1.0, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
-[    5.0s] device NVIDIA GB10; loading SAEs
-[   10.0s] SAEs loaded: primary d_sae=32768 (blocks.16.hook_resid_post), downstream d_sae=32768 (blocks.20.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+[    7.7s] device NVIDIA GB10; loading SAEs
+[   11.6s] SAEs loaded: primary d_sae=32768 (blocks.16.hook_resid_post), downstream d_sae=32768 (blocks.20.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True

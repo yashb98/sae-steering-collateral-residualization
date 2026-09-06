@@ -147,9 +147,19 @@ def main():
         hf_model = AutoModelForCausalLM.from_pretrained(hf_name, torch_dtype=dtype)
         if not hasattr(hf_model, "embed_out") and hasattr(hf_model, "lm_head"):
             hf_model.embed_out = hf_model.lm_head
-    model = HookedTransformer.from_pretrained(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype,
-                                              **model_kwargs).eval()
+    elif "llama" in cfg["model_name"].lower():
+        from transformers import AutoModelForCausalLM
+        hf_model = AutoModelForCausalLM.from_pretrained(cfg["model_name"], torch_dtype=dtype, low_cpu_mem_usage=True)
+    # tl_processing: "default" applies TransformerLens weight processing; "none" skips it, which
+    # roughly halves peak memory for large models and leaves the residual stream unchanged.
+    tl_processing = cfg.get("tl_processing", "default")
+    loader = HookedTransformer.from_pretrained_no_processing if tl_processing == "none" else HookedTransformer.from_pretrained
+    model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
     del hf_model
+    import gc
+    gc.collect()
+    if device == "cuda":
+        torch.cuda.empty_cache()
     tick(f"model loaded: {cfg['model_name']} d_model={model.cfg.d_model} n_layers={model.cfg.n_layers} "
          f"norm={model.cfg.normalization_type} dtype={dtype_name}", "model_loaded")
     W_dec = sae_p.W_dec.detach().float()                    # [d_sae, d_model]
@@ -398,7 +408,7 @@ def main():
                       mean_l0_primary=round(l0_p, 2), mean_l0_downstream=round(l0_d, 2), frac_primary_never_firing=round(dead_p, 4)),
         "context_build": dict(dupes_removed=n_dupes, short_texts_dropped=n_short_dropped,
                               contexts_final_token_is_pad=n_final_pad, pad_token_id=pad_id),
-        "sae": sae_meta, "dtype": dtype_name, "device": torch.cuda.get_device_name(0) if device == "cuda" else "cpu",
+        "sae": sae_meta, "dtype": dtype_name, "tl_processing": tl_processing, "device": torch.cuda.get_device_name(0) if device == "cuda" else "cpu",
         "versions": dict(python=platform.python_version(), torch=torch.__version__, transformers=transformers.__version__,
                          transformer_lens=_pkg_version("transformer-lens", transformer_lens),
                          sae_lens=_pkg_version("sae-lens", sae_lens), numpy=np.__version__),
