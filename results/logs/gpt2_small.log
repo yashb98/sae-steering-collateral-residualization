@@ -1,23 +1,17 @@
 config: {"name": "gpt2_small", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
-[    3.5s] device NVIDIA GB10; loading SAEs
-[   10.3s] SAEs loaded: primary d_sae=24576 (blocks.8.hook_resid_pre), downstream d_sae=24576 (blocks.10.hook_resid_pre); model_from_pretrained_kwargs={'center_writing_weights': True}; prepend_bos=True
+[    3.6s] device NVIDIA GB10; loading SAEs
+[    7.2s] SAEs loaded: primary d_sae=24576 (blocks.8.hook_resid_pre), downstream d_sae=24576 (blocks.10.hook_resid_pre); model_from_pretrained_kwargs={'center_writing_weights': True}; prepend_bos=True
 Loaded pretrained model gpt2 into HookedTransformer
-[   12.3s] model loaded: gpt2 d_model=768 n_layers=12 norm=LNPre dtype=float32
-[   12.3s] streaming wikitext-103 train split
-[   19.4s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
-[   20.0s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
-[   25.9s] cached clean final-token activations: prim (2048, 24576) down (2048, 24576)
-[   26.3s] predictors: crowding done
+[    9.2s] model loaded: gpt2 d_model=768 n_layers=12 norm=LNPre dtype=float32
+[    9.2s] streaming wikitext-103 train split
+[   26.6s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   27.2s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   33.1s] cached clean final-token activations: prim (2048, 24576) down (2048, 24576); mean L0 primary=71.8 downstream=60.0; primary features never firing=26.5%
+[   33.5s] predictors: crowding done
 eligible features: 7532 of 24576 | sampled: 300
-[   26.4s] predictors: all done
-[   26.4s] steering 300 features x 48 contexts
-[   38.3s]   steered 50/300
-[   50.1s]   steered 100/300
-[   61.9s]   steered 150/300
-[   73.8s]   steered 200/300
-[   85.6s]   steered 250/300
-[   97.5s]   steered 300/300
-[   97.5s] steering done
+[   33.6s] predictors: all done
+[   33.6s] steering 300 features x 48 contexts
+[  104.2s] steering done
 {
  "rho_crowding__collateral_raw": 0.4819,
  "rho_frequency__collateral_raw": 0.11,
@@ -30,4 +24,4 @@ eligible features: 7532 of 24576 | sampled: 300
  "crowd_rho_lowfreq_half": 0.6043,
  "crowd_rho_highfreq_half": 0.3499
 }
-[   97.5s] wrote results/gpt2_small/per_feature.csv, selection.json, meta.json
+[  104.3s] wrote results/gpt2_small/per_feature.csv, selection.json, meta.json

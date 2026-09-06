@@ -39,7 +39,10 @@
   "n_ctx_per_feature": 48,
   "panel": 2048,
   "d_sae_primary": 24576,
-  "d_sae_downstream": 24576
+  "d_sae_downstream": 24576,
+  "mean_l0_primary": 71.79,
+  "mean_l0_downstream": 60.01,
+  "frac_primary_never_firing": 0.265
  },
  "context_build": {
   "dupes_removed": 0,
@@ -76,13 +79,13 @@
   "numpy": "2.5.1"
  },
  "timings_s": {
-  "saes_loaded": 10.3,
-  "model_loaded": 12.3,
-  "cache_done": 25.9,
-  "predictors_done": 26.4,
-  "steering_done": 97.5
+  "saes_loaded": 7.2,
+  "model_loaded": 9.2,
+  "cache_done": 33.1,
+  "predictors_done": 33.6,
+  "steering_done": 104.2
  },
- "wall_clock_s": 97.5,
+ "wall_clock_s": 104.3,
  "headline": {
   "rho_crowding__collateral_raw": 0.4819,
   "rho_frequency__collateral_raw": 0.11,
