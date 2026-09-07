@@ -1,0 +1,1843 @@
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "llama_3_1_8b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 1024, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "bfloat16", "seed": 0}
+[    9.7s] device NVIDIA GB10; loading SAEs
+[   14.7s] SAEs loaded: primary d_sae=32768 (blocks.16.hook_resid_post), downstream d_sae=32768 (blocks.20.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:  30%|██▉       | 86/291 [00:00<00:00, 845.77it/s]Loading weights:  90%|█████████ | 263/291 [00:00<00:00, 1323.48it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 1336.96it/s]
+Loaded pretrained model meta-llama/Llama-3.1-8B into HookedTransformer
+[   64.0s] model loaded: meta-llama/Llama-3.1-8B d_model=4096 n_layers=32 norm=RMS dtype=bfloat16
+[   64.0s] streaming wikitext-103 train split
+[   71.9s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   73.1s] 2048 contexts x 48 tokens; short texts dropped (v2): 27; contexts whose final token is the pad token: 0
+[  219.0s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=32.2 downstream=31.4; primary features never firing=61.0%
+[  220.2s] predictors: crowding done
+eligible features: 2837 of 32768 | sampled: 300
+panel 1024 features; 1005 with firing frequency <= 0.1
+[  221.0s] predictors: all done
+[  221.0s] steering 300 features x 48 contexts
+[  221.0s] feature 1: clean forward
+[  223.5s] feature 1: SAE forward
+[  228.4s] feature 1: SAE eigenvalues
+[  228.6s] feature 1: random forward
+[  230.0s] feature 1: random eigenvalues (CPU)
+[  230.1s] feature 1: complete
+[  230.1s] feature 2: clean forward
+[  231.0s] feature 2: SAE forward
+[  233.2s] feature 2: SAE eigenvalues
+[  233.2s] feature 2: random forward
+[  234.7s] feature 2: random eigenvalues (CPU)
+[  234.7s] feature 2: complete
+[  234.8s] feature 3: clean forward
+[  235.7s] feature 3: SAE forward
+[  237.7s] feature 3: SAE eigenvalues
+[  237.8s] feature 3: random forward
+[  239.4s] feature 3: random eigenvalues (CPU)
+[  239.4s] feature 3: complete
+[  239.5s] feature 4: clean forward
+[  240.4s] feature 4: SAE forward
+[  242.4s] feature 4: SAE eigenvalues
+[  242.4s] feature 4: random forward
+[  243.9s] feature 4: random eigenvalues (CPU)
+[  243.9s] feature 4: complete
+[  243.9s] feature 5: clean forward
+[  244.9s] feature 5: SAE forward
+[  247.1s] feature 5: SAE eigenvalues
+[  247.1s] feature 5: random forward
+[  248.6s] feature 5: random eigenvalues (CPU)
+[  248.7s] feature 5: complete
+[  248.7s] feature 6: clean forward
+[  249.6s] feature 6: SAE forward
+[  251.7s] feature 6: SAE eigenvalues
+[  251.7s] feature 6: random forward
+[  254.0s] feature 6: random eigenvalues (CPU)
+[  254.1s] feature 6: complete
+[  254.1s] feature 7: clean forward
+[  255.0s] feature 7: SAE forward
+[  257.2s] feature 7: SAE eigenvalues
+[  257.2s] feature 7: random forward
+[  258.7s] feature 7: random eigenvalues (CPU)
+[  258.7s] feature 7: complete
+[  258.7s] feature 8: clean forward
+[  259.6s] feature 8: SAE forward
+[  261.7s] feature 8: SAE eigenvalues
+[  261.7s] feature 8: random forward
+[  263.2s] feature 8: random eigenvalues (CPU)
+[  263.2s] feature 8: complete
+[  263.2s] feature 9: clean forward
+[  264.1s] feature 9: SAE forward
+[  266.2s] feature 9: SAE eigenvalues
+[  266.2s] feature 9: random forward
+[  267.7s] feature 9: random eigenvalues (CPU)
+[  267.7s] feature 9: complete
+[  267.7s] feature 10: clean forward
+[  268.6s] feature 10: SAE forward
+[  270.7s] feature 10: SAE eigenvalues
+[  270.7s] feature 10: random forward
+[  272.2s] feature 10: random eigenvalues (CPU)
+[  272.2s] feature 10: complete
+[  272.2s] feature 11: clean forward
+[  273.1s] feature 11: SAE forward
+[  275.3s] feature 11: SAE eigenvalues
+[  275.3s] feature 11: random forward
+[  276.8s] feature 11: random eigenvalues (CPU)
+[  276.8s] feature 11: complete
+[  276.8s] feature 12: clean forward
+[  277.7s] feature 12: SAE forward
+[  279.9s] feature 12: SAE eigenvalues
+[  279.9s] feature 12: random forward
+[  281.4s] feature 12: random eigenvalues (CPU)
+[  281.4s] feature 12: complete
+[  281.4s] feature 13: clean forward
+[  282.3s] feature 13: SAE forward
+[  284.4s] feature 13: SAE eigenvalues
+[  284.4s] feature 13: random forward
+[  285.9s] feature 13: random eigenvalues (CPU)
+[  285.9s] feature 13: complete
+[  285.9s] feature 14: clean forward
+[  286.8s] feature 14: SAE forward
+[  288.9s] feature 14: SAE eigenvalues
+[  288.9s] feature 14: random forward
+[  290.5s] feature 14: random eigenvalues (CPU)
+[  290.5s] feature 14: complete
+[  290.6s] feature 15: clean forward
+[  291.4s] feature 15: SAE forward
+[  293.5s] feature 15: SAE eigenvalues
+[  293.5s] feature 15: random forward
+[  295.1s] feature 15: random eigenvalues (CPU)
+[  295.1s] feature 15: complete
+[  295.1s] feature 16: clean forward
+[  295.9s] feature 16: SAE forward
+[  298.0s] feature 16: SAE eigenvalues
+[  298.0s] feature 16: random forward
+[  299.5s] feature 16: random eigenvalues (CPU)
+[  299.5s] feature 16: complete
+[  299.5s] feature 17: clean forward
+[  300.4s] feature 17: SAE forward
+[  302.6s] feature 17: SAE eigenvalues
+[  302.6s] feature 17: random forward
+[  304.1s] feature 17: random eigenvalues (CPU)
+[  304.1s] feature 17: complete
+[  304.1s] feature 18: clean forward
+[  305.0s] feature 18: SAE forward
+[  307.1s] feature 18: SAE eigenvalues
+[  307.1s] feature 18: random forward
+[  308.6s] feature 18: random eigenvalues (CPU)
+[  308.7s] feature 18: complete
+[  308.7s] feature 19: clean forward
+[  309.6s] feature 19: SAE forward
+[  311.8s] feature 19: SAE eigenvalues
+[  311.8s] feature 19: random forward
+[  313.3s] feature 19: random eigenvalues (CPU)
+[  313.3s] feature 19: complete
+[  313.5s] feature 20: clean forward
+[  314.4s] feature 20: SAE forward
+[  316.5s] feature 20: SAE eigenvalues
+[  316.5s] feature 20: random forward
+[  318.3s] feature 20: random eigenvalues (CPU)
+[  318.3s] feature 20: complete
+[  318.5s] feature 21: clean forward
+[  319.4s] feature 21: SAE forward
+[  321.4s] feature 21: SAE eigenvalues
+[  321.4s] feature 21: random forward
+[  323.1s] feature 21: random eigenvalues (CPU)
+[  323.1s] feature 21: complete
+[  323.1s] feature 22: clean forward
+[  324.0s] feature 22: SAE forward
+[  326.3s] feature 22: SAE eigenvalues
+[  326.3s] feature 22: random forward
+[  327.8s] feature 22: random eigenvalues (CPU)
+[  327.8s] feature 22: complete
+[  327.8s] feature 23: clean forward
+[  328.7s] feature 23: SAE forward
+[  330.9s] feature 23: SAE eigenvalues
+[  330.9s] feature 23: random forward
+[  332.5s] feature 23: random eigenvalues (CPU)
+[  332.5s] feature 23: complete
+[  332.5s] feature 24: clean forward
+[  333.4s] feature 24: SAE forward
+[  335.5s] feature 24: SAE eigenvalues
+[  335.5s] feature 24: random forward
+[  337.0s] feature 24: random eigenvalues (CPU)
+[  337.0s] feature 24: complete
+[  337.0s] feature 25: clean forward
+[  337.8s] feature 25: SAE forward
+[  340.2s] feature 25: SAE eigenvalues
+[  340.2s] feature 25: random forward
+[  341.7s] feature 25: random eigenvalues (CPU)
+[  341.7s] feature 25: complete
+[  341.7s] feature 26: clean forward
+[  342.6s] feature 26: SAE forward
+[  344.7s] feature 26: SAE eigenvalues
+[  344.7s] feature 26: random forward
+[  346.2s] feature 26: random eigenvalues (CPU)
+[  346.2s] feature 26: complete
+[  346.3s] feature 27: clean forward
+[  347.2s] feature 27: SAE forward
+[  350.5s] feature 27: SAE eigenvalues
+[  350.5s] feature 27: random forward
+[  352.1s] feature 27: random eigenvalues (CPU)
+[  352.2s] feature 27: complete
+[  352.2s] feature 28: clean forward
+[  353.1s] feature 28: SAE forward
+[  355.1s] feature 28: SAE eigenvalues
+[  355.1s] feature 28: random forward
+[  356.5s] feature 28: random eigenvalues (CPU)
+[  356.5s] feature 28: complete
+[  356.5s] feature 29: clean forward
+[  357.4s] feature 29: SAE forward
+[  359.5s] feature 29: SAE eigenvalues
+[  359.5s] feature 29: random forward
+[  361.1s] feature 29: random eigenvalues (CPU)
+[  361.1s] feature 29: complete
+[  361.1s] feature 30: clean forward
+[  362.2s] feature 30: SAE forward
+[  364.4s] feature 30: SAE eigenvalues
+[  364.4s] feature 30: random forward
+[  365.9s] feature 30: random eigenvalues (CPU)
+[  365.9s] feature 30: complete
+[  365.9s] feature 31: clean forward
+[  366.8s] feature 31: SAE forward
+[  369.0s] feature 31: SAE eigenvalues
+[  369.0s] feature 31: random forward
+[  370.6s] feature 31: random eigenvalues (CPU)
+[  370.6s] feature 31: complete
+[  370.6s] feature 32: clean forward
+[  371.5s] feature 32: SAE forward
+[  373.6s] feature 32: SAE eigenvalues
+[  373.6s] feature 32: random forward
+[  375.3s] feature 32: random eigenvalues (CPU)
+[  375.3s] feature 32: complete
+[  375.3s] feature 33: clean forward
+[  376.1s] feature 33: SAE forward
+[  378.2s] feature 33: SAE eigenvalues
+[  378.2s] feature 33: random forward
+[  380.6s] feature 33: random eigenvalues (CPU)
+[  380.7s] feature 33: complete
+[  380.7s] feature 34: clean forward
+[  381.6s] feature 34: SAE forward
+[  383.9s] feature 34: SAE eigenvalues
+[  383.9s] feature 34: random forward
+[  385.4s] feature 34: random eigenvalues (CPU)
+[  385.4s] feature 34: complete
+[  385.4s] feature 35: clean forward
+[  386.3s] feature 35: SAE forward
+[  388.4s] feature 35: SAE eigenvalues
+[  388.4s] feature 35: random forward
+[  389.8s] feature 35: random eigenvalues (CPU)
+[  389.8s] feature 35: complete
+[  389.8s] feature 36: clean forward
+[  390.7s] feature 36: SAE forward
+[  392.7s] feature 36: SAE eigenvalues
+[  392.7s] feature 36: random forward
+[  394.3s] feature 36: random eigenvalues (CPU)
+[  394.3s] feature 36: complete
+[  394.3s] feature 37: clean forward
+[  395.2s] feature 37: SAE forward
+[  397.3s] feature 37: SAE eigenvalues
+[  397.3s] feature 37: random forward
+[  398.8s] feature 37: random eigenvalues (CPU)
+[  398.8s] feature 37: complete
+[  398.8s] feature 38: clean forward
+[  399.7s] feature 38: SAE forward
+[  401.9s] feature 38: SAE eigenvalues
+[  401.9s] feature 38: random forward
+[  403.3s] feature 38: random eigenvalues (CPU)
+[  403.5s] feature 38: complete
+[  403.5s] feature 39: clean forward
+[  404.3s] feature 39: SAE forward
+[  406.2s] feature 39: SAE eigenvalues
+[  406.2s] feature 39: random forward
+[  407.6s] feature 39: random eigenvalues (CPU)
+[  407.6s] feature 39: complete
+[  407.6s] feature 40: clean forward
+[  408.5s] feature 40: SAE forward
+[  410.5s] feature 40: SAE eigenvalues
+[  410.5s] feature 40: random forward
+[  412.4s] feature 40: random eigenvalues (CPU)
+[  412.4s] feature 40: complete
+[  412.4s] feature 41: clean forward
+[  413.2s] feature 41: SAE forward
+[  415.3s] feature 41: SAE eigenvalues
+[  415.3s] feature 41: random forward
+[  416.7s] feature 41: random eigenvalues (CPU)
+[  416.7s] feature 41: complete
+[  416.7s] feature 42: clean forward
+[  417.5s] feature 42: SAE forward
+[  419.5s] feature 42: SAE eigenvalues
+[  419.5s] feature 42: random forward
+[  420.9s] feature 42: random eigenvalues (CPU)
+[  420.9s] feature 42: complete
+[  420.9s] feature 43: clean forward
+[  421.8s] feature 43: SAE forward
+[  423.9s] feature 43: SAE eigenvalues
+[  423.9s] feature 43: random forward
+[  425.4s] feature 43: random eigenvalues (CPU)
+[  425.4s] feature 43: complete
+[  425.4s] feature 44: clean forward
+[  426.2s] feature 44: SAE forward
+[  428.4s] feature 44: SAE eigenvalues
+[  428.4s] feature 44: random forward
+[  430.0s] feature 44: random eigenvalues (CPU)
+[  430.1s] feature 44: complete
+[  430.1s] feature 45: clean forward
+[  430.9s] feature 45: SAE forward
+[  433.1s] feature 45: SAE eigenvalues
+[  433.1s] feature 45: random forward
+[  434.5s] feature 45: random eigenvalues (CPU)
+[  434.5s] feature 45: complete
+[  434.5s] feature 46: clean forward
+[  435.4s] feature 46: SAE forward
+[  437.7s] feature 46: SAE eigenvalues
+[  437.8s] feature 46: random forward
+[  439.2s] feature 46: random eigenvalues (CPU)
+[  439.3s] feature 46: complete
+[  439.3s] feature 47: clean forward
+[  440.1s] feature 47: SAE forward
+[  442.8s] feature 47: SAE eigenvalues
+[  442.8s] feature 47: random forward
+[  444.7s] feature 47: random eigenvalues (CPU)
+[  444.7s] feature 47: complete
+[  444.7s] feature 48: clean forward
+[  445.6s] feature 48: SAE forward
+[  447.8s] feature 48: SAE eigenvalues
+[  447.8s] feature 48: random forward
+[  449.3s] feature 48: random eigenvalues (CPU)
+[  449.3s] feature 48: complete
+[  449.3s] feature 49: clean forward
+[  450.3s] feature 49: SAE forward
+[  453.3s] feature 49: SAE eigenvalues
+[  453.4s] feature 49: random forward
+[  454.8s] feature 49: random eigenvalues (CPU)
+[  454.9s] feature 49: complete
+[  454.9s] feature 50: clean forward
+[  455.8s] feature 50: SAE forward
+[  457.8s] feature 50: SAE eigenvalues
+[  457.8s] feature 50: random forward
+[  459.3s] feature 50: random eigenvalues (CPU)
+[  459.3s] feature 50: complete
+[  473.2s]   steered 50/300
+[  473.2s] feature 51: clean forward
+[  474.1s] feature 51: SAE forward
+[  476.3s] feature 51: SAE eigenvalues
+[  476.3s] feature 51: random forward
+[  477.7s] feature 51: random eigenvalues (CPU)
+[  477.8s] feature 51: complete
+[  477.8s] feature 52: clean forward
+[  478.7s] feature 52: SAE forward
+[  481.0s] feature 52: SAE eigenvalues
+[  481.0s] feature 52: random forward
+[  482.5s] feature 52: random eigenvalues (CPU)
+[  482.5s] feature 52: complete
+[  482.5s] feature 53: clean forward
+[  483.4s] feature 53: SAE forward
+[  485.9s] feature 53: SAE eigenvalues
+[  485.9s] feature 53: random forward
+[  487.4s] feature 53: random eigenvalues (CPU)
+[  487.5s] feature 53: complete
+[  487.5s] feature 54: clean forward
+[  488.4s] feature 54: SAE forward
+[  490.5s] feature 54: SAE eigenvalues
+[  490.5s] feature 54: random forward
+[  492.1s] feature 54: random eigenvalues (CPU)
+[  492.1s] feature 54: complete
+[  492.1s] feature 55: clean forward
+[  493.0s] feature 55: SAE forward
+[  495.4s] feature 55: SAE eigenvalues
+[  495.4s] feature 55: random forward
+[  497.0s] feature 55: random eigenvalues (CPU)
+[  497.0s] feature 55: complete
+[  497.0s] feature 56: clean forward
+[  497.9s] feature 56: SAE forward
+[  499.9s] feature 56: SAE eigenvalues
+[  499.9s] feature 56: random forward
+[  501.4s] feature 56: random eigenvalues (CPU)
+[  501.4s] feature 56: complete
+[  501.4s] feature 57: clean forward
+[  502.3s] feature 57: SAE forward
+[  504.5s] feature 57: SAE eigenvalues
+[  504.5s] feature 57: random forward
+[  506.1s] feature 57: random eigenvalues (CPU)
+[  506.1s] feature 57: complete
+[  506.1s] feature 58: clean forward
+[  507.1s] feature 58: SAE forward
+[  509.2s] feature 58: SAE eigenvalues
+[  509.2s] feature 58: random forward
+[  510.9s] feature 58: random eigenvalues (CPU)
+[  510.9s] feature 58: complete
+[  510.9s] feature 59: clean forward
+[  511.7s] feature 59: SAE forward
+[  513.9s] feature 59: SAE eigenvalues
+[  513.9s] feature 59: random forward
+[  515.3s] feature 59: random eigenvalues (CPU)
+[  515.3s] feature 59: complete
+[  515.3s] feature 60: clean forward
+[  516.2s] feature 60: SAE forward
+[  518.4s] feature 60: SAE eigenvalues
+[  518.4s] feature 60: random forward
+[  519.8s] feature 60: random eigenvalues (CPU)
+[  519.9s] feature 60: complete
+[  519.9s] feature 61: clean forward
+[  520.8s] feature 61: SAE forward
+[  522.9s] feature 61: SAE eigenvalues
+[  522.9s] feature 61: random forward
+[  524.4s] feature 61: random eigenvalues (CPU)
+[  524.4s] feature 61: complete
+[  524.4s] feature 62: clean forward
+[  525.3s] feature 62: SAE forward
+[  527.3s] feature 62: SAE eigenvalues
+[  527.3s] feature 62: random forward
+[  528.9s] feature 62: random eigenvalues (CPU)
+[  528.9s] feature 62: complete
+[  528.9s] feature 63: clean forward
+[  529.8s] feature 63: SAE forward
+[  531.9s] feature 63: SAE eigenvalues
+[  531.9s] feature 63: random forward
+[  533.4s] feature 63: random eigenvalues (CPU)
+[  533.4s] feature 63: complete
+[  533.4s] feature 64: clean forward
+[  534.3s] feature 64: SAE forward
+[  536.3s] feature 64: SAE eigenvalues
+[  536.3s] feature 64: random forward
+[  537.8s] feature 64: random eigenvalues (CPU)
+[  537.8s] feature 64: complete
+[  537.8s] feature 65: clean forward
+[  538.7s] feature 65: SAE forward
+[  540.7s] feature 65: SAE eigenvalues
+[  540.7s] feature 65: random forward
+[  542.2s] feature 65: random eigenvalues (CPU)
+[  542.2s] feature 65: complete
+[  542.2s] feature 66: clean forward
+[  543.1s] feature 66: SAE forward
+[  545.3s] feature 66: SAE eigenvalues
+[  545.3s] feature 66: random forward
+[  546.7s] feature 66: random eigenvalues (CPU)
+[  546.8s] feature 66: complete
+[  546.8s] feature 67: clean forward
+[  547.7s] feature 67: SAE forward
+[  549.7s] feature 67: SAE eigenvalues
+[  549.7s] feature 67: random forward
+[  551.2s] feature 67: random eigenvalues (CPU)
+[  551.2s] feature 67: complete
+[  551.3s] feature 68: clean forward
+[  552.1s] feature 68: SAE forward
+[  554.3s] feature 68: SAE eigenvalues
+[  554.3s] feature 68: random forward
+[  555.7s] feature 68: random eigenvalues (CPU)
+[  555.7s] feature 68: complete
+[  555.7s] feature 69: clean forward
+[  556.6s] feature 69: SAE forward
+[  558.8s] feature 69: SAE eigenvalues
+[  558.8s] feature 69: random forward
+[  560.2s] feature 69: random eigenvalues (CPU)
+[  560.2s] feature 69: complete
+[  560.2s] feature 70: clean forward
+[  561.1s] feature 70: SAE forward
+[  563.3s] feature 70: SAE eigenvalues
+[  563.3s] feature 70: random forward
+[  564.8s] feature 70: random eigenvalues (CPU)
+[  564.8s] feature 70: complete
+[  564.8s] feature 71: clean forward
+[  565.7s] feature 71: SAE forward
+[  567.8s] feature 71: SAE eigenvalues
+[  567.8s] feature 71: random forward
+[  569.3s] feature 71: random eigenvalues (CPU)
+[  569.3s] feature 71: complete
+[  569.3s] feature 72: clean forward
+[  570.2s] feature 72: SAE forward
+[  572.3s] feature 72: SAE eigenvalues
+[  572.3s] feature 72: random forward
+[  573.7s] feature 72: random eigenvalues (CPU)
+[  573.7s] feature 72: complete
+[  573.8s] feature 73: clean forward
+[  574.6s] feature 73: SAE forward
+[  576.8s] feature 73: SAE eigenvalues
+[  576.8s] feature 73: random forward
+[  578.3s] feature 73: random eigenvalues (CPU)
+[  578.3s] feature 73: complete
+[  578.3s] feature 74: clean forward
+[  579.2s] feature 74: SAE forward
+[  581.3s] feature 74: SAE eigenvalues
+[  581.3s] feature 74: random forward
+[  582.9s] feature 74: random eigenvalues (CPU)
+[  582.9s] feature 74: complete
+[  583.0s] feature 75: clean forward
+[  583.9s] feature 75: SAE forward
+[  586.0s] feature 75: SAE eigenvalues
+[  586.0s] feature 75: random forward
+[  587.7s] feature 75: random eigenvalues (CPU)
+[  587.7s] feature 75: complete
+[  587.7s] feature 76: clean forward
+[  588.6s] feature 76: SAE forward
+[  590.8s] feature 76: SAE eigenvalues
+[  590.8s] feature 76: random forward
+[  592.2s] feature 76: random eigenvalues (CPU)
+[  592.3s] feature 76: complete
+[  592.3s] feature 77: clean forward
+[  593.2s] feature 77: SAE forward
+[  595.3s] feature 77: SAE eigenvalues
+[  595.3s] feature 77: random forward
+[  596.8s] feature 77: random eigenvalues (CPU)
+[  596.8s] feature 77: complete
+[  596.8s] feature 78: clean forward
+[  597.7s] feature 78: SAE forward
+[  599.8s] feature 78: SAE eigenvalues
+[  599.8s] feature 78: random forward
+[  601.3s] feature 78: random eigenvalues (CPU)
+[  601.4s] feature 78: complete
+[  601.4s] feature 79: clean forward
+[  602.3s] feature 79: SAE forward
+[  604.4s] feature 79: SAE eigenvalues
+[  604.4s] feature 79: random forward
+[  605.9s] feature 79: random eigenvalues (CPU)
+[  605.9s] feature 79: complete
+[  605.9s] feature 80: clean forward
+[  606.8s] feature 80: SAE forward
+[  609.0s] feature 80: SAE eigenvalues
+[  609.0s] feature 80: random forward
+[  610.6s] feature 80: random eigenvalues (CPU)
+[  610.6s] feature 80: complete
+[  610.6s] feature 81: clean forward
+[  611.5s] feature 81: SAE forward
+[  613.7s] feature 81: SAE eigenvalues
+[  613.7s] feature 81: random forward
+[  615.4s] feature 81: random eigenvalues (CPU)
+[  615.4s] feature 81: complete
+[  615.4s] feature 82: clean forward
+[  616.4s] feature 82: SAE forward
+[  618.4s] feature 82: SAE eigenvalues
+[  618.4s] feature 82: random forward
+[  619.8s] feature 82: random eigenvalues (CPU)
+[  619.9s] feature 82: complete
+[  619.9s] feature 83: clean forward
+[  620.8s] feature 83: SAE forward
+[  622.9s] feature 83: SAE eigenvalues
+[  622.9s] feature 83: random forward
+[  624.3s] feature 83: random eigenvalues (CPU)
+[  624.3s] feature 83: complete
+[  624.3s] feature 84: clean forward
+[  625.2s] feature 84: SAE forward
+[  627.3s] feature 84: SAE eigenvalues
+[  627.3s] feature 84: random forward
+[  628.8s] feature 84: random eigenvalues (CPU)
+[  628.8s] feature 84: complete
+[  628.8s] feature 85: clean forward
+[  629.7s] feature 85: SAE forward
+[  631.8s] feature 85: SAE eigenvalues
+[  631.8s] feature 85: random forward
+[  633.2s] feature 85: random eigenvalues (CPU)
+[  633.2s] feature 85: complete
+[  633.2s] feature 86: clean forward
+[  634.1s] feature 86: SAE forward
+[  636.3s] feature 86: SAE eigenvalues
+[  636.3s] feature 86: random forward
+[  637.8s] feature 86: random eigenvalues (CPU)
+[  637.8s] feature 86: complete
+[  637.8s] feature 87: clean forward
+[  638.7s] feature 87: SAE forward
+[  640.8s] feature 87: SAE eigenvalues
+[  640.8s] feature 87: random forward
+[  642.3s] feature 87: random eigenvalues (CPU)
+[  642.3s] feature 87: complete
+[  642.3s] feature 88: clean forward
+[  643.2s] feature 88: SAE forward
+[  645.4s] feature 88: SAE eigenvalues
+[  645.5s] feature 88: random forward
+[  646.9s] feature 88: random eigenvalues (CPU)
+[  647.0s] feature 88: complete
+[  647.0s] feature 89: clean forward
+[  647.8s] feature 89: SAE forward
+[  649.9s] feature 89: SAE eigenvalues
+[  649.9s] feature 89: random forward
+[  651.5s] feature 89: random eigenvalues (CPU)
+[  651.5s] feature 89: complete
+[  651.5s] feature 90: clean forward
+[  652.4s] feature 90: SAE forward
+[  654.4s] feature 90: SAE eigenvalues
+[  654.4s] feature 90: random forward
+[  656.0s] feature 90: random eigenvalues (CPU)
+[  656.0s] feature 90: complete
+[  656.0s] feature 91: clean forward
+[  656.9s] feature 91: SAE forward
+[  659.0s] feature 91: SAE eigenvalues
+[  659.0s] feature 91: random forward
+[  660.5s] feature 91: random eigenvalues (CPU)
+[  660.5s] feature 91: complete
+[  660.5s] feature 92: clean forward
+[  661.4s] feature 92: SAE forward
+[  663.5s] feature 92: SAE eigenvalues
+[  663.5s] feature 92: random forward
+[  665.0s] feature 92: random eigenvalues (CPU)
+[  665.0s] feature 92: complete
+[  665.0s] feature 93: clean forward
+[  665.9s] feature 93: SAE forward
+[  668.1s] feature 93: SAE eigenvalues
+[  668.1s] feature 93: random forward
+[  669.5s] feature 93: random eigenvalues (CPU)
+[  669.6s] feature 93: complete
+[  669.6s] feature 94: clean forward
+[  670.4s] feature 94: SAE forward
+[  672.6s] feature 94: SAE eigenvalues
+[  672.6s] feature 94: random forward
+[  674.2s] feature 94: random eigenvalues (CPU)
+[  674.2s] feature 94: complete
+[  674.2s] feature 95: clean forward
+[  675.1s] feature 95: SAE forward
+[  677.2s] feature 95: SAE eigenvalues
+[  677.2s] feature 95: random forward
+[  678.7s] feature 95: random eigenvalues (CPU)
+[  678.7s] feature 95: complete
+[  678.7s] feature 96: clean forward
+[  679.5s] feature 96: SAE forward
+[  681.6s] feature 96: SAE eigenvalues
+[  681.6s] feature 96: random forward
+[  683.1s] feature 96: random eigenvalues (CPU)
+[  683.2s] feature 96: complete
+[  683.2s] feature 97: clean forward
+[  684.0s] feature 97: SAE forward
+[  686.1s] feature 97: SAE eigenvalues
+[  686.1s] feature 97: random forward
+[  687.6s] feature 97: random eigenvalues (CPU)
+[  687.7s] feature 97: complete
+[  687.7s] feature 98: clean forward
+[  688.5s] feature 98: SAE forward
+[  690.6s] feature 98: SAE eigenvalues
+[  690.6s] feature 98: random forward
+[  692.2s] feature 98: random eigenvalues (CPU)
+[  692.2s] feature 98: complete
+[  692.2s] feature 99: clean forward
+[  693.1s] feature 99: SAE forward
+[  695.2s] feature 99: SAE eigenvalues
+[  695.2s] feature 99: random forward
+[  696.8s] feature 99: random eigenvalues (CPU)
+[  696.8s] feature 99: complete
+[  696.8s] feature 100: clean forward
+[  697.7s] feature 100: SAE forward
+[  699.8s] feature 100: SAE eigenvalues
+[  699.8s] feature 100: random forward
+[  701.4s] feature 100: random eigenvalues (CPU)
+[  701.4s] feature 100: complete
+[  714.4s]   steered 100/300
+[  714.4s] feature 101: clean forward
+[  715.3s] feature 101: SAE forward
+[  717.4s] feature 101: SAE eigenvalues
+[  717.4s] feature 101: random forward
+[  719.0s] feature 101: random eigenvalues (CPU)
+[  719.0s] feature 101: complete
+[  719.0s] feature 102: clean forward
+[  719.9s] feature 102: SAE forward
+[  722.1s] feature 102: SAE eigenvalues
+[  722.1s] feature 102: random forward
+[  723.6s] feature 102: random eigenvalues (CPU)
+[  723.6s] feature 102: complete
+[  723.6s] feature 103: clean forward
+[  724.5s] feature 103: SAE forward
+[  726.6s] feature 103: SAE eigenvalues
+[  726.6s] feature 103: random forward
+[  728.3s] feature 103: random eigenvalues (CPU)
+[  728.3s] feature 103: complete
+[  728.3s] feature 104: clean forward
+[  729.1s] feature 104: SAE forward
+[  731.3s] feature 104: SAE eigenvalues
+[  731.3s] feature 104: random forward
+[  732.7s] feature 104: random eigenvalues (CPU)
+[  732.8s] feature 104: complete
+[  732.8s] feature 105: clean forward
+[  733.6s] feature 105: SAE forward
+[  736.0s] feature 105: SAE eigenvalues
+[  736.0s] feature 105: random forward
+[  737.5s] feature 105: random eigenvalues (CPU)
+[  737.5s] feature 105: complete
+[  737.5s] feature 106: clean forward
+[  738.4s] feature 106: SAE forward
+[  740.5s] feature 106: SAE eigenvalues
+[  740.6s] feature 106: random forward
+[  742.0s] feature 106: random eigenvalues (CPU)
+[  742.1s] feature 106: complete
+[  742.1s] feature 107: clean forward
+[  742.9s] feature 107: SAE forward
+[  745.0s] feature 107: SAE eigenvalues
+[  745.0s] feature 107: random forward
+[  746.5s] feature 107: random eigenvalues (CPU)
+[  746.6s] feature 107: complete
+[  746.6s] feature 108: clean forward
+[  747.5s] feature 108: SAE forward
+[  749.5s] feature 108: SAE eigenvalues
+[  749.5s] feature 108: random forward
+[  751.1s] feature 108: random eigenvalues (CPU)
+[  751.1s] feature 108: complete
+[  751.1s] feature 109: clean forward
+[  752.0s] feature 109: SAE forward
+[  754.0s] feature 109: SAE eigenvalues
+[  754.0s] feature 109: random forward
+[  755.5s] feature 109: random eigenvalues (CPU)
+[  755.5s] feature 109: complete
+[  755.5s] feature 110: clean forward
+[  756.4s] feature 110: SAE forward
+[  758.5s] feature 110: SAE eigenvalues
+[  758.5s] feature 110: random forward
+[  760.0s] feature 110: random eigenvalues (CPU)
+[  760.0s] feature 110: complete
+[  760.0s] feature 111: clean forward
+[  760.9s] feature 111: SAE forward
+[  763.1s] feature 111: SAE eigenvalues
+[  763.1s] feature 111: random forward
+[  764.5s] feature 111: random eigenvalues (CPU)
+[  764.6s] feature 111: complete
+[  764.6s] feature 112: clean forward
+[  765.5s] feature 112: SAE forward
+[  767.7s] feature 112: SAE eigenvalues
+[  767.7s] feature 112: random forward
+[  769.2s] feature 112: random eigenvalues (CPU)
+[  769.2s] feature 112: complete
+[  769.2s] feature 113: clean forward
+[  770.1s] feature 113: SAE forward
+[  772.3s] feature 113: SAE eigenvalues
+[  772.3s] feature 113: random forward
+[  773.8s] feature 113: random eigenvalues (CPU)
+[  773.8s] feature 113: complete
+[  773.8s] feature 114: clean forward
+[  774.7s] feature 114: SAE forward
+[  776.9s] feature 114: SAE eigenvalues
+[  776.9s] feature 114: random forward
+[  778.3s] feature 114: random eigenvalues (CPU)
+[  778.4s] feature 114: complete
+[  778.4s] feature 115: clean forward
+[  779.2s] feature 115: SAE forward
+[  781.3s] feature 115: SAE eigenvalues
+[  781.3s] feature 115: random forward
+[  782.8s] feature 115: random eigenvalues (CPU)
+[  782.8s] feature 115: complete
+[  782.8s] feature 116: clean forward
+[  783.7s] feature 116: SAE forward
+[  785.8s] feature 116: SAE eigenvalues
+[  785.8s] feature 116: random forward
+[  787.2s] feature 116: random eigenvalues (CPU)
+[  787.3s] feature 116: complete
+[  787.3s] feature 117: clean forward
+[  788.2s] feature 117: SAE forward
+[  790.3s] feature 117: SAE eigenvalues
+[  790.3s] feature 117: random forward
+[  791.8s] feature 117: random eigenvalues (CPU)
+[  791.8s] feature 117: complete
+[  791.8s] feature 118: clean forward
+[  792.8s] feature 118: SAE forward
+[  794.9s] feature 118: SAE eigenvalues
+[  794.9s] feature 118: random forward
+[  796.4s] feature 118: random eigenvalues (CPU)
+[  796.4s] feature 118: complete
+[  796.4s] feature 119: clean forward
+[  797.3s] feature 119: SAE forward
+[  799.4s] feature 119: SAE eigenvalues
+[  799.4s] feature 119: random forward
+[  800.9s] feature 119: random eigenvalues (CPU)
+[  801.0s] feature 119: complete
+[  801.0s] feature 120: clean forward
+[  801.8s] feature 120: SAE forward
+[  803.9s] feature 120: SAE eigenvalues
+[  803.9s] feature 120: random forward
+[  805.4s] feature 120: random eigenvalues (CPU)
+[  805.4s] feature 120: complete
+[  805.4s] feature 121: clean forward
+[  806.2s] feature 121: SAE forward
+[  808.3s] feature 121: SAE eigenvalues
+[  808.4s] feature 121: random forward
+[  809.8s] feature 121: random eigenvalues (CPU)
+[  809.9s] feature 121: complete
+[  809.9s] feature 122: clean forward
+[  810.7s] feature 122: SAE forward
+[  812.9s] feature 122: SAE eigenvalues
+[  812.9s] feature 122: random forward
+[  814.4s] feature 122: random eigenvalues (CPU)
+[  814.5s] feature 122: complete
+[  814.5s] feature 123: clean forward
+[  815.4s] feature 123: SAE forward
+[  817.9s] feature 123: SAE eigenvalues
+[  817.9s] feature 123: random forward
+[  819.3s] feature 123: random eigenvalues (CPU)
+[  819.4s] feature 123: complete
+[  819.4s] feature 124: clean forward
+[  820.3s] feature 124: SAE forward
+[  822.4s] feature 124: SAE eigenvalues
+[  822.4s] feature 124: random forward
+[  823.9s] feature 124: random eigenvalues (CPU)
+[  823.9s] feature 124: complete
+[  823.9s] feature 125: clean forward
+[  824.8s] feature 125: SAE forward
+[  826.9s] feature 125: SAE eigenvalues
+[  826.9s] feature 125: random forward
+[  828.4s] feature 125: random eigenvalues (CPU)
+[  828.4s] feature 125: complete
+[  828.4s] feature 126: clean forward
+[  829.3s] feature 126: SAE forward
+[  831.4s] feature 126: SAE eigenvalues
+[  831.5s] feature 126: random forward
+[  833.0s] feature 126: random eigenvalues (CPU)
+[  833.0s] feature 126: complete
+[  833.0s] feature 127: clean forward
+[  833.9s] feature 127: SAE forward
+[  836.1s] feature 127: SAE eigenvalues
+[  836.1s] feature 127: random forward
+[  837.6s] feature 127: random eigenvalues (CPU)
+[  837.6s] feature 127: complete
+[  837.6s] feature 128: clean forward
+[  838.5s] feature 128: SAE forward
+[  840.6s] feature 128: SAE eigenvalues
+[  840.6s] feature 128: random forward
+[  842.1s] feature 128: random eigenvalues (CPU)
+[  842.1s] feature 128: complete
+[  842.1s] feature 129: clean forward
+[  843.0s] feature 129: SAE forward
+[  845.1s] feature 129: SAE eigenvalues
+[  845.1s] feature 129: random forward
+[  846.6s] feature 129: random eigenvalues (CPU)
+[  846.6s] feature 129: complete
+[  846.6s] feature 130: clean forward
+[  847.5s] feature 130: SAE forward
+[  849.6s] feature 130: SAE eigenvalues
+[  849.6s] feature 130: random forward
+[  851.1s] feature 130: random eigenvalues (CPU)
+[  851.1s] feature 130: complete
+[  851.1s] feature 131: clean forward
+[  852.0s] feature 131: SAE forward
+[  854.1s] feature 131: SAE eigenvalues
+[  854.1s] feature 131: random forward
+[  855.6s] feature 131: random eigenvalues (CPU)
+[  855.6s] feature 131: complete
+[  855.6s] feature 132: clean forward
+[  856.5s] feature 132: SAE forward
+[  858.6s] feature 132: SAE eigenvalues
+[  858.6s] feature 132: random forward
+[  860.2s] feature 132: random eigenvalues (CPU)
+[  860.3s] feature 132: complete
+[  860.3s] feature 133: clean forward
+[  861.2s] feature 133: SAE forward
+[  863.3s] feature 133: SAE eigenvalues
+[  863.3s] feature 133: random forward
+[  864.8s] feature 133: random eigenvalues (CPU)
+[  864.8s] feature 133: complete
+[  864.8s] feature 134: clean forward
+[  865.7s] feature 134: SAE forward
+[  867.8s] feature 134: SAE eigenvalues
+[  867.8s] feature 134: random forward
+[  869.3s] feature 134: random eigenvalues (CPU)
+[  869.3s] feature 134: complete
+[  869.3s] feature 135: clean forward
+[  870.2s] feature 135: SAE forward
+[  872.3s] feature 135: SAE eigenvalues
+[  872.3s] feature 135: random forward
+[  873.8s] feature 135: random eigenvalues (CPU)
+[  873.8s] feature 135: complete
+[  873.8s] feature 136: clean forward
+[  874.7s] feature 136: SAE forward
+[  876.8s] feature 136: SAE eigenvalues
+[  876.8s] feature 136: random forward
+[  878.3s] feature 136: random eigenvalues (CPU)
+[  878.3s] feature 136: complete
+[  878.3s] feature 137: clean forward
+[  879.2s] feature 137: SAE forward
+[  881.3s] feature 137: SAE eigenvalues
+[  881.3s] feature 137: random forward
+[  882.8s] feature 137: random eigenvalues (CPU)
+[  882.8s] feature 137: complete
+[  882.8s] feature 138: clean forward
+[  883.7s] feature 138: SAE forward
+[  885.8s] feature 138: SAE eigenvalues
+[  885.8s] feature 138: random forward
+[  887.3s] feature 138: random eigenvalues (CPU)
+[  887.4s] feature 138: complete
+[  887.4s] feature 139: clean forward
+[  888.3s] feature 139: SAE forward
+[  890.5s] feature 139: SAE eigenvalues
+[  890.5s] feature 139: random forward
+[  892.0s] feature 139: random eigenvalues (CPU)
+[  892.0s] feature 139: complete
+[  892.0s] feature 140: clean forward
+[  892.9s] feature 140: SAE forward
+[  895.0s] feature 140: SAE eigenvalues
+[  895.0s] feature 140: random forward
+[  896.5s] feature 140: random eigenvalues (CPU)
+[  896.5s] feature 140: complete
+[  896.5s] feature 141: clean forward
+[  897.4s] feature 141: SAE forward
+[  899.6s] feature 141: SAE eigenvalues
+[  899.6s] feature 141: random forward
+[  901.1s] feature 141: random eigenvalues (CPU)
+[  901.1s] feature 141: complete
+[  901.1s] feature 142: clean forward
+[  902.0s] feature 142: SAE forward
+[  904.0s] feature 142: SAE eigenvalues
+[  904.0s] feature 142: random forward
+[  905.5s] feature 142: random eigenvalues (CPU)
+[  905.5s] feature 142: complete
+[  905.5s] feature 143: clean forward
+[  906.4s] feature 143: SAE forward
+[  908.4s] feature 143: SAE eigenvalues
+[  908.4s] feature 143: random forward
+[  909.9s] feature 143: random eigenvalues (CPU)
+[  909.9s] feature 143: complete
+[  909.9s] feature 144: clean forward
+[  910.7s] feature 144: SAE forward
+[  912.9s] feature 144: SAE eigenvalues
+[  912.9s] feature 144: random forward
+[  914.4s] feature 144: random eigenvalues (CPU)
+[  914.4s] feature 144: complete
+[  914.4s] feature 145: clean forward
+[  915.3s] feature 145: SAE forward
+[  917.4s] feature 145: SAE eigenvalues
+[  917.4s] feature 145: random forward
+[  919.1s] feature 145: random eigenvalues (CPU)
+[  919.2s] feature 145: complete
+[  919.2s] feature 146: clean forward
+[  920.0s] feature 146: SAE forward
+[  922.1s] feature 146: SAE eigenvalues
+[  922.1s] feature 146: random forward
+[  923.6s] feature 146: random eigenvalues (CPU)
+[  923.6s] feature 146: complete
+[  923.6s] feature 147: clean forward
+[  924.5s] feature 147: SAE forward
+[  926.6s] feature 147: SAE eigenvalues
+[  926.6s] feature 147: random forward
+[  928.0s] feature 147: random eigenvalues (CPU)
+[  928.1s] feature 147: complete
+[  928.2s] feature 148: clean forward
+[  929.0s] feature 148: SAE forward
+[  931.2s] feature 148: SAE eigenvalues
+[  931.2s] feature 148: random forward
+[  932.6s] feature 148: random eigenvalues (CPU)
+[  932.7s] feature 148: complete
+[  932.7s] feature 149: clean forward
+[  933.5s] feature 149: SAE forward
+[  935.7s] feature 149: SAE eigenvalues
+[  935.7s] feature 149: random forward
+[  937.2s] feature 149: random eigenvalues (CPU)
+[  937.2s] feature 149: complete
+[  937.2s] feature 150: clean forward
+[  938.1s] feature 150: SAE forward
+[  940.3s] feature 150: SAE eigenvalues
+[  940.3s] feature 150: random forward
+[  941.7s] feature 150: random eigenvalues (CPU)
+[  941.7s] feature 150: complete
+[  960.3s]   steered 150/300
+[  960.3s] feature 151: clean forward
+[  961.2s] feature 151: SAE forward
+[  963.3s] feature 151: SAE eigenvalues
+[  963.3s] feature 151: random forward
+[  964.8s] feature 151: random eigenvalues (CPU)
+[  964.8s] feature 151: complete
+[  964.8s] feature 152: clean forward
+[  965.7s] feature 152: SAE forward
+[  967.8s] feature 152: SAE eigenvalues
+[  967.8s] feature 152: random forward
+[  969.3s] feature 152: random eigenvalues (CPU)
+[  969.3s] feature 152: complete
+[  969.3s] feature 153: clean forward
+[  970.2s] feature 153: SAE forward
+[  972.4s] feature 153: SAE eigenvalues
+[  972.4s] feature 153: random forward
+[  973.9s] feature 153: random eigenvalues (CPU)
+[  973.9s] feature 153: complete
+[  973.9s] feature 154: clean forward
+[  974.7s] feature 154: SAE forward
+[  976.9s] feature 154: SAE eigenvalues
+[  976.9s] feature 154: random forward
+[  978.3s] feature 154: random eigenvalues (CPU)
+[  978.4s] feature 154: complete
+[  978.4s] feature 155: clean forward
+[  979.2s] feature 155: SAE forward
+[  981.3s] feature 155: SAE eigenvalues
+[  981.3s] feature 155: random forward
+[  982.9s] feature 155: random eigenvalues (CPU)
+[  982.9s] feature 155: complete
+[  982.9s] feature 156: clean forward
+[  983.8s] feature 156: SAE forward
+[  985.9s] feature 156: SAE eigenvalues
+[  985.9s] feature 156: random forward
+[  987.4s] feature 156: random eigenvalues (CPU)
+[  987.4s] feature 156: complete
+[  987.4s] feature 157: clean forward
+[  988.3s] feature 157: SAE forward
+[  990.4s] feature 157: SAE eigenvalues
+[  990.4s] feature 157: random forward
+[  991.9s] feature 157: random eigenvalues (CPU)
+[  991.9s] feature 157: complete
+[  991.9s] feature 158: clean forward
+[  992.8s] feature 158: SAE forward
+[  994.9s] feature 158: SAE eigenvalues
+[  994.9s] feature 158: random forward
+[  996.4s] feature 158: random eigenvalues (CPU)
+[  996.4s] feature 158: complete
+[  996.4s] feature 159: clean forward
+[  997.3s] feature 159: SAE forward
+[  999.4s] feature 159: SAE eigenvalues
+[  999.4s] feature 159: random forward
+[ 1000.9s] feature 159: random eigenvalues (CPU)
+[ 1000.9s] feature 159: complete
+[ 1000.9s] feature 160: clean forward
+[ 1001.8s] feature 160: SAE forward
+[ 1003.9s] feature 160: SAE eigenvalues
+[ 1003.9s] feature 160: random forward
+[ 1005.4s] feature 160: random eigenvalues (CPU)
+[ 1005.4s] feature 160: complete
+[ 1005.4s] feature 161: clean forward
+[ 1006.3s] feature 161: SAE forward
+[ 1008.4s] feature 161: SAE eigenvalues
+[ 1008.4s] feature 161: random forward
+[ 1010.0s] feature 161: random eigenvalues (CPU)
+[ 1010.0s] feature 161: complete
+[ 1010.0s] feature 162: clean forward
+[ 1010.8s] feature 162: SAE forward
+[ 1012.9s] feature 162: SAE eigenvalues
+[ 1012.9s] feature 162: random forward
+[ 1014.4s] feature 162: random eigenvalues (CPU)
+[ 1014.4s] feature 162: complete
+[ 1014.4s] feature 163: clean forward
+[ 1015.3s] feature 163: SAE forward
+[ 1017.4s] feature 163: SAE eigenvalues
+[ 1017.5s] feature 163: random forward
+[ 1018.9s] feature 163: random eigenvalues (CPU)
+[ 1018.9s] feature 163: complete
+[ 1019.0s] feature 164: clean forward
+[ 1019.8s] feature 164: SAE forward
+[ 1022.0s] feature 164: SAE eigenvalues
+[ 1022.0s] feature 164: random forward
+[ 1023.5s] feature 164: random eigenvalues (CPU)
+[ 1023.5s] feature 164: complete
+[ 1023.5s] feature 165: clean forward
+[ 1024.4s] feature 165: SAE forward
+[ 1026.5s] feature 165: SAE eigenvalues
+[ 1026.5s] feature 165: random forward
+[ 1028.0s] feature 165: random eigenvalues (CPU)
+[ 1028.0s] feature 165: complete
+[ 1028.0s] feature 166: clean forward
+[ 1028.9s] feature 166: SAE forward
+[ 1031.0s] feature 166: SAE eigenvalues
+[ 1031.1s] feature 166: random forward
+[ 1032.5s] feature 166: random eigenvalues (CPU)
+[ 1032.5s] feature 166: complete
+[ 1032.5s] feature 167: clean forward
+[ 1033.5s] feature 167: SAE forward
+[ 1035.6s] feature 167: SAE eigenvalues
+[ 1035.6s] feature 167: random forward
+[ 1037.1s] feature 167: random eigenvalues (CPU)
+[ 1037.1s] feature 167: complete
+[ 1037.1s] feature 168: clean forward
+[ 1037.9s] feature 168: SAE forward
+[ 1040.1s] feature 168: SAE eigenvalues
+[ 1040.1s] feature 168: random forward
+[ 1041.5s] feature 168: random eigenvalues (CPU)
+[ 1041.5s] feature 168: complete
+[ 1041.5s] feature 169: clean forward
+[ 1042.4s] feature 169: SAE forward
+[ 1044.5s] feature 169: SAE eigenvalues
+[ 1044.5s] feature 169: random forward
+[ 1046.0s] feature 169: random eigenvalues (CPU)
+[ 1046.1s] feature 169: complete
+[ 1046.1s] feature 170: clean forward
+[ 1046.9s] feature 170: SAE forward
+[ 1049.0s] feature 170: SAE eigenvalues
+[ 1049.0s] feature 170: random forward
+[ 1050.5s] feature 170: random eigenvalues (CPU)
+[ 1050.5s] feature 170: complete
+[ 1050.5s] feature 171: clean forward
+[ 1051.4s] feature 171: SAE forward
+[ 1053.5s] feature 171: SAE eigenvalues
+[ 1053.5s] feature 171: random forward
+[ 1055.0s] feature 171: random eigenvalues (CPU)
+[ 1055.0s] feature 171: complete
+[ 1055.0s] feature 172: clean forward
+[ 1055.9s] feature 172: SAE forward
+[ 1058.0s] feature 172: SAE eigenvalues
+[ 1058.0s] feature 172: random forward
+[ 1059.5s] feature 172: random eigenvalues (CPU)
+[ 1059.5s] feature 172: complete
+[ 1059.5s] feature 173: clean forward
+[ 1060.4s] feature 173: SAE forward
+[ 1062.5s] feature 173: SAE eigenvalues
+[ 1062.5s] feature 173: random forward
+[ 1064.0s] feature 173: random eigenvalues (CPU)
+[ 1064.0s] feature 173: complete
+[ 1064.0s] feature 174: clean forward
+[ 1064.9s] feature 174: SAE forward
+[ 1067.0s] feature 174: SAE eigenvalues
+[ 1067.0s] feature 174: random forward
+[ 1068.5s] feature 174: random eigenvalues (CPU)
+[ 1068.5s] feature 174: complete
+[ 1068.5s] feature 175: clean forward
+[ 1069.4s] feature 175: SAE forward
+[ 1071.6s] feature 175: SAE eigenvalues
+[ 1071.6s] feature 175: random forward
+[ 1073.1s] feature 175: random eigenvalues (CPU)
+[ 1073.1s] feature 175: complete
+[ 1073.1s] feature 176: clean forward
+[ 1074.0s] feature 176: SAE forward
+[ 1076.1s] feature 176: SAE eigenvalues
+[ 1076.1s] feature 176: random forward
+[ 1077.6s] feature 176: random eigenvalues (CPU)
+[ 1077.6s] feature 176: complete
+[ 1077.6s] feature 177: clean forward
+[ 1078.4s] feature 177: SAE forward
+[ 1080.6s] feature 177: SAE eigenvalues
+[ 1080.6s] feature 177: random forward
+[ 1082.1s] feature 177: random eigenvalues (CPU)
+[ 1082.1s] feature 177: complete
+[ 1082.1s] feature 178: clean forward
+[ 1083.0s] feature 178: SAE forward
+[ 1085.1s] feature 178: SAE eigenvalues
+[ 1085.1s] feature 178: random forward
+[ 1086.6s] feature 178: random eigenvalues (CPU)
+[ 1086.6s] feature 178: complete
+[ 1086.6s] feature 179: clean forward
+[ 1087.5s] feature 179: SAE forward
+[ 1089.6s] feature 179: SAE eigenvalues
+[ 1089.6s] feature 179: random forward
+[ 1091.1s] feature 179: random eigenvalues (CPU)
+[ 1091.1s] feature 179: complete
+[ 1091.1s] feature 180: clean forward
+[ 1092.0s] feature 180: SAE forward
+[ 1094.1s] feature 180: SAE eigenvalues
+[ 1094.1s] feature 180: random forward
+[ 1095.6s] feature 180: random eigenvalues (CPU)
+[ 1095.6s] feature 180: complete
+[ 1095.6s] feature 181: clean forward
+[ 1096.5s] feature 181: SAE forward
+[ 1098.6s] feature 181: SAE eigenvalues
+[ 1098.6s] feature 181: random forward
+[ 1100.1s] feature 181: random eigenvalues (CPU)
+[ 1100.1s] feature 181: complete
+[ 1100.1s] feature 182: clean forward
+[ 1101.0s] feature 182: SAE forward
+[ 1103.1s] feature 182: SAE eigenvalues
+[ 1103.1s] feature 182: random forward
+[ 1104.6s] feature 182: random eigenvalues (CPU)
+[ 1104.6s] feature 182: complete
+[ 1104.6s] feature 183: clean forward
+[ 1105.5s] feature 183: SAE forward
+[ 1107.6s] feature 183: SAE eigenvalues
+[ 1107.6s] feature 183: random forward
+[ 1109.1s] feature 183: random eigenvalues (CPU)
+[ 1109.1s] feature 183: complete
+[ 1109.1s] feature 184: clean forward
+[ 1110.0s] feature 184: SAE forward
+[ 1112.1s] feature 184: SAE eigenvalues
+[ 1112.1s] feature 184: random forward
+[ 1113.6s] feature 184: random eigenvalues (CPU)
+[ 1113.6s] feature 184: complete
+[ 1113.6s] feature 185: clean forward
+[ 1114.5s] feature 185: SAE forward
+[ 1116.6s] feature 185: SAE eigenvalues
+[ 1116.6s] feature 185: random forward
+[ 1118.1s] feature 185: random eigenvalues (CPU)
+[ 1118.1s] feature 185: complete
+[ 1118.1s] feature 186: clean forward
+[ 1119.0s] feature 186: SAE forward
+[ 1121.1s] feature 186: SAE eigenvalues
+[ 1121.1s] feature 186: random forward
+[ 1122.6s] feature 186: random eigenvalues (CPU)
+[ 1122.6s] feature 186: complete
+[ 1122.7s] feature 187: clean forward
+[ 1123.5s] feature 187: SAE forward
+[ 1125.6s] feature 187: SAE eigenvalues
+[ 1125.6s] feature 187: random forward
+[ 1127.1s] feature 187: random eigenvalues (CPU)
+[ 1127.1s] feature 187: complete
+[ 1127.1s] feature 188: clean forward
+[ 1128.0s] feature 188: SAE forward
+[ 1130.0s] feature 188: SAE eigenvalues
+[ 1130.0s] feature 188: random forward
+[ 1131.5s] feature 188: random eigenvalues (CPU)
+[ 1131.6s] feature 188: complete
+[ 1131.6s] feature 189: clean forward
+[ 1132.4s] feature 189: SAE forward
+[ 1134.5s] feature 189: SAE eigenvalues
+[ 1134.5s] feature 189: random forward
+[ 1136.0s] feature 189: random eigenvalues (CPU)
+[ 1136.0s] feature 189: complete
+[ 1136.0s] feature 190: clean forward
+[ 1136.9s] feature 190: SAE forward
+[ 1139.0s] feature 190: SAE eigenvalues
+[ 1139.0s] feature 190: random forward
+[ 1140.4s] feature 190: random eigenvalues (CPU)
+[ 1140.5s] feature 190: complete
+[ 1140.5s] feature 191: clean forward
+[ 1141.3s] feature 191: SAE forward
+[ 1143.4s] feature 191: SAE eigenvalues
+[ 1143.4s] feature 191: random forward
+[ 1144.9s] feature 191: random eigenvalues (CPU)
+[ 1144.9s] feature 191: complete
+[ 1144.9s] feature 192: clean forward
+[ 1145.7s] feature 192: SAE forward
+[ 1147.8s] feature 192: SAE eigenvalues
+[ 1147.8s] feature 192: random forward
+[ 1149.3s] feature 192: random eigenvalues (CPU)
+[ 1149.3s] feature 192: complete
+[ 1149.3s] feature 193: clean forward
+[ 1150.2s] feature 193: SAE forward
+[ 1152.2s] feature 193: SAE eigenvalues
+[ 1152.3s] feature 193: random forward
+[ 1153.7s] feature 193: random eigenvalues (CPU)
+[ 1153.7s] feature 193: complete
+[ 1153.7s] feature 194: clean forward
+[ 1154.6s] feature 194: SAE forward
+[ 1156.7s] feature 194: SAE eigenvalues
+[ 1156.7s] feature 194: random forward
+[ 1158.1s] feature 194: random eigenvalues (CPU)
+[ 1158.2s] feature 194: complete
+[ 1158.2s] feature 195: clean forward
+[ 1159.0s] feature 195: SAE forward
+[ 1161.1s] feature 195: SAE eigenvalues
+[ 1161.1s] feature 195: random forward
+[ 1162.6s] feature 195: random eigenvalues (CPU)
+[ 1162.6s] feature 195: complete
+[ 1162.6s] feature 196: clean forward
+[ 1163.5s] feature 196: SAE forward
+[ 1165.6s] feature 196: SAE eigenvalues
+[ 1165.6s] feature 196: random forward
+[ 1167.1s] feature 196: random eigenvalues (CPU)
+[ 1167.1s] feature 196: complete
+[ 1167.1s] feature 197: clean forward
+[ 1168.0s] feature 197: SAE forward
+[ 1170.1s] feature 197: SAE eigenvalues
+[ 1170.1s] feature 197: random forward
+[ 1171.6s] feature 197: random eigenvalues (CPU)
+[ 1171.6s] feature 197: complete
+[ 1171.6s] feature 198: clean forward
+[ 1172.5s] feature 198: SAE forward
+[ 1174.6s] feature 198: SAE eigenvalues
+[ 1174.6s] feature 198: random forward
+[ 1176.1s] feature 198: random eigenvalues (CPU)
+[ 1176.1s] feature 198: complete
+[ 1176.1s] feature 199: clean forward
+[ 1177.0s] feature 199: SAE forward
+[ 1179.1s] feature 199: SAE eigenvalues
+[ 1179.1s] feature 199: random forward
+[ 1180.5s] feature 199: random eigenvalues (CPU)
+[ 1180.5s] feature 199: complete
+[ 1180.5s] feature 200: clean forward
+[ 1181.4s] feature 200: SAE forward
+[ 1183.6s] feature 200: SAE eigenvalues
+[ 1183.6s] feature 200: random forward
+[ 1185.1s] feature 200: random eigenvalues (CPU)
+[ 1185.1s] feature 200: complete
+[ 1206.5s]   steered 200/300
+[ 1206.5s] feature 201: clean forward
+[ 1207.4s] feature 201: SAE forward
+[ 1209.6s] feature 201: SAE eigenvalues
+[ 1209.6s] feature 201: random forward
+[ 1211.1s] feature 201: random eigenvalues (CPU)
+[ 1211.1s] feature 201: complete
+[ 1211.1s] feature 202: clean forward
+[ 1212.0s] feature 202: SAE forward
+[ 1214.2s] feature 202: SAE eigenvalues
+[ 1214.2s] feature 202: random forward
+[ 1215.6s] feature 202: random eigenvalues (CPU)
+[ 1215.7s] feature 202: complete
+[ 1215.7s] feature 203: clean forward
+[ 1216.5s] feature 203: SAE forward
+[ 1218.6s] feature 203: SAE eigenvalues
+[ 1218.7s] feature 203: random forward
+[ 1220.2s] feature 203: random eigenvalues (CPU)
+[ 1220.2s] feature 203: complete
+[ 1220.2s] feature 204: clean forward
+[ 1221.1s] feature 204: SAE forward
+[ 1223.3s] feature 204: SAE eigenvalues
+[ 1223.3s] feature 204: random forward
+[ 1224.8s] feature 204: random eigenvalues (CPU)
+[ 1224.8s] feature 204: complete
+[ 1224.8s] feature 205: clean forward
+[ 1225.7s] feature 205: SAE forward
+[ 1227.8s] feature 205: SAE eigenvalues
+[ 1227.8s] feature 205: random forward
+[ 1229.3s] feature 205: random eigenvalues (CPU)
+[ 1229.3s] feature 205: complete
+[ 1229.3s] feature 206: clean forward
+[ 1230.2s] feature 206: SAE forward
+[ 1232.2s] feature 206: SAE eigenvalues
+[ 1232.2s] feature 206: random forward
+[ 1233.8s] feature 206: random eigenvalues (CPU)
+[ 1233.8s] feature 206: complete
+[ 1233.8s] feature 207: clean forward
+[ 1234.6s] feature 207: SAE forward
+[ 1236.7s] feature 207: SAE eigenvalues
+[ 1236.7s] feature 207: random forward
+[ 1238.2s] feature 207: random eigenvalues (CPU)
+[ 1238.2s] feature 207: complete
+[ 1238.2s] feature 208: clean forward
+[ 1239.1s] feature 208: SAE forward
+[ 1241.2s] feature 208: SAE eigenvalues
+[ 1241.2s] feature 208: random forward
+[ 1242.7s] feature 208: random eigenvalues (CPU)
+[ 1242.7s] feature 208: complete
+[ 1242.7s] feature 209: clean forward
+[ 1243.5s] feature 209: SAE forward
+[ 1245.7s] feature 209: SAE eigenvalues
+[ 1245.7s] feature 209: random forward
+[ 1247.2s] feature 209: random eigenvalues (CPU)
+[ 1247.2s] feature 209: complete
+[ 1247.2s] feature 210: clean forward
+[ 1248.1s] feature 210: SAE forward
+[ 1250.2s] feature 210: SAE eigenvalues
+[ 1250.2s] feature 210: random forward
+[ 1251.7s] feature 210: random eigenvalues (CPU)
+[ 1251.7s] feature 210: complete
+[ 1251.7s] feature 211: clean forward
+[ 1252.5s] feature 211: SAE forward
+[ 1254.6s] feature 211: SAE eigenvalues
+[ 1254.6s] feature 211: random forward
+[ 1256.2s] feature 211: random eigenvalues (CPU)
+[ 1256.2s] feature 211: complete
+[ 1256.2s] feature 212: clean forward
+[ 1257.1s] feature 212: SAE forward
+[ 1259.1s] feature 212: SAE eigenvalues
+[ 1259.2s] feature 212: random forward
+[ 1260.6s] feature 212: random eigenvalues (CPU)
+[ 1260.6s] feature 212: complete
+[ 1260.6s] feature 213: clean forward
+[ 1261.5s] feature 213: SAE forward
+[ 1263.6s] feature 213: SAE eigenvalues
+[ 1263.6s] feature 213: random forward
+[ 1265.1s] feature 213: random eigenvalues (CPU)
+[ 1265.1s] feature 213: complete
+[ 1265.1s] feature 214: clean forward
+[ 1266.0s] feature 214: SAE forward
+[ 1268.2s] feature 214: SAE eigenvalues
+[ 1268.2s] feature 214: random forward
+[ 1269.7s] feature 214: random eigenvalues (CPU)
+[ 1269.7s] feature 214: complete
+[ 1269.7s] feature 215: clean forward
+[ 1270.6s] feature 215: SAE forward
+[ 1272.7s] feature 215: SAE eigenvalues
+[ 1272.7s] feature 215: random forward
+[ 1274.2s] feature 215: random eigenvalues (CPU)
+[ 1274.2s] feature 215: complete
+[ 1274.2s] feature 216: clean forward
+[ 1275.1s] feature 216: SAE forward
+[ 1277.2s] feature 216: SAE eigenvalues
+[ 1277.2s] feature 216: random forward
+[ 1278.7s] feature 216: random eigenvalues (CPU)
+[ 1278.7s] feature 216: complete
+[ 1278.7s] feature 217: clean forward
+[ 1279.6s] feature 217: SAE forward
+[ 1281.7s] feature 217: SAE eigenvalues
+[ 1281.7s] feature 217: random forward
+[ 1283.2s] feature 217: random eigenvalues (CPU)
+[ 1283.2s] feature 217: complete
+[ 1283.2s] feature 218: clean forward
+[ 1284.1s] feature 218: SAE forward
+[ 1286.2s] feature 218: SAE eigenvalues
+[ 1286.2s] feature 218: random forward
+[ 1287.8s] feature 218: random eigenvalues (CPU)
+[ 1287.8s] feature 218: complete
+[ 1287.8s] feature 219: clean forward
+[ 1288.7s] feature 219: SAE forward
+[ 1290.8s] feature 219: SAE eigenvalues
+[ 1290.8s] feature 219: random forward
+[ 1292.2s] feature 219: random eigenvalues (CPU)
+[ 1292.2s] feature 219: complete
+[ 1292.3s] feature 220: clean forward
+[ 1293.1s] feature 220: SAE forward
+[ 1295.3s] feature 220: SAE eigenvalues
+[ 1295.3s] feature 220: random forward
+[ 1296.7s] feature 220: random eigenvalues (CPU)
+[ 1296.8s] feature 220: complete
+[ 1296.8s] feature 221: clean forward
+[ 1297.6s] feature 221: SAE forward
+[ 1299.8s] feature 221: SAE eigenvalues
+[ 1299.8s] feature 221: random forward
+[ 1301.2s] feature 221: random eigenvalues (CPU)
+[ 1301.3s] feature 221: complete
+[ 1301.3s] feature 222: clean forward
+[ 1302.1s] feature 222: SAE forward
+[ 1304.3s] feature 222: SAE eigenvalues
+[ 1304.3s] feature 222: random forward
+[ 1305.8s] feature 222: random eigenvalues (CPU)
+[ 1305.8s] feature 222: complete
+[ 1305.8s] feature 223: clean forward
+[ 1306.7s] feature 223: SAE forward
+[ 1308.8s] feature 223: SAE eigenvalues
+[ 1308.8s] feature 223: random forward
+[ 1310.3s] feature 223: random eigenvalues (CPU)
+[ 1310.4s] feature 223: complete
+[ 1310.4s] feature 224: clean forward
+[ 1311.2s] feature 224: SAE forward
+[ 1313.3s] feature 224: SAE eigenvalues
+[ 1313.3s] feature 224: random forward
+[ 1314.8s] feature 224: random eigenvalues (CPU)
+[ 1314.8s] feature 224: complete
+[ 1314.8s] feature 225: clean forward
+[ 1315.7s] feature 225: SAE forward
+[ 1317.8s] feature 225: SAE eigenvalues
+[ 1317.8s] feature 225: random forward
+[ 1319.2s] feature 225: random eigenvalues (CPU)
+[ 1319.2s] feature 225: complete
+[ 1319.2s] feature 226: clean forward
+[ 1320.1s] feature 226: SAE forward
+[ 1322.2s] feature 226: SAE eigenvalues
+[ 1322.2s] feature 226: random forward
+[ 1323.8s] feature 226: random eigenvalues (CPU)
+[ 1323.8s] feature 226: complete
+[ 1323.8s] feature 227: clean forward
+[ 1324.6s] feature 227: SAE forward
+[ 1326.7s] feature 227: SAE eigenvalues
+[ 1326.8s] feature 227: random forward
+[ 1328.2s] feature 227: random eigenvalues (CPU)
+[ 1328.3s] feature 227: complete
+[ 1328.3s] feature 228: clean forward
+[ 1329.1s] feature 228: SAE forward
+[ 1331.2s] feature 228: SAE eigenvalues
+[ 1331.2s] feature 228: random forward
+[ 1332.7s] feature 228: random eigenvalues (CPU)
+[ 1332.8s] feature 228: complete
+[ 1332.8s] feature 229: clean forward
+[ 1333.6s] feature 229: SAE forward
+[ 1335.7s] feature 229: SAE eigenvalues
+[ 1335.7s] feature 229: random forward
+[ 1337.2s] feature 229: random eigenvalues (CPU)
+[ 1337.2s] feature 229: complete
+[ 1337.2s] feature 230: clean forward
+[ 1338.1s] feature 230: SAE forward
+[ 1340.2s] feature 230: SAE eigenvalues
+[ 1340.2s] feature 230: random forward
+[ 1341.7s] feature 230: random eigenvalues (CPU)
+[ 1341.7s] feature 230: complete
+[ 1341.7s] feature 231: clean forward
+[ 1342.6s] feature 231: SAE forward
+[ 1344.8s] feature 231: SAE eigenvalues
+[ 1344.8s] feature 231: random forward
+[ 1346.2s] feature 231: random eigenvalues (CPU)
+[ 1346.3s] feature 231: complete
+[ 1346.3s] feature 232: clean forward
+[ 1347.2s] feature 232: SAE forward
+[ 1349.2s] feature 232: SAE eigenvalues
+[ 1349.3s] feature 232: random forward
+[ 1350.7s] feature 232: random eigenvalues (CPU)
+[ 1350.7s] feature 232: complete
+[ 1350.7s] feature 233: clean forward
+[ 1351.6s] feature 233: SAE forward
+[ 1353.7s] feature 233: SAE eigenvalues
+[ 1353.7s] feature 233: random forward
+[ 1355.2s] feature 233: random eigenvalues (CPU)
+[ 1355.2s] feature 233: complete
+[ 1355.2s] feature 234: clean forward
+[ 1356.1s] feature 234: SAE forward
+[ 1358.2s] feature 234: SAE eigenvalues
+[ 1358.2s] feature 234: random forward
+[ 1359.6s] feature 234: random eigenvalues (CPU)
+[ 1359.6s] feature 234: complete
+[ 1359.7s] feature 235: clean forward
+[ 1360.5s] feature 235: SAE forward
+[ 1362.6s] feature 235: SAE eigenvalues
+[ 1362.6s] feature 235: random forward
+[ 1364.1s] feature 235: random eigenvalues (CPU)
+[ 1364.1s] feature 235: complete
+[ 1364.1s] feature 236: clean forward
+[ 1365.0s] feature 236: SAE forward
+[ 1367.2s] feature 236: SAE eigenvalues
+[ 1367.2s] feature 236: random forward
+[ 1368.7s] feature 236: random eigenvalues (CPU)
+[ 1368.7s] feature 236: complete
+[ 1368.7s] feature 237: clean forward
+[ 1369.6s] feature 237: SAE forward
+[ 1371.7s] feature 237: SAE eigenvalues
+[ 1371.7s] feature 237: random forward
+[ 1373.2s] feature 237: random eigenvalues (CPU)
+[ 1373.2s] feature 237: complete
+[ 1373.2s] feature 238: clean forward
+[ 1374.1s] feature 238: SAE forward
+[ 1376.2s] feature 238: SAE eigenvalues
+[ 1376.2s] feature 238: random forward
+[ 1377.7s] feature 238: random eigenvalues (CPU)
+[ 1377.7s] feature 238: complete
+[ 1377.7s] feature 239: clean forward
+[ 1378.6s] feature 239: SAE forward
+[ 1380.7s] feature 239: SAE eigenvalues
+[ 1380.7s] feature 239: random forward
+[ 1382.2s] feature 239: random eigenvalues (CPU)
+[ 1382.2s] feature 239: complete
+[ 1382.2s] feature 240: clean forward
+[ 1383.1s] feature 240: SAE forward
+[ 1385.2s] feature 240: SAE eigenvalues
+[ 1385.2s] feature 240: random forward
+[ 1386.7s] feature 240: random eigenvalues (CPU)
+[ 1386.8s] feature 240: complete
+[ 1386.8s] feature 241: clean forward
+[ 1387.6s] feature 241: SAE forward
+[ 1389.8s] feature 241: SAE eigenvalues
+[ 1389.8s] feature 241: random forward
+[ 1391.3s] feature 241: random eigenvalues (CPU)
+[ 1391.3s] feature 241: complete
+[ 1391.3s] feature 242: clean forward
+[ 1392.2s] feature 242: SAE forward
+[ 1394.4s] feature 242: SAE eigenvalues
+[ 1394.4s] feature 242: random forward
+[ 1395.9s] feature 242: random eigenvalues (CPU)
+[ 1395.9s] feature 242: complete
+[ 1395.9s] feature 243: clean forward
+[ 1396.8s] feature 243: SAE forward
+[ 1399.0s] feature 243: SAE eigenvalues
+[ 1399.0s] feature 243: random forward
+[ 1400.5s] feature 243: random eigenvalues (CPU)
+[ 1400.5s] feature 243: complete
+[ 1400.5s] feature 244: clean forward
+[ 1401.4s] feature 244: SAE forward
+[ 1403.5s] feature 244: SAE eigenvalues
+[ 1403.5s] feature 244: random forward
+[ 1405.1s] feature 244: random eigenvalues (CPU)
+[ 1405.1s] feature 244: complete
+[ 1405.1s] feature 245: clean forward
+[ 1406.0s] feature 245: SAE forward
+[ 1408.1s] feature 245: SAE eigenvalues
+[ 1408.1s] feature 245: random forward
+[ 1409.7s] feature 245: random eigenvalues (CPU)
+[ 1409.7s] feature 245: complete
+[ 1409.7s] feature 246: clean forward
+[ 1410.6s] feature 246: SAE forward
+[ 1412.7s] feature 246: SAE eigenvalues
+[ 1412.7s] feature 246: random forward
+[ 1414.2s] feature 246: random eigenvalues (CPU)
+[ 1414.2s] feature 246: complete
+[ 1414.2s] feature 247: clean forward
+[ 1415.2s] feature 247: SAE forward
+[ 1417.3s] feature 247: SAE eigenvalues
+[ 1417.3s] feature 247: random forward
+[ 1418.8s] feature 247: random eigenvalues (CPU)
+[ 1418.8s] feature 247: complete
+[ 1418.8s] feature 248: clean forward
+[ 1419.7s] feature 248: SAE forward
+[ 1421.8s] feature 248: SAE eigenvalues
+[ 1421.8s] feature 248: random forward
+[ 1423.3s] feature 248: random eigenvalues (CPU)
+[ 1423.3s] feature 248: complete
+[ 1423.4s] feature 249: clean forward
+[ 1424.2s] feature 249: SAE forward
+[ 1426.4s] feature 249: SAE eigenvalues
+[ 1426.4s] feature 249: random forward
+[ 1427.9s] feature 249: random eigenvalues (CPU)
+[ 1427.9s] feature 249: complete
+[ 1427.9s] feature 250: clean forward
+[ 1428.8s] feature 250: SAE forward
+[ 1431.0s] feature 250: SAE eigenvalues
+[ 1431.0s] feature 250: random forward
+[ 1432.5s] feature 250: random eigenvalues (CPU)
+[ 1432.5s] feature 250: complete
+[ 1459.7s]   steered 250/300
+[ 1459.7s] feature 251: clean forward
+[ 1460.6s] feature 251: SAE forward
+[ 1462.8s] feature 251: SAE eigenvalues
+[ 1462.8s] feature 251: random forward
+[ 1464.4s] feature 251: random eigenvalues (CPU)
+[ 1464.4s] feature 251: complete
+[ 1464.4s] feature 252: clean forward
+[ 1465.3s] feature 252: SAE forward
+[ 1467.4s] feature 252: SAE eigenvalues
+[ 1467.4s] feature 252: random forward
+[ 1469.0s] feature 252: random eigenvalues (CPU)
+[ 1469.0s] feature 252: complete
+[ 1469.0s] feature 253: clean forward
+[ 1469.9s] feature 253: SAE forward
+[ 1472.0s] feature 253: SAE eigenvalues
+[ 1472.0s] feature 253: random forward
+[ 1473.5s] feature 253: random eigenvalues (CPU)
+[ 1473.6s] feature 253: complete
+[ 1473.6s] feature 254: clean forward
+[ 1474.5s] feature 254: SAE forward
+[ 1476.6s] feature 254: SAE eigenvalues
+[ 1476.6s] feature 254: random forward
+[ 1478.1s] feature 254: random eigenvalues (CPU)
+[ 1478.2s] feature 254: complete
+[ 1478.2s] feature 255: clean forward
+[ 1479.0s] feature 255: SAE forward
+[ 1481.1s] feature 255: SAE eigenvalues
+[ 1481.2s] feature 255: random forward
+[ 1482.7s] feature 255: random eigenvalues (CPU)
+[ 1482.7s] feature 255: complete
+[ 1482.7s] feature 256: clean forward
+[ 1483.6s] feature 256: SAE forward
+[ 1485.8s] feature 256: SAE eigenvalues
+[ 1485.8s] feature 256: random forward
+[ 1487.3s] feature 256: random eigenvalues (CPU)
+[ 1487.3s] feature 256: complete
+[ 1487.3s] feature 257: clean forward
+[ 1488.2s] feature 257: SAE forward
+[ 1490.3s] feature 257: SAE eigenvalues
+[ 1490.3s] feature 257: random forward
+[ 1491.9s] feature 257: random eigenvalues (CPU)
+[ 1491.9s] feature 257: complete
+[ 1491.9s] feature 258: clean forward
+[ 1492.8s] feature 258: SAE forward
+[ 1494.9s] feature 258: SAE eigenvalues
+[ 1494.9s] feature 258: random forward
+[ 1496.4s] feature 258: random eigenvalues (CPU)
+[ 1496.4s] feature 258: complete
+[ 1496.4s] feature 259: clean forward
+[ 1497.3s] feature 259: SAE forward
+[ 1499.4s] feature 259: SAE eigenvalues
+[ 1499.4s] feature 259: random forward
+[ 1500.9s] feature 259: random eigenvalues (CPU)
+[ 1500.9s] feature 259: complete
+[ 1500.9s] feature 260: clean forward
+[ 1501.8s] feature 260: SAE forward
+[ 1503.9s] feature 260: SAE eigenvalues
+[ 1503.9s] feature 260: random forward
+[ 1505.4s] feature 260: random eigenvalues (CPU)
+[ 1505.4s] feature 260: complete
+[ 1505.4s] feature 261: clean forward
+[ 1506.3s] feature 261: SAE forward
+[ 1508.5s] feature 261: SAE eigenvalues
+[ 1508.5s] feature 261: random forward
+[ 1510.0s] feature 261: random eigenvalues (CPU)
+[ 1510.0s] feature 261: complete
+[ 1510.0s] feature 262: clean forward
+[ 1510.9s] feature 262: SAE forward
+[ 1513.1s] feature 262: SAE eigenvalues
+[ 1513.1s] feature 262: random forward
+[ 1514.7s] feature 262: random eigenvalues (CPU)
+[ 1514.7s] feature 262: complete
+[ 1514.7s] feature 263: clean forward
+[ 1515.6s] feature 263: SAE forward
+[ 1517.7s] feature 263: SAE eigenvalues
+[ 1517.7s] feature 263: random forward
+[ 1519.2s] feature 263: random eigenvalues (CPU)
+[ 1519.3s] feature 263: complete
+[ 1519.3s] feature 264: clean forward
+[ 1520.1s] feature 264: SAE forward
+[ 1522.2s] feature 264: SAE eigenvalues
+[ 1522.2s] feature 264: random forward
+[ 1523.8s] feature 264: random eigenvalues (CPU)
+[ 1523.8s] feature 264: complete
+[ 1523.8s] feature 265: clean forward
+[ 1524.7s] feature 265: SAE forward
+[ 1526.9s] feature 265: SAE eigenvalues
+[ 1526.9s] feature 265: random forward
+[ 1528.4s] feature 265: random eigenvalues (CPU)
+[ 1528.4s] feature 265: complete
+[ 1528.4s] feature 266: clean forward
+[ 1529.3s] feature 266: SAE forward
+[ 1531.4s] feature 266: SAE eigenvalues
+[ 1531.4s] feature 266: random forward
+[ 1533.0s] feature 266: random eigenvalues (CPU)
+[ 1533.0s] feature 266: complete
+[ 1533.0s] feature 267: clean forward
+[ 1533.9s] feature 267: SAE forward
+[ 1536.0s] feature 267: SAE eigenvalues
+[ 1536.0s] feature 267: random forward
+[ 1537.6s] feature 267: random eigenvalues (CPU)
+[ 1537.6s] feature 267: complete
+[ 1537.6s] feature 268: clean forward
+[ 1538.5s] feature 268: SAE forward
+[ 1540.6s] feature 268: SAE eigenvalues
+[ 1540.6s] feature 268: random forward
+[ 1542.1s] feature 268: random eigenvalues (CPU)
+[ 1542.1s] feature 268: complete
+[ 1542.1s] feature 269: clean forward
+[ 1543.0s] feature 269: SAE forward
+[ 1545.2s] feature 269: SAE eigenvalues
+[ 1545.2s] feature 269: random forward
+[ 1546.7s] feature 269: random eigenvalues (CPU)
+[ 1546.7s] feature 269: complete
+[ 1546.7s] feature 270: clean forward
+[ 1547.6s] feature 270: SAE forward
+[ 1549.8s] feature 270: SAE eigenvalues
+[ 1549.8s] feature 270: random forward
+[ 1551.3s] feature 270: random eigenvalues (CPU)
+[ 1551.4s] feature 270: complete
+[ 1551.4s] feature 271: clean forward
+[ 1552.3s] feature 271: SAE forward
+[ 1554.4s] feature 271: SAE eigenvalues
+[ 1554.4s] feature 271: random forward
+[ 1555.9s] feature 271: random eigenvalues (CPU)
+[ 1555.9s] feature 271: complete
+[ 1555.9s] feature 272: clean forward
+[ 1556.8s] feature 272: SAE forward
+[ 1559.0s] feature 272: SAE eigenvalues
+[ 1559.0s] feature 272: random forward
+[ 1560.5s] feature 272: random eigenvalues (CPU)
+[ 1560.5s] feature 272: complete
+[ 1560.5s] feature 273: clean forward
+[ 1561.4s] feature 273: SAE forward
+[ 1563.5s] feature 273: SAE eigenvalues
+[ 1563.5s] feature 273: random forward
+[ 1565.0s] feature 273: random eigenvalues (CPU)
+[ 1565.0s] feature 273: complete
+[ 1565.0s] feature 274: clean forward
+[ 1565.9s] feature 274: SAE forward
+[ 1568.0s] feature 274: SAE eigenvalues
+[ 1568.0s] feature 274: random forward
+[ 1569.5s] feature 274: random eigenvalues (CPU)
+[ 1569.6s] feature 274: complete
+[ 1569.6s] feature 275: clean forward
+[ 1570.4s] feature 275: SAE forward
+[ 1572.6s] feature 275: SAE eigenvalues
+[ 1572.6s] feature 275: random forward
+[ 1574.1s] feature 275: random eigenvalues (CPU)
+[ 1574.2s] feature 275: complete
+[ 1574.2s] feature 276: clean forward
+[ 1575.0s] feature 276: SAE forward
+[ 1577.2s] feature 276: SAE eigenvalues
+[ 1577.2s] feature 276: random forward
+[ 1578.7s] feature 276: random eigenvalues (CPU)
+[ 1578.7s] feature 276: complete
+[ 1578.7s] feature 277: clean forward
+[ 1579.6s] feature 277: SAE forward
+[ 1581.8s] feature 277: SAE eigenvalues
+[ 1581.8s] feature 277: random forward
+[ 1583.3s] feature 277: random eigenvalues (CPU)
+[ 1583.3s] feature 277: complete
+[ 1583.3s] feature 278: clean forward
+[ 1584.3s] feature 278: SAE forward
+[ 1586.5s] feature 278: SAE eigenvalues
+[ 1586.5s] feature 278: random forward
+[ 1588.0s] feature 278: random eigenvalues (CPU)
+[ 1588.0s] feature 278: complete
+[ 1588.0s] feature 279: clean forward
+[ 1589.0s] feature 279: SAE forward
+[ 1591.2s] feature 279: SAE eigenvalues
+[ 1591.2s] feature 279: random forward
+[ 1592.7s] feature 279: random eigenvalues (CPU)
+[ 1592.7s] feature 279: complete
+[ 1592.7s] feature 280: clean forward
+[ 1593.6s] feature 280: SAE forward
+[ 1595.7s] feature 280: SAE eigenvalues
+[ 1595.7s] feature 280: random forward
+[ 1597.2s] feature 280: random eigenvalues (CPU)
+[ 1597.2s] feature 280: complete
+[ 1597.2s] feature 281: clean forward
+[ 1598.1s] feature 281: SAE forward
+[ 1600.3s] feature 281: SAE eigenvalues
+[ 1600.3s] feature 281: random forward
+[ 1601.7s] feature 281: random eigenvalues (CPU)
+[ 1601.8s] feature 281: complete
+[ 1601.8s] feature 282: clean forward
+[ 1602.6s] feature 282: SAE forward
+[ 1604.7s] feature 282: SAE eigenvalues
+[ 1604.7s] feature 282: random forward
+[ 1606.2s] feature 282: random eigenvalues (CPU)
+[ 1606.2s] feature 282: complete
+[ 1606.2s] feature 283: clean forward
+[ 1607.1s] feature 283: SAE forward
+[ 1609.3s] feature 283: SAE eigenvalues
+[ 1609.3s] feature 283: random forward
+[ 1610.8s] feature 283: random eigenvalues (CPU)
+[ 1610.8s] feature 283: complete
+[ 1610.8s] feature 284: clean forward
+[ 1611.7s] feature 284: SAE forward
+[ 1613.8s] feature 284: SAE eigenvalues
+[ 1613.8s] feature 284: random forward
+[ 1615.3s] feature 284: random eigenvalues (CPU)
+[ 1615.3s] feature 284: complete
+[ 1615.3s] feature 285: clean forward
+[ 1616.1s] feature 285: SAE forward
+[ 1618.3s] feature 285: SAE eigenvalues
+[ 1618.3s] feature 285: random forward
+[ 1619.8s] feature 285: random eigenvalues (CPU)
+[ 1619.8s] feature 285: complete
+[ 1619.8s] feature 286: clean forward
+[ 1620.7s] feature 286: SAE forward
+[ 1622.9s] feature 286: SAE eigenvalues
+[ 1622.9s] feature 286: random forward
+[ 1624.3s] feature 286: random eigenvalues (CPU)
+[ 1624.4s] feature 286: complete
+[ 1624.4s] feature 287: clean forward
+[ 1625.3s] feature 287: SAE forward
+[ 1627.4s] feature 287: SAE eigenvalues
+[ 1627.4s] feature 287: random forward
+[ 1628.9s] feature 287: random eigenvalues (CPU)
+[ 1628.9s] feature 287: complete
+[ 1628.9s] feature 288: clean forward
+[ 1629.8s] feature 288: SAE forward
+[ 1632.0s] feature 288: SAE eigenvalues
+[ 1632.0s] feature 288: random forward
+[ 1633.4s] feature 288: random eigenvalues (CPU)
+[ 1633.5s] feature 288: complete
+[ 1633.5s] feature 289: clean forward
+[ 1634.4s] feature 289: SAE forward
+[ 1636.5s] feature 289: SAE eigenvalues
+[ 1636.5s] feature 289: random forward
+[ 1638.0s] feature 289: random eigenvalues (CPU)
+[ 1638.0s] feature 289: complete
+[ 1638.0s] feature 290: clean forward
+[ 1638.9s] feature 290: SAE forward
+[ 1641.1s] feature 290: SAE eigenvalues
+[ 1641.1s] feature 290: random forward
+[ 1642.6s] feature 290: random eigenvalues (CPU)
+[ 1642.6s] feature 290: complete
+[ 1642.6s] feature 291: clean forward
+[ 1643.5s] feature 291: SAE forward
+[ 1645.6s] feature 291: SAE eigenvalues
+[ 1645.6s] feature 291: random forward
+[ 1647.1s] feature 291: random eigenvalues (CPU)
+[ 1647.2s] feature 291: complete
+[ 1647.2s] feature 292: clean forward
+[ 1648.0s] feature 292: SAE forward
+[ 1650.2s] feature 292: SAE eigenvalues
+[ 1650.2s] feature 292: random forward
+[ 1651.6s] feature 292: random eigenvalues (CPU)
+[ 1651.7s] feature 292: complete
+[ 1651.7s] feature 293: clean forward
+[ 1652.5s] feature 293: SAE forward
+[ 1654.6s] feature 293: SAE eigenvalues
+[ 1654.6s] feature 293: random forward
+[ 1656.1s] feature 293: random eigenvalues (CPU)
+[ 1656.2s] feature 293: complete
+[ 1656.2s] feature 294: clean forward
+[ 1657.0s] feature 294: SAE forward
+[ 1659.2s] feature 294: SAE eigenvalues
+[ 1659.2s] feature 294: random forward
+[ 1660.7s] feature 294: random eigenvalues (CPU)
+[ 1660.7s] feature 294: complete
+[ 1660.7s] feature 295: clean forward
+[ 1661.6s] feature 295: SAE forward
+[ 1663.8s] feature 295: SAE eigenvalues
+[ 1663.8s] feature 295: random forward
+[ 1665.3s] feature 295: random eigenvalues (CPU)
+[ 1665.3s] feature 295: complete
+[ 1665.3s] feature 296: clean forward
+[ 1666.2s] feature 296: SAE forward
+[ 1668.4s] feature 296: SAE eigenvalues
+[ 1668.4s] feature 296: random forward
+[ 1669.9s] feature 296: random eigenvalues (CPU)
+[ 1669.9s] feature 296: complete
+[ 1669.9s] feature 297: clean forward
+[ 1670.8s] feature 297: SAE forward
+[ 1672.9s] feature 297: SAE eigenvalues
+[ 1672.9s] feature 297: random forward
+[ 1674.3s] feature 297: random eigenvalues (CPU)
+[ 1674.4s] feature 297: complete
+[ 1674.4s] feature 298: clean forward
+[ 1675.2s] feature 298: SAE forward
+[ 1677.4s] feature 298: SAE eigenvalues
+[ 1677.4s] feature 298: random forward
+[ 1678.9s] feature 298: random eigenvalues (CPU)
+[ 1678.9s] feature 298: complete
+[ 1678.9s] feature 299: clean forward
+[ 1679.8s] feature 299: SAE forward
+[ 1681.9s] feature 299: SAE eigenvalues
+[ 1681.9s] feature 299: random forward
+[ 1683.3s] feature 299: random eigenvalues (CPU)
+[ 1683.4s] feature 299: complete
+[ 1683.4s] feature 300: clean forward
+[ 1684.2s] feature 300: SAE forward
+[ 1686.4s] feature 300: SAE eigenvalues
+[ 1686.4s] feature 300: random forward
+[ 1687.9s] feature 300: random eigenvalues (CPU)
+[ 1687.9s] feature 300: complete
+[ 1719.0s]   steered 300/300
+[ 1719.0s] steering done
+{
+ "rho_crowding__collateral_raw": 0.2217,
+ "rho_frequency__collateral_raw": 0.1552,
+ "rho_act_mag__collateral_raw": 0.1836,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.182,
+ "rho_crowding__collateral_ctilde": 0.2013,
+ "rho_frequency__collateral_ctilde": 0.1438,
+ "rho_act_mag__collateral_ctilde": 0.1401,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.1831,
+ "crowd_rho_lowfreq_half": 0.1904,
+ "crowd_rho_highfreq_half": 0.2392,
+ "rho_crowding__collateral_raw_nodense": 0.2418,
+ "rho_crowding__resid_delta_norm": 0.1716,
+ "mean_resid_reconstruction_norm_ratio": 1.186,
+ "mean_resid_change_explained_energy": -2.6584
+}
+[ 1749.6s] wrote /tmp/duan_verified_reruns/llama_3_1_8b/per_feature.csv, selection.json, meta.json

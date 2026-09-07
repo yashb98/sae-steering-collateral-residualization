@@ -1,0 +1,50 @@
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "gpt2_small", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.4s] device NVIDIA GB10; loading SAEs
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/sae_lens/saes/sae.py:254: UserWarning: 
+This SAE has non-empty model_from_pretrained_kwargs. 
+For optimal performance, load the model like so:
+model = HookedSAETransformer.from_pretrained_no_processing(..., **cfg.model_from_pretrained_kwargs)
+  warnings.warn(
+[    6.3s] SAEs loaded: primary d_sae=24576 (blocks.8.hook_resid_pre), downstream d_sae=24576 (blocks.10.hook_resid_pre); model_from_pretrained_kwargs={'center_writing_weights': True}; prepend_bos=True
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:193: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+Loading weights:   0%|          | 0/148 [00:00<?, ?it/s]Loading weights: 100%|██████████| 148/148 [00:00<00:00, 8775.69it/s]
+Loaded pretrained model gpt2 into HookedTransformer
+[    8.4s] model loaded: gpt2 d_model=768 n_layers=12 norm=LNPre dtype=float32
+[    8.4s] streaming wikitext-103 train split
+[   15.8s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   16.4s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   22.7s] cached clean final-token activations: prim (2048, 24576) down (2048, 24576); mean L0 primary=71.8 downstream=60.0; primary features never firing=26.5%
+[   23.1s] predictors: crowding done
+eligible features: 7532 of 24576 | sampled: 300
+panel 2048 features; 2042 with firing frequency <= 0.1
+[   23.2s] predictors: all done
+[   23.2s] steering 300 features x 48 contexts
+[   42.3s]   steered 50/300
+[   61.4s]   steered 100/300
+[   80.5s]   steered 150/300
+[   99.6s]   steered 200/300
+[  118.5s]   steered 250/300
+[  137.1s]   steered 300/300
+[  137.1s] steering done
+{
+ "rho_crowding__collateral_raw": 0.4819,
+ "rho_frequency__collateral_raw": 0.11,
+ "rho_act_mag__collateral_raw": 0.0777,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.5175,
+ "rho_crowding__collateral_ctilde": 0.344,
+ "rho_frequency__collateral_ctilde": 0.0495,
+ "rho_act_mag__collateral_ctilde": 0.063,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.3547,
+ "crowd_rho_lowfreq_half": 0.6043,
+ "crowd_rho_highfreq_half": 0.3499,
+ "rho_crowding__collateral_raw_nodense": 0.4857,
+ "rho_crowding__resid_delta_norm": 0.3285,
+ "mean_resid_reconstruction_norm_ratio": 0.8448,
+ "mean_resid_change_explained_energy": -0.3768
+}
+[  142.1s] wrote /tmp/duan_verified_reruns/gpt2_small/per_feature.csv, selection.json, meta.json

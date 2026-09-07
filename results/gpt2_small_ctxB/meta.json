@@ -108,6 +108,6 @@
   "crowd_rho_highfreq_half": 0.3708,
   "rho_crowding__collateral_raw_nodense": 0.4992,
   "rho_crowding__resid_delta_norm": 0.3115,
-  "mean_resid_sae_frac": 0.8479
+  "mean_resid_reconstruction_norm_ratio": 0.8479
  }
 }

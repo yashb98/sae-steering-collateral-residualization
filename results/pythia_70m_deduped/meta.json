@@ -35,7 +35,10 @@
   "context_split": "none",
   "random_directions": false,
   "dense_freq": 0.1,
-  "n_panel_nodense": 1969
+  "n_panel_nodense": 1969,
+  "paired_random_control": true,
+  "residual_metric_version": 2,
+  "saved_residual_deltas": true
  },
  "sizes": {
   "n_texts": 8000,
@@ -87,12 +90,12 @@
  },
  "timings_s": {
   "saes_loaded": 6.6,
-  "model_loaded": 8.5,
-  "cache_done": 19.6,
-  "predictors_done": 20.2,
-  "steering_done": 44.0
+  "model_loaded": 9.3,
+  "cache_done": 22.0,
+  "predictors_done": 22.6,
+  "steering_done": 63.1
  },
- "wall_clock_s": 44.0,
+ "wall_clock_s": 66.4,
  "headline": {
   "rho_crowding__collateral_raw": -0.0225,
   "rho_frequency__collateral_raw": 0.1749,
@@ -106,6 +109,7 @@
   "crowd_rho_highfreq_half": -0.1567,
   "rho_crowding__collateral_raw_nodense": -0.0926,
   "rho_crowding__resid_delta_norm": 0.1443,
-  "mean_resid_sae_frac": 0.7776
+  "mean_resid_reconstruction_norm_ratio": 0.7776,
+  "mean_resid_change_explained_energy": 0.4663
  }
 }

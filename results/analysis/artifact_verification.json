@@ -1,0 +1,46 @@
+{
+  "settings": {
+    "gpt2_small": {
+      "n": 300,
+      "shared_reference_columns": 37,
+      "per_feature_sha256": "9ffec82aaba3cda0d6f53d374bc25f504df93b8338ce7dd3fc0012259632b02b",
+      "paired_contexts_and_norms_verified": true,
+      "headline_partials_match_independent_lstsq": true,
+      "reliability_matches_independent_spearman": true
+    },
+    "pythia_70m_deduped": {
+      "n": 300,
+      "shared_reference_columns": 37,
+      "per_feature_sha256": "6b2244c03bd5763f93efb38119a662b5e946d52309f7ce1ec0b51ab27927793a",
+      "paired_contexts_and_norms_verified": true,
+      "headline_partials_match_independent_lstsq": true,
+      "reliability_matches_independent_spearman": true
+    },
+    "gemma_2_2b": {
+      "n": 300,
+      "shared_reference_columns": 37,
+      "per_feature_sha256": "6aff23709b8d50310c2d690f0a24c9fd0be2ab0c23c2579ce9723dbda78850ed",
+      "paired_contexts_and_norms_verified": true,
+      "headline_partials_match_independent_lstsq": true,
+      "reliability_matches_independent_spearman": true
+    },
+    "llama_3_1_8b": {
+      "n": 300,
+      "shared_reference_columns": 37,
+      "per_feature_sha256": "4c99d8f998339a834f609ef641f46c9bcee9a914bdf704adadd194a86bc001a5",
+      "paired_contexts_and_norms_verified": true,
+      "headline_partials_match_independent_lstsq": true,
+      "reliability_matches_independent_spearman": true
+    }
+  },
+  "reference": "4a639d4",
+  "checks": [
+    "four complete settings",
+    "10000 bootstrap draws",
+    "unique analysis keys",
+    "multiplicity corrections preserve undefined tests",
+    "matched random controls",
+    "effect normalization",
+    "dense counts bounded by full counts"
+  ]
+}

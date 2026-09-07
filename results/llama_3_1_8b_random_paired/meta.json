@@ -1,0 +1,105 @@
+{
+ "setting": "llama_3_1_8b",
+ "protocol": "v2",
+ "smoke": false,
+ "seed": 0,
+ "config": {
+  "name": "llama_3_1_8b",
+  "model_name": "meta-llama/Llama-3.1-8B",
+  "sae_release": "llama_scope_lxr_8x",
+  "primary_sae_id": "l16r_8x",
+  "downstream_sae_id": "l20r_8x",
+  "primary_hook": "blocks.16.hook_resid_post",
+  "downstream_hook": "blocks.20.hook_resid_post",
+  "panel_size": 1024,
+  "dtype": "bfloat16",
+  "tl_processing": "none",
+  "model_batch": 16,
+  "n_texts": 8000,
+  "n_contexts": 2048,
+  "seq_len": 48,
+  "n_features": 300,
+  "ctx_per_type": 16,
+  "alpha": 1.0,
+  "tau": 0.05,
+  "eps_fire": 1e-06,
+  "topk_crowding": 20,
+  "freq_band": [
+   0.002,
+   0.5
+  ],
+  "min_text_chars": 200
+ },
+ "variant": {
+  "alpha": 1.0,
+  "alpha_mode": "fixed",
+  "context_split": "none",
+  "random_directions": true,
+  "dense_freq": 0.1,
+  "n_panel_nodense": 1005,
+  "paired_random_control": true,
+  "residual_metric_version": 2,
+  "saved_residual_deltas": false,
+  "random_contexts": "matched_to_sampled_feature",
+  "random_seed": 2000,
+  "norms": "matched_per_sampled_feature",
+  "pc1_eigensolver_device": "cpu"
+ },
+ "sizes": {
+  "n_texts": 8000,
+  "n_contexts": 2048,
+  "seq_len": 48,
+  "n_features": 300,
+  "n_eligible": 2837,
+  "ctx_per_type": 16,
+  "n_ctx_per_feature": 48,
+  "panel": 1024,
+  "d_sae_primary": 32768,
+  "d_sae_downstream": 32768,
+  "mean_l0_primary": 32.18,
+  "mean_l0_downstream": 31.42,
+  "frac_primary_never_firing": 0.6096
+ },
+ "context_build": {
+  "dupes_removed": 0,
+  "short_texts_dropped": 27,
+  "contexts_final_token_is_pad": 0,
+  "pad_token_id": 128001
+ },
+ "sae": {
+  "primary": {
+   "hook_name": "blocks.16.hook_resid_post",
+   "d_sae": 32768,
+   "d_in": 4096,
+   "architecture": "<bound method JumpReLUSAEConfig.architecture of <class 'sae_lens.saes.jumprelu_sae.JumpReLUSAEConfig'>>",
+   "prepend_bos": true,
+   "model_from_pretrained_kwargs": {}
+  },
+  "downstream": {
+   "hook_name": "blocks.20.hook_resid_post",
+   "d_sae": 32768,
+   "d_in": 4096,
+   "architecture": "<bound method JumpReLUSAEConfig.architecture of <class 'sae_lens.saes.jumprelu_sae.JumpReLUSAEConfig'>>"
+  }
+ },
+ "dtype": "bfloat16",
+ "tl_processing": "none",
+ "device": "NVIDIA GB10",
+ "versions": {
+  "python": "3.12.11",
+  "torch": "2.12.1+cu130",
+  "transformers": "5.16.1",
+  "transformer_lens": "3.8.1",
+  "sae_lens": "6.50.0",
+  "numpy": "2.5.1"
+ },
+ "timings_s": {
+  "saes_loaded": 14.7,
+  "model_loaded": 64.0,
+  "cache_done": 219.0,
+  "predictors_done": 221.0,
+  "steering_done": 1719.0
+ },
+ "wall_clock_s": 1749.5,
+ "headline": {}
+}

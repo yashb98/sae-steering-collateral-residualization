@@ -106,6 +106,6 @@
   "partial_crowding__collateral_ctilde__given_freq_actmag": NaN,
   "rho_crowding__collateral_raw_nodense": 0.0167,
   "rho_crowding__resid_delta_norm": 0.0698,
-  "mean_resid_sae_frac": 0.7743
+  "mean_resid_reconstruction_norm_ratio": 0.7743
  }
 }

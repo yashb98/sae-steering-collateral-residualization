@@ -7,6 +7,12 @@
   "llama_3_1_8b",
   "pythia_70m_deduped"
  ],
+ "versions": {
+  "numpy": "2.5.1",
+  "pandas": "2.3.3",
+  "scipy": "1.17.1",
+  "scikit-learn": "1.8.0"
+ },
  "controls": {
   "none": [],
   "primary": [
@@ -89,6 +95,12 @@
  "assumptions": [
   "natural activation a-bar_f := act_mag (mean final-token activation over all contexts)",
   "intervention value c_f is constant under fixed_global_add (alpha = 1.0) and is dropped",
-  "ridge alpha = 1.0 on standardised predictors, 5-fold KFold shuffle seed 0"
+  "ridge alpha = 1.0 on standardised predictors, 5-fold KFold shuffle seed 0",
+  "nuisance regression and predictor scaling are fitted inside each training fold",
+  "CV Spearman is undefined for constant or numerically zero predictions; this commonly occurs when a baseline uses only nuisance variables",
+  "partial rho is undefined when controls exhaust a ranked variable; percentile CIs are undefined if any bootstrap draw is degenerate (n_boot_valid records usable draws)",
+  "bootstrap draws and nuisance fits are shared within each complete predictor family",
+  "bootstrap RNG is seeded per setting with SeedSequence([seed, first four SHA256 bytes of setting name as little-endian integer]); results do not depend on setting execution order",
+  "Holm and BH adjustments apply within each setting/target/control family (up to 19 predictors); they do not test whether the top-ranked predictor exceeds the runner-up"
  ]
 }

@@ -1,0 +1,45 @@
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "pythia_70m_deduped", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.6s] device NVIDIA GB10; loading SAEs
+[    6.6s] SAEs loaded: primary d_sae=32768 (blocks.4.hook_resid_post), downstream d_sae=32768 (blocks.5.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=False
+Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 4451.62it/s]
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:193: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+Loaded pretrained model pythia-70m-deduped into HookedTransformer
+[    9.3s] model loaded: pythia-70m-deduped d_model=512 n_layers=6 norm=LNPre dtype=float32
+[    9.3s] streaming wikitext-103 train split
+[   17.1s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   17.7s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   22.0s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=68.3 downstream=118.6; primary features never firing=79.2%
+[   22.5s] predictors: crowding done
+eligible features: 4375 of 32768 | sampled: 300
+panel 2048 features; 1969 with firing frequency <= 0.1
+[   22.6s] predictors: all done
+[   22.6s] steering 300 features x 48 contexts
+[   29.4s]   steered 50/300
+[   36.1s]   steered 100/300
+[   42.8s]   steered 150/300
+[   49.6s]   steered 200/300
+[   56.4s]   steered 250/300
+[   63.1s]   steered 300/300
+[   63.1s] steering done
+{
+ "rho_crowding__collateral_raw": -0.0225,
+ "rho_frequency__collateral_raw": 0.1749,
+ "rho_act_mag__collateral_raw": 0.1145,
+ "partial_crowding__collateral_raw__given_freq_actmag": -0.0257,
+ "rho_crowding__collateral_ctilde": 0.0307,
+ "rho_frequency__collateral_ctilde": 0.3743,
+ "rho_act_mag__collateral_ctilde": 0.2835,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.011,
+ "crowd_rho_lowfreq_half": 0.1068,
+ "crowd_rho_highfreq_half": -0.1567,
+ "rho_crowding__collateral_raw_nodense": -0.0926,
+ "rho_crowding__resid_delta_norm": 0.1443,
+ "mean_resid_reconstruction_norm_ratio": 0.7776,
+ "mean_resid_change_explained_energy": 0.4663
+}
+[   66.5s] wrote /tmp/duan_verified_reruns/pythia_70m_deduped/per_feature.csv, selection.json, meta.json

@@ -1,0 +1,24 @@
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "llama_3_1_8b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 1024, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "bfloat16", "seed": 0}
+[    4.0s] device NVIDIA GB10; loading SAEs
+[    7.5s] SAEs loaded: primary d_sae=32768 (blocks.16.hook_resid_post), downstream d_sae=32768 (blocks.20.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 5468.87it/s]
+Loaded pretrained model meta-llama/Llama-3.1-8B into HookedTransformer
+[   31.7s] model loaded: meta-llama/Llama-3.1-8B d_model=4096 n_layers=32 norm=RMS dtype=bfloat16
+[   31.7s] streaming wikitext-103 train split
+[   38.3s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   39.0s] 2048 contexts x 48 tokens; short texts dropped (v2): 27; contexts whose final token is the pad token: 0
+[  175.5s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=32.2 downstream=31.4; primary features never firing=61.0%
+[  176.4s] predictors: crowding done
+eligible features: 2837 of 32768 | sampled: 300
+panel 1024 features; 1005 with firing frequency <= 0.1
+[  176.8s] predictors: all done
+[  176.8s] steering 300 features x 48 contexts
+[  419.6s]   steered 50/300
+[  662.7s]   steered 100/300
+[  895.2s]   steered 150/300
+[ 1136.0s]   steered 200/300
+[ 1364.0s]   steered 250/300

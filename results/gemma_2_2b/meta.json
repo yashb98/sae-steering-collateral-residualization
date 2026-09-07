@@ -35,7 +35,10 @@
   "context_split": "none",
   "random_directions": false,
   "dense_freq": 0.1,
-  "n_panel_nodense": 2011
+  "n_panel_nodense": 2011,
+  "paired_random_control": true,
+  "residual_metric_version": 2,
+  "saved_residual_deltas": true
  },
  "sizes": {
   "n_texts": 8000,
@@ -86,13 +89,13 @@
   "numpy": "2.5.1"
  },
  "timings_s": {
-  "saes_loaded": 6.4,
-  "model_loaded": 15.3,
-  "cache_done": 100.6,
-  "predictors_done": 100.9,
-  "steering_done": 1078.9
+  "saes_loaded": 6.0,
+  "model_loaded": 14.2,
+  "cache_done": 110.0,
+  "predictors_done": 110.5,
+  "steering_done": 1907.8
  },
- "wall_clock_s": 1078.9,
+ "wall_clock_s": 1925.4,
  "headline": {
   "rho_crowding__collateral_raw": 0.5121,
   "rho_frequency__collateral_raw": 0.3794,
@@ -106,6 +109,7 @@
   "crowd_rho_highfreq_half": 0.4137,
   "rho_crowding__collateral_raw_nodense": 0.5154,
   "rho_crowding__resid_delta_norm": 0.6257,
-  "mean_resid_sae_frac": 2.2892
+  "mean_resid_reconstruction_norm_ratio": 2.2892,
+  "mean_resid_change_explained_energy": -13.7657
  }
 }

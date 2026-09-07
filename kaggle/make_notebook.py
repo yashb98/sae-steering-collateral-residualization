@@ -154,7 +154,8 @@ fig.suptitle("Decoder crowding against both collateral metrics (Spearman rho, n 
 plt.tight_layout(rect=(0, 0, 1, 0.97))
 plt.show()'''
 
-MEDIATION = r'''fig, axes = plt.subplots(2, len(settings), figsize=(3.6 * len(settings), 6.4))
+MEDIATION = r'''from matplotlib.ticker import LogLocator, FuncFormatter, NullFormatter
+fig, axes = plt.subplots(2, len(settings), figsize=(3.6 * len(settings), 6.4))
 axes = np.atleast_2d(axes)
 for j, s in enumerate(settings):
     df = feat[s]
@@ -164,8 +165,16 @@ for j, s in enumerate(settings):
         ax.scatter(df[x], df[y], s=22, color=COLOR[s], alpha=0.75, edgecolors=SURFACE, linewidths=0.8)
         if x == "effect_l2":
             ax.set_xscale("log")
+            ax.xaxis.set_major_locator(LogLocator(base=10, subs=(1, 2, 3, 5)))
+            ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:g}"))
+            ax.xaxis.set_minor_formatter(NullFormatter())
+            xl += " (log scale)"
         if y == "effect_l2":
             ax.set_yscale("log")
+            ax.yaxis.set_major_locator(LogLocator(base=10, subs=(1, 2, 3, 5)))
+            ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:g}"))
+            ax.yaxis.set_minor_formatter(NullFormatter())
+            yl += " (log scale)"
         r, _ = stats.spearmanr(df[x], df[y])
         ax.text(0.02, 0.97, f"rho = {r:+.3f}", transform=ax.transAxes, va="top", color=INK, fontsize=10)
         if i == 0:
@@ -179,7 +188,7 @@ plt.show()'''
 
 CONTROL_MD = """## 3. The control
 
-Partial Spearman correlations: predictor and label are rank-transformed, both are residualized on the ranked control variables, and the residuals are correlated. Controls: none; the robust pair (frequency, activation magnitude); the primary set (the paper's Section 3.8 nuisance variables, effect magnitude E_f, intervention value and natural activation, plus firing frequency). Whiskers are 95% bootstrap intervals over the 300 features (10,000 resamples)."""
+Partial Spearman correlations: predictor and label are rank-transformed, both are residualized on the ranked control variables, and the residuals are correlated. Controls: none; the robust pair (frequency, activation magnitude); the primary set (the paper's Section 3.8 nuisance variables, effect magnitude E_f, intervention value and natural activation, plus firing frequency). Whiskers are pointwise 95% bootstrap intervals over the 300 features (10,000 resamples). The table below the figure reports Holm/BH adjustments within each predictor family."""
 
 PARTIALS = r'''fig, axes = plt.subplots(1, 2, figsize=(13, 4.8), sharey=True)
 controls = ["none", "robust", "primary"]
@@ -204,7 +213,8 @@ h, l = axes[0].get_legend_handles_labels()
 fig.legend(h, l, loc="upper left", bbox_to_anchor=(0.01, 0.93), ncol=3, fontsize=9)
 fig.suptitle("Crowding partial correlations vary across the four model/SAE settings", x=0.01, ha="left", color=INK, fontsize=12)
 plt.tight_layout(rect=(0, 0, 1, 0.88))
-plt.show()'''
+plt.show()
+part[(part.predictor == 'crowding') & (part.control == 'primary') & part.target.isin(['collateral_raw', 'collateral_ctilde'])][['setting', 'target', 'rho', 'p_holm', 'q_bh']].round(4)'''
 
 TOP_PREDICTORS = r'''fig, axes = plt.subplots(2, len(settings), figsize=(3.9 * len(settings), 6.8))
 axes = np.atleast_2d(axes)
@@ -224,7 +234,7 @@ for j, s in enumerate(settings):
         if j == 0:
             ax.set_ylabel(name)
         if i == 1:
-            ax.set_xlabel("partial Spearman rho, primary control")
+            ax.set_xlabel("partial Spearman rho")
 fig.suptitle("Strongest six predictors after the primary control; the leading predictor changes with the setting", x=0.01, ha="left", color=INK, fontsize=12)
 plt.tight_layout(rect=(0, 0, 1, 0.96))
 plt.show()'''
@@ -242,15 +252,19 @@ for j, s in enumerate(settings):
         sub = cvr[(cvr.setting == s) & (cvr.target == tgt) & (cvr.control == "primary")].set_index("predictor_set").loc[SETS]
         ys = np.arange(len(SETS))
         ax.barh(ys, sub.cv_spearman_mean, 0.6, color=COLOR[s], edgecolor=SURFACE, linewidth=2)
+        for y, value in zip(ys, sub.cv_spearman_mean):
+            if not np.isfinite(value):
+                ax.text(0.02, y, "undefined", va="center", fontsize=8, color=INK2)
         ax.errorbar(sub.cv_spearman_mean, ys, xerr=sub.cv_spearman_sd, fmt="none", ecolor=INK2, elinewidth=1, capsize=3)
         ax.set_yticks(ys); ax.set_yticklabels([k.replace("_", " ") for k in SETS], fontsize=8.5)
+        ax.set_ylim(-0.5, len(SETS) - 0.5)
         ax.axvline(0, color=AXIS, lw=1)
         if i == 0:
             ax.set_title(PRETTY[s])
         if j == 0:
             ax.set_ylabel(name)
         if i == 1:
-            ax.set_xlabel("CV Spearman on the residualized label")
+            ax.set_xlabel("CV Spearman (residual target)")
 fig.suptitle("Predictor-family comparison with nuisance fitting and scaling inside each training fold", x=0.01, ha="left", color=INK, fontsize=12)
 plt.tight_layout(rect=(0, 0, 1, 0.96))
 plt.show()'''
