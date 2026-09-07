@@ -88,6 +88,7 @@ def main():
                     help="build each feature's context set from even (A) or odd (B) context indices only")
     ap.add_argument("--random-directions", action="store_true",
                     help="steer with random directions (norms matched to the decoder) instead of SAE features")
+    ap.add_argument("--trace-steering", action="store_true", help="log intervention stages and save temporary checkpoints every 50 features")
     ap.add_argument("--paired-random-control", action="store_true",
                     help="also measure random unit directions scaled to each sampled decoder norm on identical contexts")
     ap.add_argument("--save-residual-deltas", action="store_true",
@@ -418,11 +419,15 @@ def main():
         toks = all_toks[ctx].to(device)
         d_f = steer_vecs[n]
         alpha_f = feature_alpha(fi)
+        if args.trace_steering:
+            tick(f"feature {n+1}: clean forward")
         logit_c, cache = model.run_with_cache(toks, names_filter=[hook_d], return_type="logits")
         logit_c = logit_c[:, -1, :].float()
         h_clean = cache[hook_d][:, -1, :].detach().float()
         u_clean = encode_final(sae_d, h_clean)
         del cache
+        if args.trace_steering:
+            tick(f"feature {n+1}: SAE forward")
         logit_s, down_resid = steered_forward(toks, d_f, alpha_f)
         down_resid = down_resid.float()
         u_steer = encode_final(sae_d, down_resid)
@@ -442,6 +447,8 @@ def main():
         dl_mean = dl.mean(0, keepdim=True)
         cos = torch.nn.functional.cosine_similarity(dl, dl_mean.expand_as(dl), dim=-1)
         dlc = dl - dl_mean
+        if args.trace_steering:
+            tick(f"feature {n+1}: SAE eigenvalues")
         ev = torch.linalg.eigvalsh(dlc @ dlc.T).clamp(min=0)
         pc1 = (ev.max() / (ev.sum() + 1e-12)).item()
         logp = torch.log_softmax(logit_c, -1)
@@ -471,6 +478,8 @@ def main():
             "intervention_value": alpha_f, "n_ctx": int(n_ctx),
         })
         if paired_vecs is not None:
+            if args.trace_steering:
+                tick(f"feature {n+1}: random forward")
             pair_ls, pair_h = steered_forward(toks, paired_vecs[n], alpha_f)
             pair_h = pair_h.float()
             pair_u = encode_final(sae_d, pair_h)
@@ -483,7 +492,9 @@ def main():
             pair_mean = pair_dl.mean(0, keepdim=True)
             pair_cos = torch.nn.functional.cosine_similarity(pair_dl, pair_mean.expand_as(pair_dl), dim=-1)
             pair_centered = pair_dl - pair_mean
-            pair_ev = torch.linalg.eigvalsh(pair_centered @ pair_centered.T).clamp(min=0)
+            if args.trace_steering:
+                tick(f"feature {n+1}: random eigenvalues (CPU)")
+            pair_ev = torch.linalg.eigvalsh((pair_centered @ pair_centered.T).cpu()).clamp(min=0)
             pair_kl = (logp.exp() * (logp - torch.log_softmax(pair_ls, -1))).sum(-1).mean().item()
             pair_row = {k: NA for k in rows[-1]}
             pair_row.update({
@@ -502,6 +513,16 @@ def main():
                 "intervention_value": alpha_f, "n_ctx": n_ctx,
             })
             paired_rows.append(pair_row)
+        if args.trace_steering:
+            tick(f"feature {n+1}: complete")
+            if (n + 1) % 50 == 0:
+                import pandas as pd
+                pd.DataFrame(rows).to_csv(os.path.join(out_dir, "per_feature.partial.csv"), index=False)
+                pd.DataFrame(paired_rows).to_csv(os.path.join(out_dir, "paired.partial.csv"), index=False)
+                if args.save_residual_deltas:
+                    np.savez_compressed(os.path.join(out_dir, "residual_deltas.partial.npz"),
+                                        delta=np.stack(residual_deltas), reconstruction_delta=np.stack(reconstructed_deltas),
+                                        features=feats[:n+1], contexts=np.asarray(context_indices))
         if (n + 1) % max(1, len(feats) // 6) == 0:
             tick(f"  steered {n + 1}/{len(feats)}")
     tick("steering done", "steering_done")
@@ -581,12 +602,16 @@ def main():
         pair_meta = dict(meta, headline={})
         pair_meta["variant"] = dict(meta["variant"], random_directions=True,
                                     random_contexts="matched_to_sampled_feature", random_seed=SEED + 2000,
-                                    norms="matched_per_sampled_feature", saved_residual_deltas=False)
+                                    norms="matched_per_sampled_feature", saved_residual_deltas=False, pc1_eigensolver_device="cpu")
         json.dump(pair_meta, open(os.path.join(pair_out, "meta.json"), "w"), indent=1)
         json.dump({"features": list(range(len(feats))), "matched_features": feats.tolist(),
                    "contexts": context_indices, "panel": panel.cpu().tolist()},
                   open(os.path.join(pair_out, "selection.json"), "w"))
         np.savez_compressed(os.path.join(pair_out, "directions.npz"), directions=paired_vecs.cpu().numpy())
+    for temporary in ["per_feature.partial.csv", "paired.partial.csv", "residual_deltas.partial.npz"]:
+        path = os.path.join(out_dir, temporary)
+        if os.path.exists(path):
+            os.remove(path)
     tick(f"wrote {out_dir}/per_feature.csv, selection.json, meta.json")
 
 

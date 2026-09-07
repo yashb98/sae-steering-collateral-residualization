@@ -89,7 +89,7 @@ def main(results="results"):
     L += ["", "Common: Wikitext-103 train split, 8,000 texts, 300 features sampled with seed 0 from the final-token firing-frequency "
           "band [0.002, 0.50], 16 contexts per type (top / random / low), additive steering alpha = 1.0 at the final token, "
           "tau = 0.05, epsilon_fire = 1e-6, crowding = top-20 mean absolute cosine, protocol v2 (no pad final tokens, "
-          "whitespace-normalised dedup).", ""]
+          "whitespace-normalised dedup). Audited-run wall clocks include the paired random control and output/checkpoint saving.", ""]
 
     # ---- 2. crowding ----
     L += ["## 2. Decoder crowding vs collateral, with and without controls", "",

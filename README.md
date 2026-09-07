@@ -46,6 +46,8 @@ pytest -q                                                            # tests
 
 `bash run_robustness.sh` regenerates all four canonical runs with residual-space measurements and a paired random-direction control, both context-pool halves, and the GPT-2/Pythia coefficient sweeps. Existing results are overwritten; use a separate checkout to retain a second copy.
 
+`--trace-steering` logs each intervention stage and writes temporary checkpoints every 50 features, removing them after successful completion. The paired-control PC1 eigensolve runs on CPU; its device is recorded in metadata.
+
 The paired control draws 300 unit directions and scales each to its matched decoder norm. It shares context indices, coefficients and downstream panels with the SAE run. `--save-residual-deltas` saves downstream and reconstructed change vectors locally; these large arrays are excluded from git. `resid_change_explained_energy` is 1 minus reconstruction-error-change energy divided by hidden-state-change energy. It can be negative. `resid_reconstruction_norm_ratio` is a separate norm ratio, not an explained fraction.
 
 Context splits use disjoint even/odd halves of the same corpus pool; they do not estimate a universal predictor ceiling. The q95 coefficient is conditional on the feature firing. Ridge nuisance fitting and scaling happen inside training folds. Multiple-comparison adjustments are per setting/target/control, and do not establish that the top-ranked predictor beats another predictor.

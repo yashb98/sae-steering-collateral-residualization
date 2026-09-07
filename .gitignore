@@ -9,4 +9,5 @@ results/*_smoke*/
 results/logs/*smoke*
 .pytest_cache/
 
-results/**/residual_deltas.npz
+results/**/residual_deltas*.npz
+results/**/*.partial.csv
