@@ -3,6 +3,7 @@
 from the CSVs and meta.json files, so a new setting only needs this script re-run.
 """
 import glob
+import math
 import json
 import os
 
@@ -64,7 +65,7 @@ def main(results="results"):
             cells.append(fmt(r))
         for tgt in TARGETS_ORDER:
             sub = part[(part.setting == s) & (part.target == tgt) & (part.control == "primary")]
-            top = sub.iloc[(-sub.rho.abs()).argsort()[:1]].iloc[0]
+            top = sub.dropna(subset=["rho"]).sort_values("rho", key=lambda v: v.abs(), ascending=False).iloc[0]
             cells.append(f"{top.predictor} ({top.rho:+.2f})")
         L.append(f"| {PRETTY[s]} | " + " | ".join(cells) + " |")
     L += ["", "Reading: crowding carries independent signal in GPT-2-small on both metrics. In Pythia-70M it carries none on either metric, "
@@ -106,35 +107,34 @@ def main(results="results"):
 
     # ---- 3. leading predictors ----
     L += ["## 3. Strongest predictors under the primary control", "",
-          "Top three predictors by absolute partial rho after the primary control, per setting and metric.", ""]
+          "Top three predictors by absolute partial rho after the primary control, per setting and metric. Holm and BH adjust within each setting/target/control family. Ranking by magnitude does not test whether one predictor is stronger than another.", ""]
     for tgt, name in TGT.items():
-        L += [f"### Target: {name}", "", "| Setting | Predictor | partial rho [95% CI] | p |", "|---|---|---|---|"]
+        L += [f"### Target: {name}", "", "| Setting | Predictor | partial rho [95% CI] | p | Holm p | BH q |", "|---|---|---|---|---|---|"]
         for s in settings:
             sub = part[(part.setting == s) & (part.target == tgt) & (part.control == "primary")]
-            sub = sub.iloc[(-sub.rho.abs()).argsort()[:3]]
+            sub = sub.dropna(subset=["rho"]).sort_values("rho", key=lambda v: v.abs(), ascending=False).head(3)
             for _, r in sub.iterrows():
-                L.append(f"| {PRETTY[s]} | {r.predictor} | {fmt(r)} | {r.p:.1e} |")
+                L.append(f"| {PRETTY[s]} | {r.predictor} | {fmt(r)} | {r.p:.1e} | {r.p_holm:.1e} | {r.q_bh:.1e} |")
         L.append("")
 
     # ---- 4. CV ridge ----
     L += ["## 4. Table B3 analog: predictor sets on the residualized collateral target", "",
-          "The collateral label is OLS-residualised against the primary control set, then predicted with ridge "
-          "(alpha = 1, standardised predictors) under 5-fold cross-validation; score = Spearman between held-out "
-          "predictions and residualised label, mean over folds (sd in parentheses).", ""]
+          "Within each training fold, the collateral label is OLS-residualised against the primary control set. The fitted nuisance model is applied to that fold's held-out features, and ridge predicts those residuals "
+          "(alpha = 1, predictor scaling fitted on training features) under 5-fold cross-validation; score = Spearman between held-out "
+          "predictions and residualised label, mean over all five folds (sd in parentheses). Constant predictions give undefined Spearman; a baseline made only of nuisance variables has no linear training-residual signal, so numerical noise is not scored.", ""]
     sets = ["frequency_only", "actmag_only", "geometry_only", "direct_logit_only", "coactivation_only", "full_no_magnitude", "full_all"]
     for tgt, name in TGT.items():
         L += [f"### Target: {name}", "", "| Setting | " + " | ".join(sets) + " |", "|---|" + "---|" * len(sets)]
         for s in settings:
             sub = cv[(cv.setting == s) & (cv.target == tgt) & (cv.control == "primary")].set_index("predictor_set")
-            L.append(f"| {PRETTY[s]} | " + " | ".join(f"{sub.loc[k].cv_spearman_mean:+.3f} ({sub.loc[k].cv_spearman_sd:.2f})" for k in sets) + " |")
+            L.append(f"| {PRETTY[s]} | " + " | ".join((f"{sub.loc[k].cv_spearman_mean:+.3f} ({sub.loc[k].cv_spearman_sd:.2f})" if math.isfinite(sub.loc[k].cv_spearman_mean) else "undefined") for k in sets) + " |")
         L.append("")
 
     # ---- 5. seeds ----
     if seeds is not None:
         L += ["## 5. Feature-sample robustness (crowding)", "",
-              "Same contexts, different random sample of 300 features (seeds 0, 1, 2). Values are crowding vs collateral rho.", "",
+              "Same 2,048-context pool, different random sample of 300 features and random-context selections (seeds 0, 1, 2). These are not independently trained SAE seeds. Values are crowding vs collateral rho.", "",
               "| Setting | Target | Control | seed 0 | seed 1 | seed 2 | mean | sd |", "|---|---|---|---|---|---|---|---|"]
-        import math
         def cell(v):
             return "" if v is None or (isinstance(v, float) and math.isnan(v)) else f"{v:+.3f}"
         single = []
@@ -157,8 +157,8 @@ def main(results="results"):
         gm = json.load(open(g)); h = gm["headline"]
         L += ["## 6. Regression gate against the published GPT-2-small notebook", "",
               "`src/run_setting.py --protocol v1` reproduces the Kaggle notebook's context construction exactly. Same seed, same "
-              "eligible-feature count (" + str(gm["sizes"]["n_eligible"]) + "). The remaining differences (at most 0.02) come from a different GPU "
-              "(T4 vs GB10) and different TransformerLens / SAELens versions; the eligible set and hence the feature sample are the same.", "",
+              "eligible-feature count (" + str(gm["sizes"]["n_eligible"]) + "). The remaining differences (at most 0.02) occur with a different GPU "
+              "(T4 vs GB10) and different TransformerLens / SAELens versions. Equal eligible counts alone do not establish identical feature IDs across machines.", "",
               "| Statistic | Kaggle notebook (Aug 7 version) | this code, protocol v1 |", "|---|---|---|"]
         for k, v in KAGGLE.items():
             L.append(f"| {k} | {v:+.3f} | {h[k]:+.3f} |")
@@ -187,31 +187,16 @@ def main(results="results"):
               "value on both machines sits inside the roughly +/-0.12 bootstrap interval around zero, so the stable finding there is the "
               "null itself, not any particular value. The weak frequency baselines also shift between machines for the same reason.", ""]
 
-    # ---- 6c. precision check ----
-    bp = os.path.join(results, "llama_3_1_8b_bf16", "meta.json")
-    if os.path.exists(bp) and "llama_3_1_8b" in metas:
-        bm = json.load(open(bp)); fm = metas["llama_3_1_8b"]
-        L += ["## 6c. Precision check (Llama-3.1-8B in bfloat16 vs float32)", "",
-              f"The Llama setting was run twice with the same seed and contexts: once with the model in bfloat16 "
-              f"({bm['wall_clock_s']:.0f} s) and once in float32 ({fm['wall_clock_s']:.0f} s, the reported run). "
-              "SAE encoding is in float32 in both cases; only the model forward pass differs.", "",
-              "| Statistic | bfloat16 | float32 (reported) |", "|---|---|---|"]
-        for k in ["rho_crowding__collateral_raw", "partial_crowding__collateral_raw__given_freq_actmag",
-                  "rho_crowding__collateral_ctilde", "partial_crowding__collateral_ctilde__given_freq_actmag",
-                  "rho_frequency__collateral_raw", "rho_act_mag__collateral_raw"]:
-            L.append(f"| {k} | {bm['headline'][k]:+.3f} | {fm['headline'][k]:+.3f} |")
-        L.append("")
-
     # ---- 8. robustness variants (generated by analysis/variants.py) ----
     vp = os.path.join(results, "analysis", "variants.md")
     if os.path.exists(vp):
         body = open(vp).read().split("\n", 2)[2] if open(vp).read().startswith("# ") else open(vp).read()
-        L += ["## 8. Robustness variants", "", body.replace("\n## ", "\n### "), ""]
+        L += ["## 7. Robustness variants", "", body.replace("## ", "### "), ""]
 
     # ---- 9. KL shift as a target ----
     if "kl_mean" in set(part.target):
-        L += ["## 9. Output-level side effect: KL shift", "",
-              "The same analysis with the mean KL divergence between clean and steered next-token distributions as the label.", "",
+        L += ["## 8. Next-token distribution change: KL shift", "",
+              "The same analysis with mean KL(clean || steered) for the next-token distribution as the label. Distribution change does not establish harmful side effects, loss of fluency, or success at an intended behavior.", "",
               "| Setting | crowding vs KL: raw | partial, primary set | strongest predictor after control |", "|---|---|---|---|"]
         for s in settings:
             sub = part[(part.setting == s) & (part.target == "kl_mean")]
@@ -219,28 +204,38 @@ def main(results="results"):
                 continue
             raw = sub[(sub.control == "none") & (sub.predictor == "crowding")].iloc[0]
             pri = sub[(sub.control == "primary") & (sub.predictor == "crowding")].iloc[0]
-            top = sub[sub.control == "primary"].iloc[(-sub[sub.control == "primary"].rho.abs()).argsort()[:1]].iloc[0]
+            top = sub[sub.control == "primary"].dropna(subset=["rho"]).sort_values("rho", key=lambda v: v.abs(), ascending=False).iloc[0]
             L.append(f"| {PRETTY[s]} | {fmt(raw)} | {fmt(pri)} | {top.predictor} ({top.rho:+.2f}, Holm p {top.p_holm:.1e}) |")
         L.append("")
 
     # ---- 7. assumptions ----
-    L += ["## 7. Assumptions and conventions", ""]
+    L += ["## 9. Assumptions and limitations", ""]
     for a in amet["assumptions"]:
         L.append(f"- {a}.")
     L += ["- Feature sampling band [0.002, 0.50] on final-token firing frequency; the paper says only \"the non-degenerate range\".",
           "- Downstream panel = the most frequently active downstream features on the clean contexts (2048; 1024 for Llama).",
           "- Model loading per setting: " + "; ".join(f"{PRETTY[s]} in {metas[s]['dtype']} with TransformerLens weight processing "
           + ("off (from_pretrained_no_processing)" if metas[s].get("tl_processing") == "none" else "on (default)") for s in settings) + ". "
-          "Weight processing never changes the residual stream the SAEs read (TransformerLens centres writing weights only for LayerNorm models); "
-          "the mean L0 column above is the empirical check that each SAE sees the activations it was trained on.",
+          "Mean L0 is a loading sanity check, not proof that preprocessing matches the SAE training pipeline. Model, dictionary, width, layer, dtype and loading choices vary together, so differences are setting-dependent rather than isolated architecture effects.",
           "- Direct-logit predictors, effect magnitude and stability use the unembedding as loaded: centred for GPT-2 and Pythia, uncentred for Gemma-2 "
           "(logit softcap) and for any setting loaded without processing.",
-          "- Effect magnitude E_f and the stability cosines are computed on final-token logit differences in float32.", ""]
+          "- Effect magnitude E_f and the stability cosines are computed on final-token logit differences in float32.",
+          "- The collateral count measures downstream SAE activation changes, not independently labeled unrelated behaviors. Reconstruction-residual changes require the separate measurements in Section 7.",
+          "- The context-pool split estimates conditional reproducibility; independent corpus draws and independently trained SAE seeds remain untested.",
+          "- Coefficient sweeps cover only GPT-2 and Pythia. Fixed-alpha results for Gemma and Llama do not establish coefficient robustness.",
+          "- Feature bootstrap intervals condition on the shared dictionary, panel and corpus pool. They do not account for uncertainty from drawing a different model or dictionary.", ""]
+    L += ["## 10. Relation to recent work", "",
+          "The literature review was refreshed on 7 September 2026, including papers submitted through 4 September. "
+          "The claim is a four-setting collateral residualization and robustness study. Pre-intervention side-effect forecasting "
+          "also appears at the behavioral level in [Ong et al.](https://arxiv.org/abs/2608.11227), and decoder geometry is connected "
+          "to safety/language intervention costs in [Upadhyaya and Sikdar](https://arxiv.org/abs/2608.29936). "
+          "We did not locate an exact duplicate of this controlled per-feature analysis; this does not establish universal novelty. "
+          "See [RELATED_WORK.md](RELATED_WORK.md) and [RECENT_RESEARCH_2026-09-07.md](RECENT_RESEARCH_2026-09-07.md) for source-specific comparisons.", ""]
     L += ["## Files", "", "- `results/<setting>/per_feature.csv`: one row per sampled feature, all predictors and labels.",
-          "- `results/<setting>/selection.json`: sampled feature indices and downstream panel indices.",
+          "- `results/<setting>/selection.json`: sampled feature indices, downstream panel indices, and per-feature context indices for the verified reruns.",
           "- `results/<setting>/meta.json`: resolved config, sizes, versions, timings, headline statistics.",
           "- `results/analysis/partial_correlations.csv`, `residualized_cv_ridge.csv`, `seed_summary.csv`, `summary.md`, `crowding_partials.png`.",
-          "- `results/analysis/table_collateral_residualized.tex`: LaTeX rows for the appendix.", ""]
+          "- `results/analysis/table_collateral_residualized.tex`: LaTeX rows for the appendix.", "- `results/analysis/variants.json` and `variants.md`: the robustness block; `audit_gate.json` and `artifact_verification.json`: rerun and independent artifact validation.", ""]
     open("RESULTS.md", "w").write("\n".join(L))
 
     # ---- LaTeX rows ----

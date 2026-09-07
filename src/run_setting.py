@@ -60,6 +60,18 @@ def sae_field(sae, name, default=None):
     return default
 
 
+def residual_change_metrics(dh, drec):
+    error = dh - drec
+    energy = dh.square().sum()
+    explained = 1 - error.square().sum() / energy if energy > 0 else dh.new_tensor(float("nan"))
+    return {
+        "resid_delta_norm": dh.norm(dim=-1).mean().item(),
+        "resid_reconstruction_norm_ratio": (drec.norm(dim=-1) / (dh.norm(dim=-1) + 1e-8)).mean().item(),
+        "resid_error_delta_norm": error.norm(dim=-1).mean().item(),
+        "resid_change_explained_energy": explained.item(),
+    }
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", required=True)
@@ -76,10 +88,16 @@ def main():
                     help="build each feature's context set from even (A) or odd (B) context indices only")
     ap.add_argument("--random-directions", action="store_true",
                     help="steer with random directions (norms matched to the decoder) instead of SAE features")
+    ap.add_argument("--paired-random-control", action="store_true",
+                    help="also measure random unit directions scaled to each sampled decoder norm on identical contexts")
+    ap.add_argument("--save-residual-deltas", action="store_true",
+                    help="save per-context downstream and reconstructed changes in residual_deltas.npz")
     ap.add_argument("--dense-freq", type=float, default=0.10,
                     help="downstream panel features firing more often than this are excluded from the *_nodense labels")
     args = ap.parse_args()
 
+    if args.paired_random_control and args.random_directions:
+        ap.error("--paired-random-control cannot be combined with --random-directions")
     cfg = yaml.safe_load(open(args.config))
     name = cfg["name"]
     ALPHA = float(args.alpha) if args.alpha is not None else float(cfg["alpha"])
@@ -296,6 +314,23 @@ def main():
         steer_vecs = W_dec[torch.as_tensor(feats).to(device)]
         crowd_vec, crowdmax_vec = crowd[feats], crowd_max[feats]
 
+    paired_vecs = None
+    if args.paired_random_control:
+        rng_pair = np.random.default_rng(SEED + 2000)
+        g_pair = torch.as_tensor(rng_pair.standard_normal((len(feats), d_model)), dtype=torch.float32, device=device)
+        paired_vecs = torch.nn.functional.normalize(g_pair, dim=-1) * steer_vecs.norm(dim=-1, keepdim=True)
+        pair_sim = (torch.nn.functional.normalize(paired_vecs, dim=-1) @ Wn.T).abs()
+        pair_top = torch.topk(pair_sim, TOPK_CROWD, dim=-1).values
+        pair_crowd = pair_top.mean(-1).cpu().numpy()
+        pair_max = pair_top[:, 0].cpu().numpy()
+        pair_logits = paired_vecs @ model.W_U.detach().float()
+        pair_logit_l2 = pair_logits.norm(dim=-1).cpu().numpy()
+        pair_logit_linf = pair_logits.abs().max(-1).values.cpu().numpy()
+        pair_mass = pair_logits.abs() / (pair_logits.abs().sum(-1, keepdim=True) + 1e-12)
+        pair_logit_entropy = (-(pair_mass * torch.log(pair_mass + 1e-12)).sum(-1)).cpu().numpy()
+        pair_top10 = torch.topk(pair_mass, 10, dim=-1).values.sum(-1).cpu().numpy()
+        del pair_sim, pair_top, pair_logits, pair_mass
+
     F = torch.as_tensor(feats)
     A = prim_clean[:, F].float()                                      # [N, 300] sampled feature acts
     fires = (A > EPS_FIRE).float()
@@ -372,12 +407,14 @@ def main():
         logits = model.run_with_hooks(toks, return_type="logits", fwd_hooks=[(hook_p, steer), (hook_d, grab)])
         return logits[:, -1, :].detach().float(), store["d"]
 
-    rows = []
+    rows, paired_rows, context_indices = [], [], []
+    residual_deltas, reconstructed_deltas = [], []
     n_ctx = 3 * CTX_PER_TYPE
     tick(f"steering {len(feats)} features x {n_ctx} contexts")
     NA = float("nan")
     for n, fi in enumerate(feats):
         ctx = pick_contexts(fi)
+        context_indices.append(ctx.tolist())
         toks = all_toks[ctx].to(device)
         d_f = steer_vecs[n]
         alpha_f = feature_alpha(fi)
@@ -395,7 +432,10 @@ def main():
         dh = down_resid - h_clean                                      # downstream residual change
         dh_norm = dh.norm(dim=-1)
         drec = sae_d.decode(u_steer) - sae_d.decode(u_clean)          # the part of dh the downstream SAE sees
-        sae_frac = (drec.norm(dim=-1) / (dh_norm + 1e-8)).mean().item()
+        residual_labels = residual_change_metrics(dh, drec)
+        if args.save_residual_deltas:
+            residual_deltas.append(dh.cpu().numpy())
+            reconstructed_deltas.append(drec.cpu().numpy())
         dl = logit_s - logit_c                                         # [n_ctx, vocab]
         dl_norm = dl.norm(dim=-1)
         Ef = dl_norm.mean().item()                                     # E_f
@@ -422,7 +462,7 @@ def main():
             "logit_entropy": float(logit_entropy[n]), "logit_top10_mass": float(logit_top10_mass[n]),
             "collateral_raw": coll, "effect_l2": Ef, "collateral_ctilde": coll / (Ef + 1e-8),
             "collateral_raw_nodense": coll_nd, "collateral_ctilde_nodense": coll_nd / (Ef + 1e-8),
-            "resid_delta_norm": dh_norm.mean().item(), "resid_sae_frac": sae_frac,
+            **residual_labels,
             "stab_signed": cos.mean().item(), "stab_abs": cos.abs().mean().item(),
             "stab_anti_frac": (cos < 0).float().mean().item(), "effect_pc1_ratio": pc1,
             "kl_mean": kl, "kl_per_effect": kl / (Ef + 1e-8),
@@ -430,6 +470,38 @@ def main():
             "ctx_mean_act": NA if rnd else float(prim_clean[ctx, fi].mean().item()),
             "intervention_value": alpha_f, "n_ctx": int(n_ctx),
         })
+        if paired_vecs is not None:
+            pair_ls, pair_h = steered_forward(toks, paired_vecs[n], alpha_f)
+            pair_h = pair_h.float()
+            pair_u = encode_final(sae_d, pair_h)
+            pair_du = (pair_u - u_clean)[:, panel].abs()
+            pair_coll = (pair_du > TAU).float().sum(-1).mean().item()
+            pair_nd = (pair_du[:, panel_nodense] > TAU).float().sum(-1).mean().item()
+            pair_dl = pair_ls - logit_c
+            pair_norm = pair_dl.norm(dim=-1)
+            pair_E = pair_norm.mean().item()
+            pair_mean = pair_dl.mean(0, keepdim=True)
+            pair_cos = torch.nn.functional.cosine_similarity(pair_dl, pair_mean.expand_as(pair_dl), dim=-1)
+            pair_centered = pair_dl - pair_mean
+            pair_ev = torch.linalg.eigvalsh(pair_centered @ pair_centered.T).clamp(min=0)
+            pair_kl = (logp.exp() * (logp - torch.log_softmax(pair_ls, -1))).sum(-1).mean().item()
+            pair_row = {k: NA for k in rows[-1]}
+            pair_row.update({
+                "feature": int(n), "matched_feature": int(fi), "crowding": float(pair_crowd[n]),
+                "crowd_max": float(pair_max[n]), "dec_norm": float(dec_norm[n]),
+                "logit_l2": float(pair_logit_l2[n]), "logit_linf": float(pair_logit_linf[n]),
+                "logit_entropy": float(pair_logit_entropy[n]), "logit_top10_mass": float(pair_top10[n]),
+                "collateral_raw": pair_coll, "effect_l2": pair_E, "collateral_ctilde": pair_coll / (pair_E + 1e-8),
+                "collateral_raw_nodense": pair_nd, "collateral_ctilde_nodense": pair_nd / (pair_E + 1e-8),
+                **residual_change_metrics(pair_h - h_clean, sae_d.decode(pair_u) - sae_d.decode(u_clean)),
+                "stab_signed": pair_cos.mean().item(), "stab_abs": pair_cos.abs().mean().item(),
+                "stab_anti_frac": (pair_cos < 0).float().mean().item(),
+                "effect_pc1_ratio": (pair_ev.max() / (pair_ev.sum() + 1e-12)).item(),
+                "kl_mean": pair_kl, "kl_per_effect": pair_kl / (pair_E + 1e-8),
+                "effect_cv": (pair_norm.std() / (pair_norm.mean() + 1e-8)).item(),
+                "intervention_value": alpha_f, "n_ctx": n_ctx,
+            })
+            paired_rows.append(pair_row)
         if (n + 1) % max(1, len(feats) // 6) == 0:
             tick(f"  steered {n + 1}/{len(feats)}")
     tick("steering done", "steering_done")
@@ -437,7 +509,12 @@ def main():
     import pandas as pd
     df = pd.DataFrame(rows)
     df.to_csv(os.path.join(out_dir, "per_feature.csv"), index=False)
-    json.dump({"features": [int(x) for x in feats], "panel": [int(x) for x in panel.cpu().numpy()]},
+    if args.save_residual_deltas:
+        np.savez_compressed(os.path.join(out_dir, "residual_deltas.npz"),
+                            delta=np.stack(residual_deltas), reconstruction_delta=np.stack(reconstructed_deltas),
+                            features=feats, contexts=np.asarray(context_indices))
+    json.dump({"features": [int(x) for x in feats], "contexts": context_indices,
+               "panel": [int(x) for x in panel.cpu().numpy()]},
               open(os.path.join(out_dir, "selection.json"), "w"))
 
     # ---- headline statistics (regression gate) ----
@@ -474,14 +551,16 @@ def main():
         head["crowd_rho_highfreq_half"] = round(float(st.spearmanr(hi.crowding, hi.collateral_raw)[0]), 4)
     head["rho_crowding__collateral_raw_nodense"] = sp("crowding", "collateral_raw_nodense")[0]
     head["rho_crowding__resid_delta_norm"] = sp("crowding", "resid_delta_norm")[0]
-    head["mean_resid_sae_frac"] = round(float(df["resid_sae_frac"].mean()), 4)
+    head["mean_resid_reconstruction_norm_ratio"] = round(float(df["resid_reconstruction_norm_ratio"].mean()), 4)
+    head["mean_resid_change_explained_energy"] = round(float(df["resid_change_explained_energy"].mean()), 4)
     print(json.dumps(head, indent=1))
 
     meta = {
         "setting": name, "protocol": args.protocol, "smoke": args.smoke, "seed": SEED, "config": cfg,
         "variant": dict(alpha=ALPHA, alpha_mode=args.alpha_mode, context_split=args.context_split,
                         random_directions=args.random_directions, dense_freq=args.dense_freq,
-                        n_panel_nodense=int(panel_nodense.sum())),
+                        n_panel_nodense=int(panel_nodense.sum()), paired_random_control=args.paired_random_control,
+                        residual_metric_version=2, saved_residual_deltas=args.save_residual_deltas),
         "sizes": dict(n_texts=len(texts), n_contexts=N, seq_len=SEQ_LEN, n_features=len(feats), n_eligible=int(len(elig)),
                       ctx_per_type=CTX_PER_TYPE, n_ctx_per_feature=n_ctx, panel=int(panel.numel()),
                       d_sae_primary=int(d_sae), d_sae_downstream=int(down_clean.shape[1]),
@@ -495,6 +574,19 @@ def main():
         "timings_s": TIMINGS, "wall_clock_s": round(time.time() - T0, 1), "headline": head,
     }
     json.dump(meta, open(os.path.join(out_dir, "meta.json"), "w"), indent=1)
+    if paired_rows:
+        pair_out = out_dir + "_random_paired"
+        os.makedirs(pair_out, exist_ok=True)
+        pd.DataFrame(paired_rows).to_csv(os.path.join(pair_out, "per_feature.csv"), index=False)
+        pair_meta = dict(meta, headline={})
+        pair_meta["variant"] = dict(meta["variant"], random_directions=True,
+                                    random_contexts="matched_to_sampled_feature", random_seed=SEED + 2000,
+                                    norms="matched_per_sampled_feature", saved_residual_deltas=False)
+        json.dump(pair_meta, open(os.path.join(pair_out, "meta.json"), "w"), indent=1)
+        json.dump({"features": list(range(len(feats))), "matched_features": feats.tolist(),
+                   "contexts": context_indices, "panel": panel.cpu().tolist()},
+                  open(os.path.join(pair_out, "selection.json"), "w"))
+        np.savez_compressed(os.path.join(pair_out, "directions.npz"), directions=paired_vecs.cpu().numpy())
     tick(f"wrote {out_dir}/per_feature.csv, selection.json, meta.json")
 
 

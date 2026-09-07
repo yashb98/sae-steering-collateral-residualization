@@ -25,6 +25,8 @@ def main(results="results"):
             continue
         m = re.match(r"(.*?)(?:_seed(\d+))?$", s)
         base, seed = m.group(1), int(m.group(2) or 0)
+        if base not in {"gpt2_small", "pythia_70m_deduped", "gemma_2_2b", "llama_3_1_8b"}:
+            continue
         groups.setdefault(base, []).append((seed, pd.read_csv(p)))
     rng = np.random.default_rng(0)
     rows = []

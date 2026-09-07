@@ -8,3 +8,5 @@ results/**/logs/*.tmp
 results/*_smoke*/
 results/logs/*smoke*
 .pytest_cache/
+
+results/**/residual_deltas.npz

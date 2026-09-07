@@ -173,7 +173,7 @@ for j, s in enumerate(settings):
         if j == 0:
             ax.set_ylabel(yl)
         ax.set_xlabel(xl)
-fig.suptitle("Why effect magnitude is in the control set: crowded features steer harder, and harder steering moves more downstream features", x=0.01, ha="left", color=INK, fontsize=12)
+fig.suptitle("Effect magnitude correlates with collateral; its relationship to crowding varies by setting", x=0.01, ha="left", color=INK, fontsize=12)
 plt.tight_layout(rect=(0, 0, 1, 0.97))
 plt.show()'''
 
@@ -202,7 +202,7 @@ for ax, (tgt, name) in zip(axes, [("collateral_raw", "collateral count C"), ("co
 axes[0].set_ylabel("Spearman rho (partial where controlled)")
 h, l = axes[0].get_legend_handles_labels()
 fig.legend(h, l, loc="upper left", bbox_to_anchor=(0.01, 0.93), ncol=3, fontsize=9)
-fig.suptitle("Decoder crowding survives the control in GPT-2-small, is null in Pythia, loses most of its raw-count signal to effect magnitude in Gemma, and keeps a small share in Llama", x=0.01, ha="left", color=INK, fontsize=12)
+fig.suptitle("Crowding partial correlations vary across the four model/SAE settings", x=0.01, ha="left", color=INK, fontsize=12)
 plt.tight_layout(rect=(0, 0, 1, 0.88))
 plt.show()'''
 
@@ -212,7 +212,7 @@ for j, s in enumerate(settings):
     for i, (tgt, name) in enumerate([("collateral_raw", "collateral count C"), ("collateral_ctilde", "C-tilde")]):
         ax = axes[i, j]
         sub = part[(part.setting == s) & (part.target == tgt) & (part.control == "primary")]
-        sub = sub.iloc[(-sub.rho.abs()).argsort()[:6]].iloc[::-1]
+        sub = sub.dropna(subset=["rho"]).sort_values("rho", key=lambda v: v.abs(), ascending=False).head(6).iloc[::-1]
         ys = np.arange(len(sub))
         ax.barh(ys, sub.rho, 0.6, color=COLOR[s], edgecolor=SURFACE, linewidth=2)
         ax.errorbar(sub.rho, ys, xerr=[sub.rho - sub.ci_lo, sub.ci_hi - sub.rho], fmt="none", ecolor=INK2, elinewidth=1, capsize=3)
@@ -231,7 +231,7 @@ plt.show()'''
 
 CV_MD = """## 4. Predictor sets on the residualized target
 
-The paper's Table B3 residualizes the stability labels and re-runs its cross-validated ridge regressions on the residuals. This is the same procedure on the collateral labels: residualize on the primary control set, then predict with ridge (alpha = 1, standardized predictors) under five-fold cross-validation. Score = Spearman between held-out predictions and the residualized label, mean over folds, whiskers = fold standard deviation."""
+The paper's Table B3 residualizes the stability labels and re-runs its cross-validated ridge regressions on the residuals. Here the nuisance model is fitted inside each training fold and applied to that fold's held-out features; ridge predicts these collateral residuals (alpha = 1, predictor scaling fitted on the training fold) under five-fold cross-validation. Score = Spearman between held-out predictions and the residualized label, mean over folds, whiskers = fold standard deviation. Undefined scores from constant residualized predictions are omitted; nuisance-only linear baselines have no training-residual signal."""
 
 CV_RIDGE = r'''SETS = ["frequency_only", "actmag_only", "coactivation_only", "direct_logit_only", "geometry_only", "full_no_magnitude", "full_all"]
 fig, axes = plt.subplots(2, len(settings), figsize=(3.9 * len(settings), 6.4), sharex=True)
@@ -251,13 +251,13 @@ for j, s in enumerate(settings):
             ax.set_ylabel(name)
         if i == 1:
             ax.set_xlabel("CV Spearman on the residualized label")
-fig.suptitle("Table B3 analog: the no-magnitude set beats the frequency-only and activation-magnitude-only baselines in every setting", x=0.01, ha="left", color=INK, fontsize=12)
+fig.suptitle("Predictor-family comparison with nuisance fitting and scaling inside each training fold", x=0.01, ha="left", color=INK, fontsize=12)
 plt.tight_layout(rect=(0, 0, 1, 0.96))
 plt.show()'''
 
 ROBUST_MD = """## 5. Robustness: feature samples, machines, protocol
 
-Three checks. Different random samples of 300 features (seeds 0, 1, 2, same contexts). The same code on a Kaggle T4 with an older library stack. And the change from the original notebook's context construction (protocol v1, which left 33 of 2,048 GPT-2-small contexts ending in a pad token) to the reported protocol v2."""
+Three checks. Different samples of 300 features and random-context selections (seeds 0, 1, 2, same underlying context pool). The same code on a Kaggle T4 with an older library stack. And the change from the original notebook's context construction (protocol v1, which left 33 of 2,048 GPT-2-small contexts ending in a pad token) to the reported protocol v2."""
 
 ROBUST = r'''fig, axes = plt.subplots(1, 3, figsize=(15, 4.6))
 # seeds
@@ -314,13 +314,64 @@ fig.suptitle("Robustness checks", x=0.01, ha="left", color=INK, fontsize=12)
 plt.tight_layout(rect=(0, 0, 1, 0.95))
 plt.show()'''
 
-LIVE_MD = """## 6. Live reproduction on this GPU
+VARIANTS_MD = '''## 6. Context reproducibility, coefficients and paired random directions
+
+The even/odd context-pool split uses the same features and predictor estimates. It measures reproducibility within one corpus pool, not a universal predictor ceiling. Coefficient sweeps cover GPT-2 and Pythia; q95 uses the activation percentile conditional on firing. Paired random directions are normalized and scaled to each SAE decoder norm, then steered on exactly the same contexts. Both arms use effect-only adjustment because feature frequency is undefined for random directions. Intervals are pointwise feature-bootstrap intervals, not tests of a between-arm difference.'''
+
+VARIANTS = r'''variants = json.load(open(os.path.join(DATA, "analysis", "variants.json")))
+fig, axes = plt.subplots(1, 3, figsize=(16, 4.6))
+labels = [("collateral_raw", "count"), ("collateral_ctilde", "C-tilde"), ("kl_mean", "KL")]
+for i, s in enumerate(settings):
+    for j, (label, short) in enumerate(labels):
+        r = variants["reliability"][s]["labels"][label]
+        x = i + (j - 1) * 0.2
+        axes[0].errorbar(x, r["rho"], yerr=[[r["rho"]-r["ci_lo"]], [r["ci_hi"]-r["rho"]]],
+                         fmt=["o", "s", "^"][j], color=COLOR[s], capsize=2, label=short if i == 0 else None)
+axes[0].set_xticks(range(len(settings))); axes[0].set_xticklabels([PRETTY[s] for s in settings], rotation=15)
+axes[0].set_ylabel("Spearman between disjoint context pools")
+axes[0].set_ylim(0, 1.05); axes[0].set_title("Label reproducibility"); axes[0].legend()
+for s in settings[:2]:
+    for x, label in enumerate(["alpha0.5", "alpha1", "alpha2", "alpha4", "q95 firing"]):
+        r = variants["alpha"][s][label]["collateral_raw|primary"]
+        axes[1].errorbar(x, r["rho"], yerr=[[r["rho"]-r["ci_lo"]], [r["ci_hi"]-r["rho"]]],
+                         fmt="o", color=COLOR[s], capsize=3, label=PRETTY[s] if x == 0 else None)
+axes[1].set_xticks(range(5)); axes[1].set_xticklabels(["0.5", "1", "2", "4", "q95"])
+axes[1].set_xlabel("additive coefficient"); axes[1].set_ylabel("crowding vs count, primary partial rho")
+axes[1].set_title("Coefficient sensitivity"); axes[1].legend(); axes[1].axhline(0, color=AXIS)
+for i, s in enumerate(settings):
+    for j, (arm, marker) in enumerate([("SAE features", "o"), ("paired random directions", "s")]):
+        r = variants["random"][s][arm]["collateral_raw|effect_only"]
+        axes[2].errorbar(i+(j-0.5)*0.2, r["rho"], yerr=[[r["rho"]-r["ci_lo"]], [r["ci_hi"]-r["rho"]]],
+                         fmt=marker, color=COLOR[s], capsize=3, label=arm if i == 0 else None)
+axes[2].set_xticks(range(len(settings))); axes[2].set_xticklabels([PRETTY[s] for s in settings], rotation=15)
+axes[2].set_ylabel("crowding vs count, effect-only partial rho")
+axes[2].set_title("Same contexts and decoder norms"); axes[2].legend(); axes[2].axhline(0, color=AXIS)
+plt.tight_layout(); plt.show()'''
+
+RESIDUAL_MD = '''## 7. Change outside the SAE reconstruction
+
+For downstream change dh and reconstruction change dr, the unrepresented change is de = dh - dr. The explained-change score is 1 - sum(||de||²) / sum(||dh||²) across contexts for each feature. Negative scores mean predicting zero change beats using dr. Because dr and de need not be orthogonal, this is not a nonnegative variance partition. The separate norm ratio does not measure explanation. These hidden-state quantities do not establish behavioral harm.'''
+
+RESIDUAL = r'''fig, axes = plt.subplots(1, 2, figsize=(11, 4.6))
+for s in settings:
+    d = feat[s]
+    axes[0].scatter(d.resid_reconstruction_norm_ratio, d.resid_change_explained_energy,
+                    s=14, alpha=0.55, color=COLOR[s], label=PRETTY[s])
+    axes[1].scatter(d.crowding, d.resid_error_delta_norm, s=14, alpha=0.55, color=COLOR[s])
+axes[0].axhline(0, color=AXIS); axes[0].set_yscale("symlog", linthresh=1)
+axes[0].set_xlabel("reconstruction norm ratio"); axes[0].set_ylabel("explained-change score (symlog)")
+axes[0].set_title("A norm ratio is not an explained fraction"); axes[0].legend()
+axes[1].set_xlabel("decoder crowding"); axes[1].set_ylabel("mean norm of unrepresented change")
+axes[1].set_title("Residual reconstruction-error change")
+plt.tight_layout(); plt.show()'''
+
+LIVE_MD = """## 8. Live reproduction on this GPU
 
 The two ungated settings are recomputed here from scratch with the same script as the dataset (protocol v2, seed 0) and compared with the dataset's headline statistics. GPT-2-small takes a few minutes on a T4, Pythia-70M about one."""
 
 CLOSING = """## Notes
 
-Natural activation is taken as the mean final-token activation over the 2,048 contexts, and the intervention value is constant under fixed_global_add with alpha = 1.0, so it drops out of the regression. Feature sampling uses seed 0 over the firing-frequency band [0.002, 0.50]. The downstream panel is the most frequently active downstream features on clean contexts (2,048; 1,024 for Llama). Gemma-2-2B and Llama-3.1-8B are loaded from Hugging Face under their gated licences on the original machine; Llama runs in bfloat16 without TransformerLens weight processing to fit in memory, which leaves the residual stream the SAEs read unchanged. Full write-up and LaTeX table: `RESULTS.md` in the repository."""
+Natural activation is taken as the mean final-token activation over the 2,048 contexts, and the intervention value is constant under fixed_global_add with alpha = 1.0, so it drops out of the regression. Feature sampling uses seed 0 over the firing-frequency band [0.002, 0.50]. The downstream panel is the most frequently active downstream features on clean contexts (2,048; 1,024 for Llama). Gemma-2-2B and Llama-3.1-8B are loaded from Hugging Face under their gated licences on the original machine; Llama runs in bfloat16 without TransformerLens weight processing to fit in memory. Model, dictionary and loading choices vary together; mean L0 is a loading sanity check, not proof of preprocessing equivalence. Full write-up and LaTeX table: `RESULTS.md` in the repository."""
 
 
 def live_cells():
@@ -335,12 +386,12 @@ def live_cells():
           "os.makedirs('src', exist_ok=True); os.makedirs('configs', exist_ok=True); os.makedirs('results/logs', exist_ok=True)\n"
           "open('src/run_setting.py', 'w').write(json.loads(%s))\n%s\n"
           "os.environ['HF_HUB_ENABLE_HF_TRANSFER'] = '0'" % (json.dumps(json.dumps(src)), write))
-    c2 = "!python src/run_setting.py --config configs/pythia_70m_deduped.yaml --protocol v2 --out results/live_pythia 2>&1 | grep -v 'Warning\\|warn\\|Loading weights' | tail -18"
-    c3 = "!python src/run_setting.py --config configs/gpt2_small.yaml --protocol v2 --out results/live_gpt2 2>&1 | grep -v 'Warning\\|warn\\|Loading weights' | tail -18"
+    c2 = "subprocess.run([sys.executable, 'src/run_setting.py', '--config', 'configs/pythia_70m_deduped.yaml', '--protocol', 'v2', '--out', 'results/live_pythia'], check=True)"
+    c3 = "subprocess.run([sys.executable, 'src/run_setting.py', '--config', 'configs/gpt2_small.yaml', '--protocol', 'v2', '--out', 'results/live_gpt2'], check=True)"
     c4 = r'''rows = []
 for s, live in [("pythia_70m_deduped", "results/live_pythia/meta.json"), ("gpt2_small", "results/live_gpt2/meta.json")]:
     if not os.path.exists(live):
-        continue
+        raise FileNotFoundError(live)
     L = json.load(open(live))
     for k, v in meta[s]["headline"].items():
         rows.append({"setting": PRETTY[s], "statistic": k, "dataset (GB10)": v, "this Kaggle run": L["headline"][k], "difference": L["headline"][k] - v})
@@ -353,7 +404,7 @@ pd.DataFrame(rows).round(3)'''
 def build():
     cells = [md(INTRO), code(SETUP), md(EDA_MD), code(DESCRIBE), code(HIST), code(HEATMAP), md(SCATTER_MD), code(SCATTER),
              code(MEDIATION), md(CONTROL_MD), code(PARTIALS), code(TOP_PREDICTORS), md(CV_MD), code(CV_RIDGE), md(ROBUST_MD),
-             code(ROBUST), md(LIVE_MD)] + live_cells() + [md(CLOSING)]
+             code(ROBUST), md(VARIANTS_MD), code(VARIANTS), md(RESIDUAL_MD), code(RESIDUAL), md(LIVE_MD)] + live_cells() + [md(CLOSING)]
     nb = {"cells": cells, "metadata": {"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
                                         "language_info": {"name": "python"}}, "nbformat": 4, "nbformat_minor": 5}
     json.dump(nb, open(os.path.join(HERE, "eda.ipynb"), "w"), indent=1)
@@ -375,7 +426,7 @@ def run_local(outdir):
     plt.show = show
     g = {}
     for name, src in [("setup", SETUP), ("describe", DESCRIBE), ("hist", HIST), ("heatmap", HEATMAP), ("scatter", SCATTER),
-                      ("mediation", MEDIATION), ("partials", PARTIALS), ("top", TOP_PREDICTORS), ("cv", CV_RIDGE), ("robust", ROBUST)]:
+                      ("mediation", MEDIATION), ("partials", PARTIALS), ("top", TOP_PREDICTORS), ("cv", CV_RIDGE), ("robust", ROBUST), ("variants", VARIANTS), ("residual", RESIDUAL)]:
         exec(compile(src, name, "exec"), g)
         print("ok:", name)
     print("figures:", counter["n"], "->", outdir)
