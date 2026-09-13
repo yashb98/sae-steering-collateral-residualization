@@ -221,11 +221,18 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--out", default=None)
     ap.add_argument("--cache", default=None, help="optional content-validated cache of per-setting statistics")
+    ap.add_argument("--natural-activation", default="act_mag",
+                    help="column used as natural activation a-bar_f in the primary/robust controls "
+                         "(default act_mag; alternatives on this branch: act_mean_firing, act_max, ctx_mean_act)")
     args = ap.parse_args()
+    control_sets = {name: [args.natural_activation if c == "act_mag" else c for c in cols]
+                    for name, cols in CONTROLS.items()}
     out = args.out or os.path.join(args.results, "analysis")
     os.makedirs(out, exist_ok=True)
 
     paths = sorted(glob.glob(os.path.join(args.results, "*", "per_feature.csv")))
+    if args.natural_activation != "act_mag":
+        print(f"natural activation A/B: a-bar_f := {args.natural_activation}")
     settings = {}
     for p in paths:
         s = os.path.basename(os.path.dirname(p))
@@ -258,7 +265,7 @@ def main():
         first_row, first_cv = len(rows), len(cv_rows)
         usable_preds = [p for p in ALL_PREDICTORS if p in df.columns and df[p].notna().sum() >= 30]
         for tgt in TARGETS + [t for t in EXTRA_TARGETS if t in df.columns]:
-            for cname, controls in CONTROLS.items():
+            for cname, controls in control_sets.items():
                 if any(c not in df.columns or df[c].isna().all() for c in controls):
                     continue
                 tested = [p for p in usable_preds if p not in controls or cname == "none"]
@@ -311,8 +318,8 @@ def main():
         lines.append("")
     open(os.path.join(out, "summary.md"), "w").write("\n".join(lines))
     json.dump({"n_boot": args.n_boot, "seed": args.seed, "settings": list(settings), "versions": dependencies,
-               "controls": CONTROLS, "predictor_sets": PRED_SETS,
-               "assumptions": ["natural activation a-bar_f := act_mag (mean final-token activation over all contexts)",
+               "controls": control_sets, "predictor_sets": PRED_SETS, "natural_activation": args.natural_activation,
+               "assumptions": [f"natural activation a-bar_f := {args.natural_activation}",
                                "intervention value c_f is constant under fixed_global_add (alpha = 1.0) and is dropped",
                                "ridge alpha = 1.0 on standardised predictors, 5-fold KFold shuffle seed 0",
                                "nuisance regression and predictor scaling are fitted inside each training fold",
