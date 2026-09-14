@@ -41,7 +41,7 @@ The same 300 features and clean-activation predictors are retained. Labels use 4
 
 ## Steering coefficient
 
-Only GPT-2 and Pythia have coefficient sweeps. q95 is the 95th percentile conditional on firing (activation > 1e-6), multiplied by alpha; it is not the unconditional activation percentile. The primary control includes the varying intervention value for q95. These are coefficient sensitivity checks, without evidence that the selected scale improves generated behavior.
+GPT-2 and Pythia have alpha in {0.5, 1, 2, 4} and a q95 firing variant; Gemma and Llama have alpha in {0.5, 1, 2}. q95 is the 95th percentile conditional on firing (activation > 1e-6), multiplied by alpha; it is not the unconditional activation percentile. The primary control includes the varying intervention value for q95. These are coefficient sensitivity checks, without evidence that the selected scale improves generated behavior.
 
 | Setting | Variant | raw count: rho | primary partial [95% CI] | C-tilde: rho | primary partial [95% CI] | median coefficient |
 |---|---|---|---|---|---|---|
@@ -55,6 +55,32 @@ Only GPT-2 and Pythia have coefficient sweeps. q95 is the 95th percentile condit
 | Pythia-70M-deduped | alpha2 | -0.046 | -0.048 [-0.167, +0.070] | +0.056 | -0.008 [-0.134, +0.120] | 2 |
 | Pythia-70M-deduped | alpha4 | -0.036 | -0.076 [-0.199, +0.053] | +0.048 | -0.055 [-0.185, +0.079] | 4 |
 | Pythia-70M-deduped | q95 firing | +0.214 | +0.037 [-0.085, +0.166] | +0.198 | +0.110 [-0.015, +0.226] | 0.792 |
+| Gemma-2-2B | alpha1 | +0.512 | +0.242 [+0.121, +0.361] | +0.069 | +0.252 [+0.131, +0.366] | 1 |
+| Gemma-2-2B | alpha0.5 | +0.555 | +0.261 [+0.149, +0.375] | +0.317 | +0.262 [+0.151, +0.374] | 0.5 |
+| Gemma-2-2B | alpha2 | +0.413 | +0.181 [+0.060, +0.304] | -0.318 | +0.178 [+0.041, +0.305] | 2 |
+| Llama-3.1-8B | alpha1 | +0.222 | +0.152 [+0.039, +0.265] | +0.201 | +0.166 [+0.055, +0.279] | 1 |
+| Llama-3.1-8B | alpha0.5 | +0.251 | +0.179 [+0.069, +0.287] | +0.241 | +0.179 [+0.066, +0.288] | 0.5 |
+| Llama-3.1-8B | alpha2 | +0.193 | +0.111 [-0.005, +0.229] | +0.060 | +0.108 [-0.005, +0.221] | 2 |
+
+## Feature-selection band
+
+The canonical band keeps features with final-token firing frequency in [0.002, 0.50]; the bandb variant uses [0.005, 0.30]. The eligible pool and the sampled 300 features differ between bands, so these are separate feature samples, not the same features under two filters. GPT-2 and Pythia only.
+
+| Setting | Band | eligible | raw count: rho | primary partial [95% CI] | C-tilde: rho | primary partial [95% CI] |
+|---|---|---|---|---|---|---|
+| GPT-2-small | [0.002, 0.50] | 7532 | +0.482 | +0.475 [+0.374, +0.569] | +0.344 | +0.425 [+0.317, +0.524] |
+| GPT-2-small | [0.005, 0.30] | 3546 | +0.460 | +0.423 [+0.309, +0.524] | +0.244 | +0.372 [+0.265, +0.470] |
+| Pythia-70M-deduped | [0.002, 0.50] | 4375 | -0.022 | -0.004 [-0.120, +0.116] | +0.031 | +0.001 [-0.117, +0.123] |
+| Pythia-70M-deduped | [0.005, 0.30] | 2945 | -0.023 | -0.053 [-0.166, +0.062] | +0.016 | -0.052 [-0.173, +0.072] |
+
+## Llama precision: bfloat16 vs float32
+
+The canonical Llama run loads in bfloat16 with TransformerLens weight processing off; the retry loads the same checkpoint in float32. Both have 2,837 eligible features, but only 88 of the 300 sampled features coincide: dtype shifts final-token frequencies enough to move features across the eligibility band edges, so these are different feature samples, not the same features at two precisions.
+
+| Run | dtype | feature overlap | raw count: rho | primary partial [95% CI] | C-tilde: rho | primary partial [95% CI] |
+|---|---|---|---|---|---|---|
+| canonical | bfloat16 | 300 of 300 | +0.222 | +0.152 [+0.038, +0.266] | +0.201 | +0.166 [+0.053, +0.277] |
+| float32 retry | float32 | 88 of 300 | +0.221 | +0.142 [+0.017, +0.263] | +0.144 | +0.160 [+0.043, +0.275] |
 
 ## Paired random-direction control
 
@@ -62,14 +88,14 @@ Each of 300 isotropic Gaussian directions is normalized to unit length, then sca
 
 | Setting | Vectors | raw count: rho [95% CI] | partial given E_f [95% CI] | C-tilde: rho [95% CI] | partial given E_f [95% CI] | median count | median effect L2 | median C-tilde |
 |---|---|---|---|---|---|---|---|---|
-| GPT-2-small | SAE features | +0.482 [+0.382, +0.573] | +0.444 [+0.340, +0.539] | +0.344 [+0.237, +0.447] | +0.398 [+0.290, +0.499] | 11.5 | 3.86 | 2.89 |
-| GPT-2-small | paired random directions | -0.063 [-0.172, +0.048] | -0.064 [-0.174, +0.047] | -0.077 [-0.187, +0.035] | -0.075 [-0.186, +0.036] | 8.7 | 3.52 | 2.47 |
-| Pythia-70M-deduped | SAE features | -0.022 [-0.139, +0.092] | +0.008 [-0.105, +0.124] | +0.031 [-0.085, +0.143] | +0.016 [-0.096, +0.130] | 22.1 | 35.4 | 0.614 |
-| Pythia-70M-deduped | paired random directions | +0.009 [-0.104, +0.123] | +0.007 [-0.109, +0.122] | +0.021 [-0.098, +0.139] | +0.013 [-0.106, +0.131] | 21.7 | 33.3 | 0.659 |
-| Gemma-2-2B | SAE features | +0.512 [+0.411, +0.603] | +0.267 [+0.152, +0.379] | +0.069 [-0.054, +0.190] | +0.266 [+0.143, +0.378] | 4.3 | 5.48 | 0.759 |
-| Gemma-2-2B | paired random directions | -0.012 [-0.127, +0.102] | -0.011 [-0.128, +0.105] | -0.006 [-0.126, +0.113] | -0.015 [-0.123, +0.097] | 3.2 | 5.01 | 0.626 |
-| Llama-3.1-8B | SAE features | +0.222 [+0.108, +0.329] | +0.161 [+0.051, +0.270] | +0.201 [+0.090, +0.303] | +0.171 [+0.062, +0.280] | 2.7 | 14 | 0.184 |
-| Llama-3.1-8B | paired random directions | -0.058 [-0.172, +0.060] | -0.089 [-0.195, +0.021] | -0.070 [-0.184, +0.051] | -0.091 [-0.197, +0.019] | 1.5 | 12.8 | 0.115 |
+| GPT-2-small | SAE features | +0.482 [+0.382, +0.570] | +0.444 [+0.339, +0.540] | +0.344 [+0.234, +0.448] | +0.398 [+0.290, +0.498] | 11.5 | 3.86 | 2.89 |
+| GPT-2-small | paired random directions | -0.063 [-0.173, +0.051] | -0.064 [-0.174, +0.049] | -0.077 [-0.187, +0.034] | -0.075 [-0.185, +0.038] | 8.7 | 3.52 | 2.47 |
+| Pythia-70M-deduped | SAE features | -0.022 [-0.135, +0.093] | +0.008 [-0.106, +0.123] | +0.031 [-0.084, +0.145] | +0.016 [-0.096, +0.130] | 22.1 | 35.4 | 0.614 |
+| Pythia-70M-deduped | paired random directions | +0.009 [-0.108, +0.121] | +0.007 [-0.109, +0.123] | +0.021 [-0.097, +0.136] | +0.013 [-0.104, +0.131] | 21.7 | 33.3 | 0.659 |
+| Gemma-2-2B | SAE features | +0.512 [+0.413, +0.601] | +0.267 [+0.149, +0.385] | +0.069 [-0.052, +0.187] | +0.266 [+0.146, +0.381] | 4.3 | 5.48 | 0.759 |
+| Gemma-2-2B | paired random directions | -0.012 [-0.125, +0.102] | -0.011 [-0.128, +0.104] | -0.006 [-0.126, +0.111] | -0.015 [-0.128, +0.097] | 3.2 | 5.01 | 0.626 |
+| Llama-3.1-8B | SAE features | +0.222 [+0.108, +0.330] | +0.161 [+0.051, +0.272] | +0.201 [+0.091, +0.308] | +0.171 [+0.060, +0.279] | 2.7 | 14 | 0.184 |
+| Llama-3.1-8B | paired random directions | -0.058 [-0.176, +0.060] | -0.089 [-0.197, +0.022] | -0.070 [-0.186, +0.050] | -0.091 [-0.200, +0.017] | 1.5 | 12.8 | 0.115 |
 
 ## Dense-panel exclusion
 
@@ -77,9 +103,9 @@ Panel features firing in more than 10% of clean contexts are excluded. The remai
 
 | Setting | panel kept | crowding vs count (all) | crowding vs count (no dense) | primary partial (no dense) [95% CI] |
 |---|---|---|---|---|
-| GPT-2-small | 2042 of 2048 | +0.482 | +0.486 | +0.477 [+0.373, +0.568] |
-| Pythia-70M-deduped | 1969 of 2048 | -0.022 | -0.093 | -0.093 [-0.212, +0.030] |
-| Gemma-2-2B | 2011 of 2048 | +0.512 | +0.515 | +0.196 [+0.073, +0.315] |
+| GPT-2-small | 2042 of 2048 | +0.482 | +0.486 | +0.477 [+0.374, +0.569] |
+| Pythia-70M-deduped | 1969 of 2048 | -0.022 | -0.093 | -0.093 [-0.210, +0.029] |
+| Gemma-2-2B | 2011 of 2048 | +0.512 | +0.515 | +0.196 [+0.075, +0.316] |
 | Llama-3.1-8B | 1005 of 1024 | +0.222 | +0.242 | +0.144 [+0.032, +0.256] |
 
 ## Residual-space change
@@ -88,10 +114,10 @@ Let dh be the downstream hidden-state change and dr the change in its full SAE r
 
 | Setting | crowding vs ||dh|| [95% CI] | mean reconstruction norm ratio | mean explained-change score | median score | features with score < 0 |
 |---|---|---|---|---|---|
-| GPT-2-small | +0.328 [+0.220, +0.427] | 0.845 | -0.377 | -0.234 | 78.3% |
-| Pythia-70M-deduped | +0.144 [+0.029, +0.260] | 0.778 | +0.466 | +0.452 | 0.0% |
-| Gemma-2-2B | +0.626 [+0.536, +0.703] | 2.289 | -13.766 | -13.581 | 100.0% |
-| Llama-3.1-8B | +0.172 [+0.056, +0.283] | 1.186 | -2.658 | -2.579 | 100.0% |
+| GPT-2-small | +0.328 [+0.222, +0.429] | 0.845 | -0.377 | -0.234 | 78.3% |
+| Pythia-70M-deduped | +0.144 [+0.027, +0.259] | 0.778 | +0.466 | +0.452 | 0.0% |
+| Gemma-2-2B | +0.626 [+0.536, +0.702] | 2.289 | -13.766 | -13.581 | 100.0% |
+| Llama-3.1-8B | +0.172 [+0.054, +0.284] | 1.186 | -2.658 | -2.579 | 100.0% |
 
 ## Additional stability summaries
 

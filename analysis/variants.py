@@ -83,20 +83,58 @@ def main():
             lines.append(f"| {PRETTY[s]} | {label} | {fmt(r)} | {extra} |")
 
     lines += ["", "## Steering coefficient", "",
-              "Only GPT-2 and Pythia have coefficient sweeps. q95 is the 95th percentile conditional on firing "
+              "GPT-2 and Pythia have alpha in {0.5, 1, 2, 4} and a q95 firing variant; Gemma and Llama have alpha in "
+              "{0.5, 1, 2}. q95 is the 95th percentile conditional on firing "
               "(activation > 1e-6), multiplied by alpha; it is not the unconditional activation percentile. "
               "The primary control includes the varying intervention value for q95. These are coefficient sensitivity checks, "
               "without evidence that the selected scale improves generated behavior.", "",
               "| Setting | Variant | raw count: rho | primary partial [95% CI] | C-tilde: rho | primary partial [95% CI] | median coefficient |",
               "|---|---|---|---|---|---|---|"]
-    for s in ORDER[:2]:
+    for s in ORDER:
         for suffix, name in [("", "alpha1"), ("_alpha0.5", "alpha0.5"), ("_alpha2", "alpha2"), ("_alpha4", "alpha4"), ("_q95", "q95 firing")]:
+            if not (root/(s + suffix)/"per_feature.csv").exists():
+                continue
             df = load(root, s + suffix)
             r = crowding_stats(df, a.n_boot, rng, ("none", "primary"))
             r["median_intervention_value"] = float(df.intervention_value.median())
             out["alpha"].setdefault(s, {})[name] = r
             lines.append(f"| {PRETTY[s]} | {name} | {r['collateral_raw|none']['rho']:+.3f} | {fmt(r['collateral_raw|primary'])} | "
                          f"{r['collateral_ctilde|none']['rho']:+.3f} | {fmt(r['collateral_ctilde|primary'])} | {df.intervention_value.median():.3g} |")
+
+    lines += ["", "## Feature-selection band", "",
+              "The canonical band keeps features with final-token firing frequency in [0.002, 0.50]; the bandb variant uses "
+              "[0.005, 0.30]. The eligible pool and the sampled 300 features differ between bands, so these are separate "
+              "feature samples, not the same features under two filters. GPT-2 and Pythia only.", "",
+              "| Setting | Band | eligible | raw count: rho | primary partial [95% CI] | C-tilde: rho | primary partial [95% CI] |",
+              "|---|---|---|---|---|---|---|"]
+    for s in ORDER[:2]:
+        for suffix, name in [("", "[0.002, 0.50]"), ("_bandb", "[0.005, 0.30]")]:
+            df = load(root, s + suffix)
+            meta = json.loads((root/(s + suffix)/"meta.json").read_text())
+            n_eligible = meta["sizes"]["n_eligible"]
+            r = crowding_stats(df, a.n_boot, rng, ("none", "primary"))
+            out.setdefault("band", {}).setdefault(s, {})[name] = r
+            lines.append(f"| {PRETTY[s]} | {name} | {n_eligible} | {r['collateral_raw|none']['rho']:+.3f} | {fmt(r['collateral_raw|primary'])} | "
+                         f"{r['collateral_ctilde|none']['rho']:+.3f} | {fmt(r['collateral_ctilde|primary'])} |")
+
+    df_bf16, df_fp32 = load(root, "llama_3_1_8b"), load(root, "llama_3_1_8b_fp32")
+    overlap = len(set(df_bf16.feature) & set(df_fp32.feature))
+    lines += ["", "## Llama precision: bfloat16 vs float32", "",
+              "The canonical Llama run loads in bfloat16 with TransformerLens weight processing off; the retry loads the same "
+              "checkpoint in float32. Both have 2,837 eligible features, but only "
+              f"{overlap} of the 300 sampled features coincide: "
+              "dtype shifts final-token frequencies enough to move features across the eligibility band edges, so these are "
+              "different feature samples, not the same features at two precisions.", "",
+              "| Run | dtype | feature overlap | raw count: rho | primary partial [95% CI] | C-tilde: rho | primary partial [95% CI] |",
+              "|---|---|---|---|---|---|---|"]
+    for suffix, name in [("", "canonical"), ("_fp32", "float32 retry")]:
+        df = df_bf16 if suffix == "" else df_fp32
+        meta = json.loads((root/("llama_3_1_8b" + suffix)/"meta.json").read_text())
+        r = crowding_stats(df, a.n_boot, rng, ("none", "primary"))
+        out.setdefault("precision", {})[name] = r
+        lines.append(f"| {name} | {meta['dtype']} | {len(set(df.feature) & set(df_bf16.feature))} of 300 | "
+                     f"{r['collateral_raw|none']['rho']:+.3f} | {fmt(r['collateral_raw|primary'])} | "
+                     f"{r['collateral_ctilde|none']['rho']:+.3f} | {fmt(r['collateral_ctilde|primary'])} |")
 
     lines += ["", "## Paired random-direction control", "",
               "Each of 300 isotropic Gaussian directions is normalized to unit length, then scaled to the corresponding "

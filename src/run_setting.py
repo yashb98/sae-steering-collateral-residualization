@@ -431,9 +431,12 @@ def main():
         logit_s, down_resid = steered_forward(toks, d_f, alpha_f)
         down_resid = down_resid.float()
         u_steer = encode_final(sae_d, down_resid)
-        du = (u_steer - u_clean)[:, panel].abs()                      # [n_ctx, PANEL]
+        du_signed = (u_steer - u_clean)[:, panel]                    # [n_ctx, PANEL]
+        du = du_signed.abs()
         coll = (du > TAU).float().sum(-1).mean().item()               # C_{f,tau}
         coll_nd = (du[:, panel_nodense] > TAU).float().sum(-1).mean().item()
+        panel_s2 = (u_clean[:, panel] ** 2).mean(0)                   # clean second moment per panel feature
+        coll_w2 = (panel_s2 * du_signed ** 2).sum(-1).mean().item()   # COAST-style weighted collateral
         dh = down_resid - h_clean                                      # downstream residual change
         dh_norm = dh.norm(dim=-1)
         drec = sae_d.decode(u_steer) - sae_d.decode(u_clean)          # the part of dh the downstream SAE sees
@@ -468,6 +471,7 @@ def main():
             "logit_l2": float(logit_l2[n]), "logit_linf": float(logit_linf[n]),
             "logit_entropy": float(logit_entropy[n]), "logit_top10_mass": float(logit_top10_mass[n]),
             "collateral_raw": coll, "effect_l2": Ef, "collateral_ctilde": coll / (Ef + 1e-8),
+            "collateral_w2": coll_w2, "collateral_w2_per_effect": coll_w2 / (Ef + 1e-8),
             "collateral_raw_nodense": coll_nd, "collateral_ctilde_nodense": coll_nd / (Ef + 1e-8),
             **residual_labels,
             "stab_signed": cos.mean().item(), "stab_abs": cos.abs().mean().item(),

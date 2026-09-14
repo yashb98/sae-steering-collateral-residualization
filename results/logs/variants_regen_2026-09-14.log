@@ -1,0 +1,3 @@
+wrote results/analysis/variants.md
+wrote results/analysis/ab_derived.json and results/analysis/ab_derived.md
+wrote RESULTS.md and results/analysis/table_collateral_residualized.tex | settings: ['gpt2_small', 'pythia_70m_deduped', 'gemma_2_2b', 'llama_3_1_8b']

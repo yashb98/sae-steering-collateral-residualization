@@ -128,6 +128,13 @@ Orthogonal-selection demo (median raw collateral within effect_l2 terciles):
 | mid | 3.93 | 5.21 |
 | high | 5.07 | 5.71 |
 
+Dose-response over alphas [0.5, 1.0, 2.0] (n=300 common features):
+
+| target | median collateral per alpha | per-feature rho(collateral, alpha) median [IQR] |
+|---|---|---|
+| collateral_raw | ['0.81', '4.31', '14.97'] | +1.000 [+1.000, +1.000] |
+| collateral_ctilde | ['0.28', '0.76', '1.36'] | +1.000 [+1.000, +1.000] |
+
 ## llama_3_1_8b
 
 Measurement ceiling (ctxA/ctxB split-half, Spearman-Brown) and attenuation-corrected crowding partial rho:
@@ -164,3 +171,10 @@ Orthogonal-selection demo (median raw collateral within effect_l2 terciles):
 | low | 2.08 | 2.31 |
 | mid | 2.47 | 2.98 |
 | high | 3.24 | 3.65 |
+
+Dose-response over alphas [0.5, 1.0, 2.0] (n=300 common features):
+
+| target | median collateral per alpha | per-feature rho(collateral, alpha) median [IQR] |
+|---|---|---|
+| collateral_raw | ['1.15', '2.68', '6.18'] | +1.000 [+1.000, +1.000] |
+| collateral_ctilde | ['0.10', '0.18', '0.28'] | +1.000 [+1.000, +1.000] |

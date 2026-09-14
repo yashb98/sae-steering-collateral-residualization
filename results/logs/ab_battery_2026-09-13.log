@@ -1,0 +1,4021 @@
+=== START llama_seed1 2026-09-13T23:29:56+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "llama_3_1_8b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 1024, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "bfloat16", "seed": 1}
+[    9.7s] device NVIDIA GB10; loading SAEs
+[   14.0s] SAEs loaded: primary d_sae=32768 (blocks.16.hook_resid_post), downstream d_sae=32768 (blocks.20.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:  66%|██████▋   | 193/291 [00:00<00:00, 1911.86it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 2134.65it/s]
+Loaded pretrained model meta-llama/Llama-3.1-8B into HookedTransformer
+[   37.7s] model loaded: meta-llama/Llama-3.1-8B d_model=4096 n_layers=32 norm=RMS dtype=bfloat16
+[   37.7s] streaming wikitext-103 train split
+[   44.9s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   45.5s] 2048 contexts x 48 tokens; short texts dropped (v2): 27; contexts whose final token is the pad token: 0
+[  154.0s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=32.2 downstream=31.4; primary features never firing=61.0%
+[  154.7s] predictors: crowding done
+eligible features: 2837 of 32768 | sampled: 300
+panel 1024 features; 1005 with firing frequency <= 0.1
+[  155.0s] predictors: all done
+[  155.0s] steering 300 features x 48 contexts
+[  155.0s] feature 1: clean forward
+[  155.8s] feature 1: SAE forward
+[  157.5s] feature 1: SAE eigenvalues
+[  157.5s] feature 1: complete
+[  157.5s] feature 2: clean forward
+[  158.3s] feature 2: SAE forward
+[  160.0s] feature 2: SAE eigenvalues
+[  160.0s] feature 2: complete
+[  160.0s] feature 3: clean forward
+[  160.8s] feature 3: SAE forward
+[  162.6s] feature 3: SAE eigenvalues
+[  162.6s] feature 3: complete
+[  162.6s] feature 4: clean forward
+[  163.3s] feature 4: SAE forward
+[  165.1s] feature 4: SAE eigenvalues
+[  165.1s] feature 4: complete
+[  165.1s] feature 5: clean forward
+[  165.9s] feature 5: SAE forward
+[  167.7s] feature 5: SAE eigenvalues
+[  167.7s] feature 5: complete
+[  167.7s] feature 6: clean forward
+[  168.4s] feature 6: SAE forward
+[  170.2s] feature 6: SAE eigenvalues
+[  170.3s] feature 6: complete
+[  170.3s] feature 7: clean forward
+[  171.0s] feature 7: SAE forward
+[  172.8s] feature 7: SAE eigenvalues
+[  172.8s] feature 7: complete
+[  172.8s] feature 8: clean forward
+[  173.6s] feature 8: SAE forward
+[  175.4s] feature 8: SAE eigenvalues
+[  175.4s] feature 8: complete
+[  175.4s] feature 9: clean forward
+[  176.1s] feature 9: SAE forward
+[  178.0s] feature 9: SAE eigenvalues
+[  178.0s] feature 9: complete
+[  178.0s] feature 10: clean forward
+[  178.7s] feature 10: SAE forward
+[  180.5s] feature 10: SAE eigenvalues
+[  180.5s] feature 10: complete
+[  180.5s] feature 11: clean forward
+[  181.3s] feature 11: SAE forward
+[  183.1s] feature 11: SAE eigenvalues
+[  183.1s] feature 11: complete
+[  183.1s] feature 12: clean forward
+[  183.8s] feature 12: SAE forward
+[  185.6s] feature 12: SAE eigenvalues
+[  185.6s] feature 12: complete
+[  185.6s] feature 13: clean forward
+[  186.4s] feature 13: SAE forward
+[  188.2s] feature 13: SAE eigenvalues
+[  188.2s] feature 13: complete
+[  188.2s] feature 14: clean forward
+[  188.9s] feature 14: SAE forward
+[  190.7s] feature 14: SAE eigenvalues
+[  190.7s] feature 14: complete
+[  190.7s] feature 15: clean forward
+[  191.5s] feature 15: SAE forward
+[  193.3s] feature 15: SAE eigenvalues
+[  193.3s] feature 15: complete
+[  193.3s] feature 16: clean forward
+[  194.1s] feature 16: SAE forward
+[  195.8s] feature 16: SAE eigenvalues
+[  195.8s] feature 16: complete
+[  195.8s] feature 17: clean forward
+[  196.6s] feature 17: SAE forward
+[  198.4s] feature 17: SAE eigenvalues
+[  198.4s] feature 17: complete
+[  198.4s] feature 18: clean forward
+[  199.2s] feature 18: SAE forward
+[  201.0s] feature 18: SAE eigenvalues
+[  201.0s] feature 18: complete
+[  201.0s] feature 19: clean forward
+[  201.7s] feature 19: SAE forward
+[  203.5s] feature 19: SAE eigenvalues
+[  203.5s] feature 19: complete
+[  203.5s] feature 20: clean forward
+[  204.2s] feature 20: SAE forward
+[  206.0s] feature 20: SAE eigenvalues
+[  206.0s] feature 20: complete
+[  206.0s] feature 21: clean forward
+[  206.8s] feature 21: SAE forward
+[  208.6s] feature 21: SAE eigenvalues
+[  208.6s] feature 21: complete
+[  208.6s] feature 22: clean forward
+[  209.3s] feature 22: SAE forward
+[  211.1s] feature 22: SAE eigenvalues
+[  211.1s] feature 22: complete
+[  211.1s] feature 23: clean forward
+[  211.9s] feature 23: SAE forward
+[  213.7s] feature 23: SAE eigenvalues
+[  213.7s] feature 23: complete
+[  213.7s] feature 24: clean forward
+[  214.4s] feature 24: SAE forward
+[  216.2s] feature 24: SAE eigenvalues
+[  216.2s] feature 24: complete
+[  216.2s] feature 25: clean forward
+[  217.0s] feature 25: SAE forward
+[  218.8s] feature 25: SAE eigenvalues
+[  218.8s] feature 25: complete
+[  218.8s] feature 26: clean forward
+[  219.5s] feature 26: SAE forward
+[  221.3s] feature 26: SAE eigenvalues
+[  221.3s] feature 26: complete
+[  221.3s] feature 27: clean forward
+[  222.1s] feature 27: SAE forward
+[  223.9s] feature 27: SAE eigenvalues
+[  223.9s] feature 27: complete
+[  223.9s] feature 28: clean forward
+[  224.6s] feature 28: SAE forward
+[  226.4s] feature 28: SAE eigenvalues
+[  226.4s] feature 28: complete
+[  226.4s] feature 29: clean forward
+[  227.2s] feature 29: SAE forward
+[  229.0s] feature 29: SAE eigenvalues
+[  229.0s] feature 29: complete
+[  229.0s] feature 30: clean forward
+[  229.7s] feature 30: SAE forward
+[  231.5s] feature 30: SAE eigenvalues
+[  231.5s] feature 30: complete
+[  231.5s] feature 31: clean forward
+[  232.2s] feature 31: SAE forward
+[  234.0s] feature 31: SAE eigenvalues
+[  234.0s] feature 31: complete
+[  234.0s] feature 32: clean forward
+[  234.8s] feature 32: SAE forward
+[  236.6s] feature 32: SAE eigenvalues
+[  236.6s] feature 32: complete
+[  236.6s] feature 33: clean forward
+[  237.3s] feature 33: SAE forward
+[  239.1s] feature 33: SAE eigenvalues
+[  239.1s] feature 33: complete
+[  239.1s] feature 34: clean forward
+[  239.8s] feature 34: SAE forward
+[  241.6s] feature 34: SAE eigenvalues
+[  241.6s] feature 34: complete
+[  241.6s] feature 35: clean forward
+[  242.4s] feature 35: SAE forward
+[  244.2s] feature 35: SAE eigenvalues
+[  244.2s] feature 35: complete
+[  244.2s] feature 36: clean forward
+[  244.9s] feature 36: SAE forward
+[  246.7s] feature 36: SAE eigenvalues
+[  246.7s] feature 36: complete
+[  246.7s] feature 37: clean forward
+[  247.4s] feature 37: SAE forward
+[  249.2s] feature 37: SAE eigenvalues
+[  249.2s] feature 37: complete
+[  249.2s] feature 38: clean forward
+[  250.0s] feature 38: SAE forward
+[  251.8s] feature 38: SAE eigenvalues
+[  251.8s] feature 38: complete
+[  251.8s] feature 39: clean forward
+[  252.5s] feature 39: SAE forward
+[  254.3s] feature 39: SAE eigenvalues
+[  254.3s] feature 39: complete
+[  254.3s] feature 40: clean forward
+[  255.0s] feature 40: SAE forward
+[  256.8s] feature 40: SAE eigenvalues
+[  256.8s] feature 40: complete
+[  256.8s] feature 41: clean forward
+[  257.5s] feature 41: SAE forward
+[  259.3s] feature 41: SAE eigenvalues
+[  259.3s] feature 41: complete
+[  259.3s] feature 42: clean forward
+[  260.1s] feature 42: SAE forward
+[  261.8s] feature 42: SAE eigenvalues
+[  261.8s] feature 42: complete
+[  261.8s] feature 43: clean forward
+[  262.6s] feature 43: SAE forward
+[  264.4s] feature 43: SAE eigenvalues
+[  264.4s] feature 43: complete
+[  264.4s] feature 44: clean forward
+[  265.1s] feature 44: SAE forward
+[  266.9s] feature 44: SAE eigenvalues
+[  266.9s] feature 44: complete
+[  266.9s] feature 45: clean forward
+[  267.6s] feature 45: SAE forward
+[  269.4s] feature 45: SAE eigenvalues
+[  269.4s] feature 45: complete
+[  269.4s] feature 46: clean forward
+[  270.1s] feature 46: SAE forward
+[  271.9s] feature 46: SAE eigenvalues
+[  271.9s] feature 46: complete
+[  271.9s] feature 47: clean forward
+[  272.7s] feature 47: SAE forward
+[  274.4s] feature 47: SAE eigenvalues
+[  274.5s] feature 47: complete
+[  274.5s] feature 48: clean forward
+[  275.2s] feature 48: SAE forward
+[  276.9s] feature 48: SAE eigenvalues
+[  277.0s] feature 48: complete
+[  277.0s] feature 49: clean forward
+[  277.7s] feature 49: SAE forward
+[  279.5s] feature 49: SAE eigenvalues
+[  279.5s] feature 49: complete
+[  279.5s] feature 50: clean forward
+[  280.2s] feature 50: SAE forward
+[  282.0s] feature 50: SAE eigenvalues
+[  282.0s] feature 50: complete
+[  282.0s]   steered 50/300
+[  282.0s] feature 51: clean forward
+[  282.8s] feature 51: SAE forward
+[  284.5s] feature 51: SAE eigenvalues
+[  284.5s] feature 51: complete
+[  284.5s] feature 52: clean forward
+[  285.3s] feature 52: SAE forward
+[  287.1s] feature 52: SAE eigenvalues
+[  287.1s] feature 52: complete
+[  287.1s] feature 53: clean forward
+[  287.8s] feature 53: SAE forward
+[  289.6s] feature 53: SAE eigenvalues
+[  289.6s] feature 53: complete
+[  289.6s] feature 54: clean forward
+[  290.3s] feature 54: SAE forward
+[  292.1s] feature 54: SAE eigenvalues
+[  292.1s] feature 54: complete
+[  292.1s] feature 55: clean forward
+[  292.9s] feature 55: SAE forward
+[  294.7s] feature 55: SAE eigenvalues
+[  294.7s] feature 55: complete
+[  294.7s] feature 56: clean forward
+[  295.4s] feature 56: SAE forward
+[  297.2s] feature 56: SAE eigenvalues
+[  297.2s] feature 56: complete
+[  297.2s] feature 57: clean forward
+[  298.0s] feature 57: SAE forward
+[  299.7s] feature 57: SAE eigenvalues
+[  299.7s] feature 57: complete
+[  299.7s] feature 58: clean forward
+[  300.5s] feature 58: SAE forward
+[  302.3s] feature 58: SAE eigenvalues
+[  302.3s] feature 58: complete
+[  302.3s] feature 59: clean forward
+[  303.0s] feature 59: SAE forward
+[  304.8s] feature 59: SAE eigenvalues
+[  304.8s] feature 59: complete
+[  304.8s] feature 60: clean forward
+[  305.5s] feature 60: SAE forward
+[  307.3s] feature 60: SAE eigenvalues
+[  307.3s] feature 60: complete
+[  307.3s] feature 61: clean forward
+[  308.1s] feature 61: SAE forward
+[  309.9s] feature 61: SAE eigenvalues
+[  309.9s] feature 61: complete
+[  309.9s] feature 62: clean forward
+[  310.6s] feature 62: SAE forward
+[  312.4s] feature 62: SAE eigenvalues
+[  312.4s] feature 62: complete
+[  312.4s] feature 63: clean forward
+[  313.2s] feature 63: SAE forward
+[  315.0s] feature 63: SAE eigenvalues
+[  315.0s] feature 63: complete
+[  315.0s] feature 64: clean forward
+[  315.7s] feature 64: SAE forward
+[  317.5s] feature 64: SAE eigenvalues
+[  317.5s] feature 64: complete
+[  317.5s] feature 65: clean forward
+[  318.2s] feature 65: SAE forward
+[  320.0s] feature 65: SAE eigenvalues
+[  320.0s] feature 65: complete
+[  320.0s] feature 66: clean forward
+[  320.8s] feature 66: SAE forward
+[  322.6s] feature 66: SAE eigenvalues
+[  322.6s] feature 66: complete
+[  322.6s] feature 67: clean forward
+[  323.3s] feature 67: SAE forward
+[  325.1s] feature 67: SAE eigenvalues
+[  325.1s] feature 67: complete
+[  325.1s] feature 68: clean forward
+[  325.9s] feature 68: SAE forward
+[  327.6s] feature 68: SAE eigenvalues
+[  327.6s] feature 68: complete
+[  327.6s] feature 69: clean forward
+[  328.4s] feature 69: SAE forward
+[  330.2s] feature 69: SAE eigenvalues
+[  330.2s] feature 69: complete
+[  330.2s] feature 70: clean forward
+[  330.9s] feature 70: SAE forward
+[  332.7s] feature 70: SAE eigenvalues
+[  332.7s] feature 70: complete
+[  332.7s] feature 71: clean forward
+[  333.5s] feature 71: SAE forward
+[  335.3s] feature 71: SAE eigenvalues
+[  335.3s] feature 71: complete
+[  335.3s] feature 72: clean forward
+[  336.1s] feature 72: SAE forward
+[  337.8s] feature 72: SAE eigenvalues
+[  337.8s] feature 72: complete
+[  337.8s] feature 73: clean forward
+[  338.6s] feature 73: SAE forward
+[  340.3s] feature 73: SAE eigenvalues
+[  340.3s] feature 73: complete
+[  340.3s] feature 74: clean forward
+[  341.1s] feature 74: SAE forward
+[  342.9s] feature 74: SAE eigenvalues
+[  342.9s] feature 74: complete
+[  342.9s] feature 75: clean forward
+[  343.6s] feature 75: SAE forward
+[  345.4s] feature 75: SAE eigenvalues
+[  345.4s] feature 75: complete
+[  345.4s] feature 76: clean forward
+[  346.2s] feature 76: SAE forward
+[  348.0s] feature 76: SAE eigenvalues
+[  348.0s] feature 76: complete
+[  348.0s] feature 77: clean forward
+[  348.8s] feature 77: SAE forward
+[  350.6s] feature 77: SAE eigenvalues
+[  350.6s] feature 77: complete
+[  350.6s] feature 78: clean forward
+[  351.4s] feature 78: SAE forward
+[  353.2s] feature 78: SAE eigenvalues
+[  353.2s] feature 78: complete
+[  353.2s] feature 79: clean forward
+[  353.9s] feature 79: SAE forward
+[  355.7s] feature 79: SAE eigenvalues
+[  355.7s] feature 79: complete
+[  355.7s] feature 80: clean forward
+[  356.5s] feature 80: SAE forward
+[  358.3s] feature 80: SAE eigenvalues
+[  358.3s] feature 80: complete
+[  358.3s] feature 81: clean forward
+[  359.1s] feature 81: SAE forward
+[  360.9s] feature 81: SAE eigenvalues
+[  360.9s] feature 81: complete
+[  360.9s] feature 82: clean forward
+[  361.7s] feature 82: SAE forward
+[  363.5s] feature 82: SAE eigenvalues
+[  363.5s] feature 82: complete
+[  363.5s] feature 83: clean forward
+[  364.2s] feature 83: SAE forward
+[  366.0s] feature 83: SAE eigenvalues
+[  366.0s] feature 83: complete
+[  366.0s] feature 84: clean forward
+[  366.8s] feature 84: SAE forward
+[  368.6s] feature 84: SAE eigenvalues
+[  368.6s] feature 84: complete
+[  368.6s] feature 85: clean forward
+[  369.3s] feature 85: SAE forward
+[  371.1s] feature 85: SAE eigenvalues
+[  371.1s] feature 85: complete
+[  371.1s] feature 86: clean forward
+[  371.9s] feature 86: SAE forward
+[  373.7s] feature 86: SAE eigenvalues
+[  373.7s] feature 86: complete
+[  373.7s] feature 87: clean forward
+[  374.5s] feature 87: SAE forward
+[  376.3s] feature 87: SAE eigenvalues
+[  376.3s] feature 87: complete
+[  376.3s] feature 88: clean forward
+[  377.0s] feature 88: SAE forward
+[  378.8s] feature 88: SAE eigenvalues
+[  378.8s] feature 88: complete
+[  378.8s] feature 89: clean forward
+[  379.6s] feature 89: SAE forward
+[  381.4s] feature 89: SAE eigenvalues
+[  381.4s] feature 89: complete
+[  381.4s] feature 90: clean forward
+[  382.2s] feature 90: SAE forward
+[  384.0s] feature 90: SAE eigenvalues
+[  384.0s] feature 90: complete
+[  384.0s] feature 91: clean forward
+[  384.7s] feature 91: SAE forward
+[  386.5s] feature 91: SAE eigenvalues
+[  386.6s] feature 91: complete
+[  386.6s] feature 92: clean forward
+[  387.3s] feature 92: SAE forward
+[  389.2s] feature 92: SAE eigenvalues
+[  389.2s] feature 92: complete
+[  389.2s] feature 93: clean forward
+[  389.9s] feature 93: SAE forward
+[  391.7s] feature 93: SAE eigenvalues
+[  391.7s] feature 93: complete
+[  391.7s] feature 94: clean forward
+[  392.5s] feature 94: SAE forward
+[  394.3s] feature 94: SAE eigenvalues
+[  394.3s] feature 94: complete
+[  394.3s] feature 95: clean forward
+[  395.0s] feature 95: SAE forward
+[  396.9s] feature 95: SAE eigenvalues
+[  396.9s] feature 95: complete
+[  396.9s] feature 96: clean forward
+[  397.6s] feature 96: SAE forward
+[  399.4s] feature 96: SAE eigenvalues
+[  399.4s] feature 96: complete
+[  399.4s] feature 97: clean forward
+[  400.2s] feature 97: SAE forward
+[  402.0s] feature 97: SAE eigenvalues
+[  402.0s] feature 97: complete
+[  402.0s] feature 98: clean forward
+[  402.8s] feature 98: SAE forward
+[  404.6s] feature 98: SAE eigenvalues
+[  404.6s] feature 98: complete
+[  404.6s] feature 99: clean forward
+[  405.3s] feature 99: SAE forward
+[  407.2s] feature 99: SAE eigenvalues
+[  407.2s] feature 99: complete
+[  407.2s] feature 100: clean forward
+[  407.9s] feature 100: SAE forward
+[  409.7s] feature 100: SAE eigenvalues
+[  409.7s] feature 100: complete
+[  409.7s]   steered 100/300
+[  409.7s] feature 101: clean forward
+[  410.5s] feature 101: SAE forward
+[  412.3s] feature 101: SAE eigenvalues
+[  412.3s] feature 101: complete
+[  412.3s] feature 102: clean forward
+[  413.1s] feature 102: SAE forward
+[  414.9s] feature 102: SAE eigenvalues
+[  414.9s] feature 102: complete
+[  414.9s] feature 103: clean forward
+[  415.6s] feature 103: SAE forward
+[  417.5s] feature 103: SAE eigenvalues
+[  417.5s] feature 103: complete
+[  417.5s] feature 104: clean forward
+[  418.3s] feature 104: SAE forward
+[  420.1s] feature 104: SAE eigenvalues
+[  420.1s] feature 104: complete
+[  420.1s] feature 105: clean forward
+[  420.8s] feature 105: SAE forward
+[  422.6s] feature 105: SAE eigenvalues
+[  422.6s] feature 105: complete
+[  422.7s] feature 106: clean forward
+[  423.4s] feature 106: SAE forward
+[  425.2s] feature 106: SAE eigenvalues
+[  425.2s] feature 106: complete
+[  425.2s] feature 107: clean forward
+[  426.0s] feature 107: SAE forward
+[  427.8s] feature 107: SAE eigenvalues
+[  427.8s] feature 107: complete
+[  427.8s] feature 108: clean forward
+[  428.5s] feature 108: SAE forward
+[  430.4s] feature 108: SAE eigenvalues
+[  430.4s] feature 108: complete
+[  430.4s] feature 109: clean forward
+[  431.1s] feature 109: SAE forward
+[  432.9s] feature 109: SAE eigenvalues
+[  433.0s] feature 109: complete
+[  433.0s] feature 110: clean forward
+[  433.7s] feature 110: SAE forward
+[  435.5s] feature 110: SAE eigenvalues
+[  435.5s] feature 110: complete
+[  435.5s] feature 111: clean forward
+[  436.3s] feature 111: SAE forward
+[  438.1s] feature 111: SAE eigenvalues
+[  438.1s] feature 111: complete
+[  438.1s] feature 112: clean forward
+[  438.8s] feature 112: SAE forward
+[  440.6s] feature 112: SAE eigenvalues
+[  440.6s] feature 112: complete
+[  440.6s] feature 113: clean forward
+[  441.4s] feature 113: SAE forward
+[  443.2s] feature 113: SAE eigenvalues
+[  443.3s] feature 113: complete
+[  443.3s] feature 114: clean forward
+[  444.0s] feature 114: SAE forward
+[  445.8s] feature 114: SAE eigenvalues
+[  445.8s] feature 114: complete
+[  445.8s] feature 115: clean forward
+[  446.6s] feature 115: SAE forward
+[  448.4s] feature 115: SAE eigenvalues
+[  448.4s] feature 115: complete
+[  448.4s] feature 116: clean forward
+[  449.2s] feature 116: SAE forward
+[  451.0s] feature 116: SAE eigenvalues
+[  451.0s] feature 116: complete
+[  451.0s] feature 117: clean forward
+[  451.7s] feature 117: SAE forward
+[  453.6s] feature 117: SAE eigenvalues
+[  453.6s] feature 117: complete
+[  453.6s] feature 118: clean forward
+[  454.4s] feature 118: SAE forward
+[  456.2s] feature 118: SAE eigenvalues
+[  456.2s] feature 118: complete
+[  456.2s] feature 119: clean forward
+[  456.9s] feature 119: SAE forward
+[  458.7s] feature 119: SAE eigenvalues
+[  458.7s] feature 119: complete
+[  458.7s] feature 120: clean forward
+[  459.5s] feature 120: SAE forward
+[  461.3s] feature 120: SAE eigenvalues
+[  461.3s] feature 120: complete
+[  461.3s] feature 121: clean forward
+[  462.1s] feature 121: SAE forward
+[  463.8s] feature 121: SAE eigenvalues
+[  463.8s] feature 121: complete
+[  463.8s] feature 122: clean forward
+[  464.6s] feature 122: SAE forward
+[  466.4s] feature 122: SAE eigenvalues
+[  466.4s] feature 122: complete
+[  466.4s] feature 123: clean forward
+[  467.2s] feature 123: SAE forward
+[  469.0s] feature 123: SAE eigenvalues
+[  469.0s] feature 123: complete
+[  469.0s] feature 124: clean forward
+[  469.8s] feature 124: SAE forward
+[  471.6s] feature 124: SAE eigenvalues
+[  471.6s] feature 124: complete
+[  471.6s] feature 125: clean forward
+[  472.3s] feature 125: SAE forward
+[  474.2s] feature 125: SAE eigenvalues
+[  474.2s] feature 125: complete
+[  474.2s] feature 126: clean forward
+[  474.9s] feature 126: SAE forward
+[  476.7s] feature 126: SAE eigenvalues
+[  476.7s] feature 126: complete
+[  476.7s] feature 127: clean forward
+[  477.5s] feature 127: SAE forward
+[  479.3s] feature 127: SAE eigenvalues
+[  479.3s] feature 127: complete
+[  479.3s] feature 128: clean forward
+[  480.0s] feature 128: SAE forward
+[  481.8s] feature 128: SAE eigenvalues
+[  481.8s] feature 128: complete
+[  481.8s] feature 129: clean forward
+[  482.6s] feature 129: SAE forward
+[  484.4s] feature 129: SAE eigenvalues
+[  484.4s] feature 129: complete
+[  484.4s] feature 130: clean forward
+[  485.1s] feature 130: SAE forward
+[  486.9s] feature 130: SAE eigenvalues
+[  486.9s] feature 130: complete
+[  486.9s] feature 131: clean forward
+[  487.7s] feature 131: SAE forward
+[  489.5s] feature 131: SAE eigenvalues
+[  489.5s] feature 131: complete
+[  489.5s] feature 132: clean forward
+[  490.3s] feature 132: SAE forward
+[  492.1s] feature 132: SAE eigenvalues
+[  492.1s] feature 132: complete
+[  492.1s] feature 133: clean forward
+[  492.8s] feature 133: SAE forward
+[  494.6s] feature 133: SAE eigenvalues
+[  494.6s] feature 133: complete
+[  494.6s] feature 134: clean forward
+[  495.4s] feature 134: SAE forward
+[  497.2s] feature 134: SAE eigenvalues
+[  497.2s] feature 134: complete
+[  497.2s] feature 135: clean forward
+[  498.0s] feature 135: SAE forward
+[  499.8s] feature 135: SAE eigenvalues
+[  499.8s] feature 135: complete
+[  499.8s] feature 136: clean forward
+[  500.5s] feature 136: SAE forward
+[  502.3s] feature 136: SAE eigenvalues
+[  502.3s] feature 136: complete
+[  502.3s] feature 137: clean forward
+[  503.1s] feature 137: SAE forward
+[  504.9s] feature 137: SAE eigenvalues
+[  504.9s] feature 137: complete
+[  504.9s] feature 138: clean forward
+[  505.6s] feature 138: SAE forward
+[  507.4s] feature 138: SAE eigenvalues
+[  507.4s] feature 138: complete
+[  507.4s] feature 139: clean forward
+[  508.2s] feature 139: SAE forward
+[  510.0s] feature 139: SAE eigenvalues
+[  510.0s] feature 139: complete
+[  510.0s] feature 140: clean forward
+[  510.7s] feature 140: SAE forward
+[  512.6s] feature 140: SAE eigenvalues
+[  512.6s] feature 140: complete
+[  512.6s] feature 141: clean forward
+[  513.3s] feature 141: SAE forward
+[  515.1s] feature 141: SAE eigenvalues
+[  515.2s] feature 141: complete
+[  515.2s] feature 142: clean forward
+[  515.9s] feature 142: SAE forward
+[  517.7s] feature 142: SAE eigenvalues
+[  517.7s] feature 142: complete
+[  517.7s] feature 143: clean forward
+[  518.5s] feature 143: SAE forward
+[  520.3s] feature 143: SAE eigenvalues
+[  520.3s] feature 143: complete
+[  520.3s] feature 144: clean forward
+[  521.1s] feature 144: SAE forward
+[  522.9s] feature 144: SAE eigenvalues
+[  522.9s] feature 144: complete
+[  522.9s] feature 145: clean forward
+[  523.6s] feature 145: SAE forward
+[  525.4s] feature 145: SAE eigenvalues
+[  525.4s] feature 145: complete
+[  525.4s] feature 146: clean forward
+[  526.2s] feature 146: SAE forward
+[  528.0s] feature 146: SAE eigenvalues
+[  528.0s] feature 146: complete
+[  528.0s] feature 147: clean forward
+[  528.7s] feature 147: SAE forward
+[  530.6s] feature 147: SAE eigenvalues
+[  530.6s] feature 147: complete
+[  530.6s] feature 148: clean forward
+[  531.3s] feature 148: SAE forward
+[  533.1s] feature 148: SAE eigenvalues
+[  533.1s] feature 148: complete
+[  533.1s] feature 149: clean forward
+[  533.9s] feature 149: SAE forward
+[  535.7s] feature 149: SAE eigenvalues
+[  535.7s] feature 149: complete
+[  535.7s] feature 150: clean forward
+[  536.5s] feature 150: SAE forward
+[  538.3s] feature 150: SAE eigenvalues
+[  538.3s] feature 150: complete
+[  538.3s]   steered 150/300
+[  538.3s] feature 151: clean forward
+[  539.1s] feature 151: SAE forward
+[  541.0s] feature 151: SAE eigenvalues
+[  541.0s] feature 151: complete
+[  541.0s] feature 152: clean forward
+[  541.8s] feature 152: SAE forward
+[  543.6s] feature 152: SAE eigenvalues
+[  543.6s] feature 152: complete
+[  543.6s] feature 153: clean forward
+[  544.4s] feature 153: SAE forward
+[  546.1s] feature 153: SAE eigenvalues
+[  546.1s] feature 153: complete
+[  546.1s] feature 154: clean forward
+[  546.9s] feature 154: SAE forward
+[  548.7s] feature 154: SAE eigenvalues
+[  548.7s] feature 154: complete
+[  548.7s] feature 155: clean forward
+[  549.5s] feature 155: SAE forward
+[  551.3s] feature 155: SAE eigenvalues
+[  551.3s] feature 155: complete
+[  551.3s] feature 156: clean forward
+[  552.1s] feature 156: SAE forward
+[  553.9s] feature 156: SAE eigenvalues
+[  553.9s] feature 156: complete
+[  553.9s] feature 157: clean forward
+[  554.6s] feature 157: SAE forward
+[  556.6s] feature 157: SAE eigenvalues
+[  556.6s] feature 157: complete
+[  556.6s] feature 158: clean forward
+[  557.4s] feature 158: SAE forward
+[  559.3s] feature 158: SAE eigenvalues
+[  559.3s] feature 158: complete
+[  559.3s] feature 159: clean forward
+[  560.1s] feature 159: SAE forward
+[  561.9s] feature 159: SAE eigenvalues
+[  561.9s] feature 159: complete
+[  561.9s] feature 160: clean forward
+[  562.7s] feature 160: SAE forward
+[  564.5s] feature 160: SAE eigenvalues
+[  564.5s] feature 160: complete
+[  564.5s] feature 161: clean forward
+[  565.2s] feature 161: SAE forward
+[  567.1s] feature 161: SAE eigenvalues
+[  567.1s] feature 161: complete
+[  567.1s] feature 162: clean forward
+[  567.8s] feature 162: SAE forward
+[  569.6s] feature 162: SAE eigenvalues
+[  569.6s] feature 162: complete
+[  569.6s] feature 163: clean forward
+[  570.3s] feature 163: SAE forward
+[  572.1s] feature 163: SAE eigenvalues
+[  572.1s] feature 163: complete
+[  572.1s] feature 164: clean forward
+[  572.8s] feature 164: SAE forward
+[  574.6s] feature 164: SAE eigenvalues
+[  574.6s] feature 164: complete
+[  574.6s] feature 165: clean forward
+[  575.4s] feature 165: SAE forward
+[  577.1s] feature 165: SAE eigenvalues
+[  577.1s] feature 165: complete
+[  577.1s] feature 166: clean forward
+[  577.9s] feature 166: SAE forward
+[  579.7s] feature 166: SAE eigenvalues
+[  579.7s] feature 166: complete
+[  579.7s] feature 167: clean forward
+[  580.4s] feature 167: SAE forward
+[  582.2s] feature 167: SAE eigenvalues
+[  582.2s] feature 167: complete
+[  582.2s] feature 168: clean forward
+[  583.0s] feature 168: SAE forward
+[  584.8s] feature 168: SAE eigenvalues
+[  584.8s] feature 168: complete
+[  584.8s] feature 169: clean forward
+[  585.5s] feature 169: SAE forward
+[  587.4s] feature 169: SAE eigenvalues
+[  587.4s] feature 169: complete
+[  587.4s] feature 170: clean forward
+[  588.2s] feature 170: SAE forward
+[  590.0s] feature 170: SAE eigenvalues
+[  590.0s] feature 170: complete
+[  590.0s] feature 171: clean forward
+[  590.8s] feature 171: SAE forward
+[  592.6s] feature 171: SAE eigenvalues
+[  592.6s] feature 171: complete
+[  592.6s] feature 172: clean forward
+[  593.3s] feature 172: SAE forward
+[  595.2s] feature 172: SAE eigenvalues
+[  595.2s] feature 172: complete
+[  595.2s] feature 173: clean forward
+[  595.9s] feature 173: SAE forward
+[  597.7s] feature 173: SAE eigenvalues
+[  597.7s] feature 173: complete
+[  597.7s] feature 174: clean forward
+[  598.5s] feature 174: SAE forward
+[  600.4s] feature 174: SAE eigenvalues
+[  600.4s] feature 174: complete
+[  600.4s] feature 175: clean forward
+[  601.1s] feature 175: SAE forward
+[  603.0s] feature 175: SAE eigenvalues
+[  603.0s] feature 175: complete
+[  603.0s] feature 176: clean forward
+[  603.7s] feature 176: SAE forward
+[  605.5s] feature 176: SAE eigenvalues
+[  605.5s] feature 176: complete
+[  605.5s] feature 177: clean forward
+[  606.3s] feature 177: SAE forward
+[  608.1s] feature 177: SAE eigenvalues
+[  608.1s] feature 177: complete
+[  608.1s] feature 178: clean forward
+[  608.8s] feature 178: SAE forward
+[  610.6s] feature 178: SAE eigenvalues
+[  610.6s] feature 178: complete
+[  610.6s] feature 179: clean forward
+[  611.4s] feature 179: SAE forward
+[  613.2s] feature 179: SAE eigenvalues
+[  613.2s] feature 179: complete
+[  613.2s] feature 180: clean forward
+[  614.0s] feature 180: SAE forward
+[  615.8s] feature 180: SAE eigenvalues
+[  615.8s] feature 180: complete
+[  615.8s] feature 181: clean forward
+[  616.5s] feature 181: SAE forward
+[  618.3s] feature 181: SAE eigenvalues
+[  618.3s] feature 181: complete
+[  618.3s] feature 182: clean forward
+[  619.1s] feature 182: SAE forward
+[  620.9s] feature 182: SAE eigenvalues
+[  620.9s] feature 182: complete
+[  620.9s] feature 183: clean forward
+[  621.6s] feature 183: SAE forward
+[  623.5s] feature 183: SAE eigenvalues
+[  623.5s] feature 183: complete
+[  623.5s] feature 184: clean forward
+[  624.3s] feature 184: SAE forward
+[  626.1s] feature 184: SAE eigenvalues
+[  626.1s] feature 184: complete
+[  626.1s] feature 185: clean forward
+[  626.8s] feature 185: SAE forward
+[  628.6s] feature 185: SAE eigenvalues
+[  628.6s] feature 185: complete
+[  628.6s] feature 186: clean forward
+[  629.4s] feature 186: SAE forward
+[  631.2s] feature 186: SAE eigenvalues
+[  631.2s] feature 186: complete
+[  631.2s] feature 187: clean forward
+[  631.9s] feature 187: SAE forward
+[  633.7s] feature 187: SAE eigenvalues
+[  633.7s] feature 187: complete
+[  633.7s] feature 188: clean forward
+[  634.5s] feature 188: SAE forward
+[  636.3s] feature 188: SAE eigenvalues
+[  636.3s] feature 188: complete
+[  636.3s] feature 189: clean forward
+[  637.1s] feature 189: SAE forward
+[  638.9s] feature 189: SAE eigenvalues
+[  638.9s] feature 189: complete
+[  638.9s] feature 190: clean forward
+[  639.6s] feature 190: SAE forward
+[  641.4s] feature 190: SAE eigenvalues
+[  641.4s] feature 190: complete
+[  641.4s] feature 191: clean forward
+[  642.2s] feature 191: SAE forward
+[  644.0s] feature 191: SAE eigenvalues
+[  644.0s] feature 191: complete
+[  644.0s] feature 192: clean forward
+[  644.7s] feature 192: SAE forward
+[  646.5s] feature 192: SAE eigenvalues
+[  646.6s] feature 192: complete
+[  646.6s] feature 193: clean forward
+[  647.3s] feature 193: SAE forward
+[  649.2s] feature 193: SAE eigenvalues
+[  649.2s] feature 193: complete
+[  649.2s] feature 194: clean forward
+[  649.9s] feature 194: SAE forward
+[  651.7s] feature 194: SAE eigenvalues
+[  651.8s] feature 194: complete
+[  651.8s] feature 195: clean forward
+[  652.5s] feature 195: SAE forward
+[  654.3s] feature 195: SAE eigenvalues
+[  654.3s] feature 195: complete
+[  654.3s] feature 196: clean forward
+[  655.1s] feature 196: SAE forward
+[  656.9s] feature 196: SAE eigenvalues
+[  656.9s] feature 196: complete
+[  656.9s] feature 197: clean forward
+[  657.6s] feature 197: SAE forward
+[  659.5s] feature 197: SAE eigenvalues
+[  659.5s] feature 197: complete
+[  659.5s] feature 198: clean forward
+[  660.2s] feature 198: SAE forward
+[  662.0s] feature 198: SAE eigenvalues
+[  662.0s] feature 198: complete
+[  662.0s] feature 199: clean forward
+[  662.7s] feature 199: SAE forward
+[  664.6s] feature 199: SAE eigenvalues
+[  664.6s] feature 199: complete
+[  664.6s] feature 200: clean forward
+[  665.3s] feature 200: SAE forward
+[  667.1s] feature 200: SAE eigenvalues
+[  667.1s] feature 200: complete
+[  667.1s]   steered 200/300
+[  667.1s] feature 201: clean forward
+[  667.8s] feature 201: SAE forward
+[  669.7s] feature 201: SAE eigenvalues
+[  669.7s] feature 201: complete
+[  669.7s] feature 202: clean forward
+[  670.5s] feature 202: SAE forward
+[  672.3s] feature 202: SAE eigenvalues
+[  672.3s] feature 202: complete
+[  672.3s] feature 203: clean forward
+[  673.0s] feature 203: SAE forward
+[  674.8s] feature 203: SAE eigenvalues
+[  674.8s] feature 203: complete
+[  674.8s] feature 204: clean forward
+[  675.6s] feature 204: SAE forward
+[  677.4s] feature 204: SAE eigenvalues
+[  677.4s] feature 204: complete
+[  677.4s] feature 205: clean forward
+[  678.1s] feature 205: SAE forward
+[  680.0s] feature 205: SAE eigenvalues
+[  680.0s] feature 205: complete
+[  680.0s] feature 206: clean forward
+[  680.7s] feature 206: SAE forward
+[  682.5s] feature 206: SAE eigenvalues
+[  682.5s] feature 206: complete
+[  682.5s] feature 207: clean forward
+[  683.3s] feature 207: SAE forward
+[  685.0s] feature 207: SAE eigenvalues
+[  685.0s] feature 207: complete
+[  685.0s] feature 208: clean forward
+[  685.8s] feature 208: SAE forward
+[  687.6s] feature 208: SAE eigenvalues
+[  687.6s] feature 208: complete
+[  687.6s] feature 209: clean forward
+[  688.4s] feature 209: SAE forward
+[  690.2s] feature 209: SAE eigenvalues
+[  690.2s] feature 209: complete
+[  690.2s] feature 210: clean forward
+[  690.9s] feature 210: SAE forward
+[  692.7s] feature 210: SAE eigenvalues
+[  692.7s] feature 210: complete
+[  692.7s] feature 211: clean forward
+[  693.5s] feature 211: SAE forward
+[  695.3s] feature 211: SAE eigenvalues
+[  695.3s] feature 211: complete
+[  695.3s] feature 212: clean forward
+[  696.1s] feature 212: SAE forward
+[  697.8s] feature 212: SAE eigenvalues
+[  697.8s] feature 212: complete
+[  697.8s] feature 213: clean forward
+[  698.6s] feature 213: SAE forward
+[  700.4s] feature 213: SAE eigenvalues
+[  700.5s] feature 213: complete
+[  700.5s] feature 214: clean forward
+[  701.2s] feature 214: SAE forward
+[  703.0s] feature 214: SAE eigenvalues
+[  703.0s] feature 214: complete
+[  703.0s] feature 215: clean forward
+[  703.7s] feature 215: SAE forward
+[  705.5s] feature 215: SAE eigenvalues
+[  705.5s] feature 215: complete
+[  705.5s] feature 216: clean forward
+[  706.3s] feature 216: SAE forward
+[  708.1s] feature 216: SAE eigenvalues
+[  708.1s] feature 216: complete
+[  708.1s] feature 217: clean forward
+[  708.9s] feature 217: SAE forward
+[  710.8s] feature 217: SAE eigenvalues
+[  710.8s] feature 217: complete
+[  710.8s] feature 218: clean forward
+[  711.5s] feature 218: SAE forward
+[  713.3s] feature 218: SAE eigenvalues
+[  713.3s] feature 218: complete
+[  713.3s] feature 219: clean forward
+[  714.1s] feature 219: SAE forward
+[  715.9s] feature 219: SAE eigenvalues
+[  715.9s] feature 219: complete
+[  715.9s] feature 220: clean forward
+[  716.7s] feature 220: SAE forward
+[  718.5s] feature 220: SAE eigenvalues
+[  718.5s] feature 220: complete
+[  718.5s] feature 221: clean forward
+[  719.2s] feature 221: SAE forward
+[  721.0s] feature 221: SAE eigenvalues
+[  721.0s] feature 221: complete
+[  721.0s] feature 222: clean forward
+[  721.8s] feature 222: SAE forward
+[  723.6s] feature 222: SAE eigenvalues
+[  723.6s] feature 222: complete
+[  723.6s] feature 223: clean forward
+[  724.3s] feature 223: SAE forward
+[  726.2s] feature 223: SAE eigenvalues
+[  726.2s] feature 223: complete
+[  726.2s] feature 224: clean forward
+[  726.9s] feature 224: SAE forward
+[  728.7s] feature 224: SAE eigenvalues
+[  728.7s] feature 224: complete
+[  728.7s] feature 225: clean forward
+[  729.5s] feature 225: SAE forward
+[  731.3s] feature 225: SAE eigenvalues
+[  731.3s] feature 225: complete
+[  731.3s] feature 226: clean forward
+[  732.1s] feature 226: SAE forward
+[  733.9s] feature 226: SAE eigenvalues
+[  733.9s] feature 226: complete
+[  733.9s] feature 227: clean forward
+[  734.6s] feature 227: SAE forward
+[  736.4s] feature 227: SAE eigenvalues
+[  736.4s] feature 227: complete
+[  736.4s] feature 228: clean forward
+[  737.2s] feature 228: SAE forward
+[  739.0s] feature 228: SAE eigenvalues
+[  739.0s] feature 228: complete
+[  739.0s] feature 229: clean forward
+[  739.8s] feature 229: SAE forward
+[  741.6s] feature 229: SAE eigenvalues
+[  741.6s] feature 229: complete
+[  741.6s] feature 230: clean forward
+[  742.3s] feature 230: SAE forward
+[  744.1s] feature 230: SAE eigenvalues
+[  744.1s] feature 230: complete
+[  744.1s] feature 231: clean forward
+[  744.9s] feature 231: SAE forward
+[  746.7s] feature 231: SAE eigenvalues
+[  746.7s] feature 231: complete
+[  746.7s] feature 232: clean forward
+[  747.5s] feature 232: SAE forward
+[  749.3s] feature 232: SAE eigenvalues
+[  749.3s] feature 232: complete
+[  749.3s] feature 233: clean forward
+[  750.1s] feature 233: SAE forward
+[  751.8s] feature 233: SAE eigenvalues
+[  751.9s] feature 233: complete
+[  751.9s] feature 234: clean forward
+[  752.6s] feature 234: SAE forward
+[  754.4s] feature 234: SAE eigenvalues
+[  754.4s] feature 234: complete
+[  754.4s] feature 235: clean forward
+[  755.2s] feature 235: SAE forward
+[  757.0s] feature 235: SAE eigenvalues
+[  757.0s] feature 235: complete
+[  757.0s] feature 236: clean forward
+[  757.7s] feature 236: SAE forward
+[  759.6s] feature 236: SAE eigenvalues
+[  759.6s] feature 236: complete
+[  759.6s] feature 237: clean forward
+[  760.3s] feature 237: SAE forward
+[  762.1s] feature 237: SAE eigenvalues
+[  762.1s] feature 237: complete
+[  762.1s] feature 238: clean forward
+[  762.9s] feature 238: SAE forward
+[  764.7s] feature 238: SAE eigenvalues
+[  764.7s] feature 238: complete
+[  764.7s] feature 239: clean forward
+[  765.5s] feature 239: SAE forward
+[  767.3s] feature 239: SAE eigenvalues
+[  767.3s] feature 239: complete
+[  767.3s] feature 240: clean forward
+[  768.0s] feature 240: SAE forward
+[  769.9s] feature 240: SAE eigenvalues
+[  769.9s] feature 240: complete
+[  769.9s] feature 241: clean forward
+[  770.6s] feature 241: SAE forward
+[  772.4s] feature 241: SAE eigenvalues
+[  772.4s] feature 241: complete
+[  772.4s] feature 242: clean forward
+[  773.2s] feature 242: SAE forward
+[  774.9s] feature 242: SAE eigenvalues
+[  774.9s] feature 242: complete
+[  774.9s] feature 243: clean forward
+[  775.7s] feature 243: SAE forward
+[  777.5s] feature 243: SAE eigenvalues
+[  777.5s] feature 243: complete
+[  777.5s] feature 244: clean forward
+[  778.3s] feature 244: SAE forward
+[  780.1s] feature 244: SAE eigenvalues
+[  780.1s] feature 244: complete
+[  780.1s] feature 245: clean forward
+[  780.8s] feature 245: SAE forward
+[  782.6s] feature 245: SAE eigenvalues
+[  782.6s] feature 245: complete
+[  782.6s] feature 246: clean forward
+[  783.4s] feature 246: SAE forward
+[  785.3s] feature 246: SAE eigenvalues
+[  785.3s] feature 246: complete
+[  785.3s] feature 247: clean forward
+[  786.1s] feature 247: SAE forward
+[  787.9s] feature 247: SAE eigenvalues
+[  787.9s] feature 247: complete
+[  787.9s] feature 248: clean forward
+[  788.6s] feature 248: SAE forward
+[  790.4s] feature 248: SAE eigenvalues
+[  790.4s] feature 248: complete
+[  790.4s] feature 249: clean forward
+[  791.2s] feature 249: SAE forward
+[  793.0s] feature 249: SAE eigenvalues
+[  793.0s] feature 249: complete
+[  793.0s] feature 250: clean forward
+[  793.7s] feature 250: SAE forward
+[  795.5s] feature 250: SAE eigenvalues
+[  795.5s] feature 250: complete
+[  795.5s]   steered 250/300
+[  795.6s] feature 251: clean forward
+[  796.3s] feature 251: SAE forward
+[  798.1s] feature 251: SAE eigenvalues
+[  798.1s] feature 251: complete
+[  798.1s] feature 252: clean forward
+[  798.9s] feature 252: SAE forward
+[  800.7s] feature 252: SAE eigenvalues
+[  800.7s] feature 252: complete
+[  800.7s] feature 253: clean forward
+[  801.4s] feature 253: SAE forward
+[  803.3s] feature 253: SAE eigenvalues
+[  803.3s] feature 253: complete
+[  803.3s] feature 254: clean forward
+[  804.0s] feature 254: SAE forward
+[  805.8s] feature 254: SAE eigenvalues
+[  805.8s] feature 254: complete
+[  805.8s] feature 255: clean forward
+[  806.6s] feature 255: SAE forward
+[  808.4s] feature 255: SAE eigenvalues
+[  808.4s] feature 255: complete
+[  808.4s] feature 256: clean forward
+[  809.1s] feature 256: SAE forward
+[  810.9s] feature 256: SAE eigenvalues
+[  810.9s] feature 256: complete
+[  810.9s] feature 257: clean forward
+[  811.7s] feature 257: SAE forward
+[  813.5s] feature 257: SAE eigenvalues
+[  813.5s] feature 257: complete
+[  813.5s] feature 258: clean forward
+[  814.3s] feature 258: SAE forward
+[  816.1s] feature 258: SAE eigenvalues
+[  816.1s] feature 258: complete
+[  816.1s] feature 259: clean forward
+[  816.8s] feature 259: SAE forward
+[  818.6s] feature 259: SAE eigenvalues
+[  818.6s] feature 259: complete
+[  818.6s] feature 260: clean forward
+[  819.4s] feature 260: SAE forward
+[  821.2s] feature 260: SAE eigenvalues
+[  821.2s] feature 260: complete
+[  821.2s] feature 261: clean forward
+[  821.9s] feature 261: SAE forward
+[  823.7s] feature 261: SAE eigenvalues
+[  823.7s] feature 261: complete
+[  823.7s] feature 262: clean forward
+[  824.5s] feature 262: SAE forward
+[  826.3s] feature 262: SAE eigenvalues
+[  826.3s] feature 262: complete
+[  826.3s] feature 263: clean forward
+[  827.1s] feature 263: SAE forward
+[  828.9s] feature 263: SAE eigenvalues
+[  828.9s] feature 263: complete
+[  828.9s] feature 264: clean forward
+[  829.6s] feature 264: SAE forward
+[  831.5s] feature 264: SAE eigenvalues
+[  831.5s] feature 264: complete
+[  831.5s] feature 265: clean forward
+[  832.2s] feature 265: SAE forward
+[  834.0s] feature 265: SAE eigenvalues
+[  834.0s] feature 265: complete
+[  834.0s] feature 266: clean forward
+[  834.8s] feature 266: SAE forward
+[  836.6s] feature 266: SAE eigenvalues
+[  836.6s] feature 266: complete
+[  836.6s] feature 267: clean forward
+[  837.4s] feature 267: SAE forward
+[  839.2s] feature 267: SAE eigenvalues
+[  839.2s] feature 267: complete
+[  839.2s] feature 268: clean forward
+[  839.9s] feature 268: SAE forward
+[  841.8s] feature 268: SAE eigenvalues
+[  841.8s] feature 268: complete
+[  841.8s] feature 269: clean forward
+[  842.5s] feature 269: SAE forward
+[  844.3s] feature 269: SAE eigenvalues
+[  844.3s] feature 269: complete
+[  844.3s] feature 270: clean forward
+[  845.1s] feature 270: SAE forward
+[  846.9s] feature 270: SAE eigenvalues
+[  846.9s] feature 270: complete
+[  846.9s] feature 271: clean forward
+[  847.6s] feature 271: SAE forward
+[  849.4s] feature 271: SAE eigenvalues
+[  849.4s] feature 271: complete
+[  849.4s] feature 272: clean forward
+[  850.2s] feature 272: SAE forward
+[  852.0s] feature 272: SAE eigenvalues
+[  852.0s] feature 272: complete
+[  852.0s] feature 273: clean forward
+[  852.7s] feature 273: SAE forward
+[  854.6s] feature 273: SAE eigenvalues
+[  854.6s] feature 273: complete
+[  854.6s] feature 274: clean forward
+[  855.4s] feature 274: SAE forward
+[  857.2s] feature 274: SAE eigenvalues
+[  857.2s] feature 274: complete
+[  857.2s] feature 275: clean forward
+[  857.9s] feature 275: SAE forward
+[  859.7s] feature 275: SAE eigenvalues
+[  859.7s] feature 275: complete
+[  859.7s] feature 276: clean forward
+[  860.5s] feature 276: SAE forward
+[  862.3s] feature 276: SAE eigenvalues
+[  862.3s] feature 276: complete
+[  862.3s] feature 277: clean forward
+[  863.1s] feature 277: SAE forward
+[  864.8s] feature 277: SAE eigenvalues
+[  864.8s] feature 277: complete
+[  864.8s] feature 278: clean forward
+[  865.6s] feature 278: SAE forward
+[  867.4s] feature 278: SAE eigenvalues
+[  867.4s] feature 278: complete
+[  867.4s] feature 279: clean forward
+[  868.2s] feature 279: SAE forward
+[  870.0s] feature 279: SAE eigenvalues
+[  870.0s] feature 279: complete
+[  870.0s] feature 280: clean forward
+[  870.7s] feature 280: SAE forward
+[  872.6s] feature 280: SAE eigenvalues
+[  872.6s] feature 280: complete
+[  872.6s] feature 281: clean forward
+[  873.3s] feature 281: SAE forward
+[  875.1s] feature 281: SAE eigenvalues
+[  875.1s] feature 281: complete
+[  875.1s] feature 282: clean forward
+[  875.9s] feature 282: SAE forward
+[  877.7s] feature 282: SAE eigenvalues
+[  877.7s] feature 282: complete
+[  877.7s] feature 283: clean forward
+[  878.4s] feature 283: SAE forward
+[  880.2s] feature 283: SAE eigenvalues
+[  880.2s] feature 283: complete
+[  880.2s] feature 284: clean forward
+[  881.0s] feature 284: SAE forward
+[  882.8s] feature 284: SAE eigenvalues
+[  882.8s] feature 284: complete
+[  882.8s] feature 285: clean forward
+[  883.5s] feature 285: SAE forward
+[  885.4s] feature 285: SAE eigenvalues
+[  885.4s] feature 285: complete
+[  885.4s] feature 286: clean forward
+[  886.1s] feature 286: SAE forward
+[  887.9s] feature 286: SAE eigenvalues
+[  887.9s] feature 286: complete
+[  887.9s] feature 287: clean forward
+[  888.7s] feature 287: SAE forward
+[  890.5s] feature 287: SAE eigenvalues
+[  890.5s] feature 287: complete
+[  890.5s] feature 288: clean forward
+[  891.3s] feature 288: SAE forward
+[  893.1s] feature 288: SAE eigenvalues
+[  893.1s] feature 288: complete
+[  893.1s] feature 289: clean forward
+[  893.8s] feature 289: SAE forward
+[  895.6s] feature 289: SAE eigenvalues
+[  895.6s] feature 289: complete
+[  895.6s] feature 290: clean forward
+[  896.4s] feature 290: SAE forward
+[  898.2s] feature 290: SAE eigenvalues
+[  898.2s] feature 290: complete
+[  898.2s] feature 291: clean forward
+[  898.9s] feature 291: SAE forward
+[  900.7s] feature 291: SAE eigenvalues
+[  900.7s] feature 291: complete
+[  900.7s] feature 292: clean forward
+[  901.5s] feature 292: SAE forward
+[  903.3s] feature 292: SAE eigenvalues
+[  903.3s] feature 292: complete
+[  903.3s] feature 293: clean forward
+[  904.0s] feature 293: SAE forward
+[  905.8s] feature 293: SAE eigenvalues
+[  905.8s] feature 293: complete
+[  905.8s] feature 294: clean forward
+[  906.6s] feature 294: SAE forward
+[  908.4s] feature 294: SAE eigenvalues
+[  908.4s] feature 294: complete
+[  908.4s] feature 295: clean forward
+[  909.2s] feature 295: SAE forward
+[  911.0s] feature 295: SAE eigenvalues
+[  911.0s] feature 295: complete
+[  911.0s] feature 296: clean forward
+[  911.7s] feature 296: SAE forward
+[  913.5s] feature 296: SAE eigenvalues
+[  913.5s] feature 296: complete
+[  913.5s] feature 297: clean forward
+[  914.3s] feature 297: SAE forward
+[  916.1s] feature 297: SAE eigenvalues
+[  916.1s] feature 297: complete
+[  916.1s] feature 298: clean forward
+[  916.8s] feature 298: SAE forward
+[  918.7s] feature 298: SAE eigenvalues
+[  918.7s] feature 298: complete
+[  918.7s] feature 299: clean forward
+[  919.4s] feature 299: SAE forward
+[  921.2s] feature 299: SAE eigenvalues
+[  921.2s] feature 299: complete
+[  921.2s] feature 300: clean forward
+[  922.0s] feature 300: SAE forward
+[  923.8s] feature 300: SAE eigenvalues
+[  923.8s] feature 300: complete
+[  923.8s]   steered 300/300
+[  923.8s] steering done
+{
+ "rho_crowding__collateral_raw": 0.3292,
+ "rho_frequency__collateral_raw": 0.2702,
+ "rho_act_mag__collateral_raw": 0.3428,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.2242,
+ "rho_crowding__collateral_ctilde": 0.2773,
+ "rho_frequency__collateral_ctilde": 0.2798,
+ "rho_act_mag__collateral_ctilde": 0.3227,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.1852,
+ "crowd_rho_lowfreq_half": 0.3279,
+ "crowd_rho_highfreq_half": 0.266,
+ "rho_crowding__collateral_raw_nodense": 0.3496,
+ "rho_crowding__resid_delta_norm": 0.1975,
+ "mean_resid_reconstruction_norm_ratio": 1.2023,
+ "mean_resid_change_explained_energy": -2.7239
+}
+[  923.9s] wrote results/llama_3_1_8b_seed1/per_feature.csv, selection.json, meta.json
+=== OK    llama_seed1 2026-09-13T23:45:22+01:00
+=== START llama_seed2 2026-09-13T23:45:22+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "llama_3_1_8b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 1024, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "bfloat16", "seed": 2}
+[    3.7s] device NVIDIA GB10; loading SAEs
+[    7.0s] SAEs loaded: primary d_sae=32768 (blocks.16.hook_resid_post), downstream d_sae=32768 (blocks.20.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 10221.36it/s]
+Loaded pretrained model meta-llama/Llama-3.1-8B into HookedTransformer
+[   29.4s] model loaded: meta-llama/Llama-3.1-8B d_model=4096 n_layers=32 norm=RMS dtype=bfloat16
+[   29.4s] streaming wikitext-103 train split
+[   36.7s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   37.3s] 2048 contexts x 48 tokens; short texts dropped (v2): 27; contexts whose final token is the pad token: 0
+[  145.1s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=32.2 downstream=31.4; primary features never firing=61.0%
+[  146.0s] predictors: crowding done
+eligible features: 2837 of 32768 | sampled: 300
+panel 1024 features; 1005 with firing frequency <= 0.1
+[  146.2s] predictors: all done
+[  146.2s] steering 300 features x 48 contexts
+[  146.2s] feature 1: clean forward
+[  147.0s] feature 1: SAE forward
+[  148.7s] feature 1: SAE eigenvalues
+[  148.7s] feature 1: complete
+[  148.7s] feature 2: clean forward
+[  149.5s] feature 2: SAE forward
+[  151.2s] feature 2: SAE eigenvalues
+[  151.2s] feature 2: complete
+[  151.2s] feature 3: clean forward
+[  151.9s] feature 3: SAE forward
+[  153.7s] feature 3: SAE eigenvalues
+[  153.7s] feature 3: complete
+[  153.7s] feature 4: clean forward
+[  154.4s] feature 4: SAE forward
+[  156.2s] feature 4: SAE eigenvalues
+[  156.2s] feature 4: complete
+[  156.2s] feature 5: clean forward
+[  156.9s] feature 5: SAE forward
+[  158.7s] feature 5: SAE eigenvalues
+[  158.7s] feature 5: complete
+[  158.7s] feature 6: clean forward
+[  159.4s] feature 6: SAE forward
+[  161.2s] feature 6: SAE eigenvalues
+[  161.2s] feature 6: complete
+[  161.2s] feature 7: clean forward
+[  161.9s] feature 7: SAE forward
+[  163.7s] feature 7: SAE eigenvalues
+[  163.7s] feature 7: complete
+[  163.7s] feature 8: clean forward
+[  164.4s] feature 8: SAE forward
+[  166.2s] feature 8: SAE eigenvalues
+[  166.2s] feature 8: complete
+[  166.2s] feature 9: clean forward
+[  166.9s] feature 9: SAE forward
+[  168.7s] feature 9: SAE eigenvalues
+[  168.7s] feature 9: complete
+[  168.7s] feature 10: clean forward
+[  169.4s] feature 10: SAE forward
+[  171.2s] feature 10: SAE eigenvalues
+[  171.2s] feature 10: complete
+[  171.2s] feature 11: clean forward
+[  172.0s] feature 11: SAE forward
+[  173.7s] feature 11: SAE eigenvalues
+[  173.8s] feature 11: complete
+[  173.8s] feature 12: clean forward
+[  174.5s] feature 12: SAE forward
+[  176.2s] feature 12: SAE eigenvalues
+[  176.2s] feature 12: complete
+[  176.2s] feature 13: clean forward
+[  177.0s] feature 13: SAE forward
+[  178.8s] feature 13: SAE eigenvalues
+[  178.8s] feature 13: complete
+[  178.8s] feature 14: clean forward
+[  179.5s] feature 14: SAE forward
+[  181.3s] feature 14: SAE eigenvalues
+[  181.3s] feature 14: complete
+[  181.3s] feature 15: clean forward
+[  182.0s] feature 15: SAE forward
+[  183.8s] feature 15: SAE eigenvalues
+[  183.8s] feature 15: complete
+[  183.8s] feature 16: clean forward
+[  184.5s] feature 16: SAE forward
+[  186.3s] feature 16: SAE eigenvalues
+[  186.3s] feature 16: complete
+[  186.3s] feature 17: clean forward
+[  187.0s] feature 17: SAE forward
+[  188.8s] feature 17: SAE eigenvalues
+[  188.8s] feature 17: complete
+[  188.8s] feature 18: clean forward
+[  189.6s] feature 18: SAE forward
+[  191.3s] feature 18: SAE eigenvalues
+[  191.3s] feature 18: complete
+[  191.3s] feature 19: clean forward
+[  192.1s] feature 19: SAE forward
+[  193.8s] feature 19: SAE eigenvalues
+[  193.9s] feature 19: complete
+[  193.9s] feature 20: clean forward
+[  194.6s] feature 20: SAE forward
+[  196.3s] feature 20: SAE eigenvalues
+[  196.3s] feature 20: complete
+[  196.3s] feature 21: clean forward
+[  197.1s] feature 21: SAE forward
+[  198.8s] feature 21: SAE eigenvalues
+[  198.8s] feature 21: complete
+[  198.8s] feature 22: clean forward
+[  199.6s] feature 22: SAE forward
+[  201.3s] feature 22: SAE eigenvalues
+[  201.3s] feature 22: complete
+[  201.3s] feature 23: clean forward
+[  202.1s] feature 23: SAE forward
+[  203.9s] feature 23: SAE eigenvalues
+[  203.9s] feature 23: complete
+[  203.9s] feature 24: clean forward
+[  204.6s] feature 24: SAE forward
+[  206.4s] feature 24: SAE eigenvalues
+[  206.4s] feature 24: complete
+[  206.4s] feature 25: clean forward
+[  207.1s] feature 25: SAE forward
+[  208.9s] feature 25: SAE eigenvalues
+[  208.9s] feature 25: complete
+[  208.9s] feature 26: clean forward
+[  209.6s] feature 26: SAE forward
+[  211.4s] feature 26: SAE eigenvalues
+[  211.4s] feature 26: complete
+[  211.4s] feature 27: clean forward
+[  212.1s] feature 27: SAE forward
+[  213.9s] feature 27: SAE eigenvalues
+[  213.9s] feature 27: complete
+[  213.9s] feature 28: clean forward
+[  214.6s] feature 28: SAE forward
+[  216.4s] feature 28: SAE eigenvalues
+[  216.4s] feature 28: complete
+[  216.4s] feature 29: clean forward
+[  217.2s] feature 29: SAE forward
+[  218.9s] feature 29: SAE eigenvalues
+[  218.9s] feature 29: complete
+[  218.9s] feature 30: clean forward
+[  219.7s] feature 30: SAE forward
+[  221.4s] feature 30: SAE eigenvalues
+[  221.4s] feature 30: complete
+[  221.4s] feature 31: clean forward
+[  222.2s] feature 31: SAE forward
+[  224.0s] feature 31: SAE eigenvalues
+[  224.0s] feature 31: complete
+[  224.0s] feature 32: clean forward
+[  224.7s] feature 32: SAE forward
+[  226.4s] feature 32: SAE eigenvalues
+[  226.4s] feature 32: complete
+[  226.4s] feature 33: clean forward
+[  227.2s] feature 33: SAE forward
+[  229.0s] feature 33: SAE eigenvalues
+[  229.0s] feature 33: complete
+[  229.0s] feature 34: clean forward
+[  229.7s] feature 34: SAE forward
+[  231.5s] feature 34: SAE eigenvalues
+[  231.5s] feature 34: complete
+[  231.5s] feature 35: clean forward
+[  232.2s] feature 35: SAE forward
+[  234.0s] feature 35: SAE eigenvalues
+[  234.0s] feature 35: complete
+[  234.0s] feature 36: clean forward
+[  234.8s] feature 36: SAE forward
+[  236.5s] feature 36: SAE eigenvalues
+[  236.5s] feature 36: complete
+[  236.5s] feature 37: clean forward
+[  237.3s] feature 37: SAE forward
+[  239.1s] feature 37: SAE eigenvalues
+[  239.1s] feature 37: complete
+[  239.1s] feature 38: clean forward
+[  239.8s] feature 38: SAE forward
+[  241.6s] feature 38: SAE eigenvalues
+[  241.6s] feature 38: complete
+[  241.6s] feature 39: clean forward
+[  242.3s] feature 39: SAE forward
+[  244.1s] feature 39: SAE eigenvalues
+[  244.1s] feature 39: complete
+[  244.1s] feature 40: clean forward
+[  244.8s] feature 40: SAE forward
+[  246.6s] feature 40: SAE eigenvalues
+[  246.6s] feature 40: complete
+[  246.6s] feature 41: clean forward
+[  247.3s] feature 41: SAE forward
+[  249.1s] feature 41: SAE eigenvalues
+[  249.1s] feature 41: complete
+[  249.1s] feature 42: clean forward
+[  249.8s] feature 42: SAE forward
+[  251.6s] feature 42: SAE eigenvalues
+[  251.6s] feature 42: complete
+[  251.6s] feature 43: clean forward
+[  252.3s] feature 43: SAE forward
+[  254.1s] feature 43: SAE eigenvalues
+[  254.1s] feature 43: complete
+[  254.1s] feature 44: clean forward
+[  254.9s] feature 44: SAE forward
+[  256.6s] feature 44: SAE eigenvalues
+[  256.7s] feature 44: complete
+[  256.7s] feature 45: clean forward
+[  257.4s] feature 45: SAE forward
+[  259.2s] feature 45: SAE eigenvalues
+[  259.2s] feature 45: complete
+[  259.2s] feature 46: clean forward
+[  259.9s] feature 46: SAE forward
+[  261.7s] feature 46: SAE eigenvalues
+[  261.7s] feature 46: complete
+[  261.7s] feature 47: clean forward
+[  262.4s] feature 47: SAE forward
+[  264.2s] feature 47: SAE eigenvalues
+[  264.2s] feature 47: complete
+[  264.2s] feature 48: clean forward
+[  265.0s] feature 48: SAE forward
+[  266.7s] feature 48: SAE eigenvalues
+[  266.7s] feature 48: complete
+[  266.7s] feature 49: clean forward
+[  267.5s] feature 49: SAE forward
+[  269.2s] feature 49: SAE eigenvalues
+[  269.2s] feature 49: complete
+[  269.2s] feature 50: clean forward
+[  270.0s] feature 50: SAE forward
+[  271.8s] feature 50: SAE eigenvalues
+[  271.8s] feature 50: complete
+[  271.8s]   steered 50/300
+[  271.8s] feature 51: clean forward
+[  272.5s] feature 51: SAE forward
+[  274.2s] feature 51: SAE eigenvalues
+[  274.2s] feature 51: complete
+[  274.2s] feature 52: clean forward
+[  275.0s] feature 52: SAE forward
+[  276.7s] feature 52: SAE eigenvalues
+[  276.7s] feature 52: complete
+[  276.7s] feature 53: clean forward
+[  277.4s] feature 53: SAE forward
+[  279.2s] feature 53: SAE eigenvalues
+[  279.2s] feature 53: complete
+[  279.2s] feature 54: clean forward
+[  279.9s] feature 54: SAE forward
+[  281.7s] feature 54: SAE eigenvalues
+[  281.7s] feature 54: complete
+[  281.7s] feature 55: clean forward
+[  282.4s] feature 55: SAE forward
+[  284.2s] feature 55: SAE eigenvalues
+[  284.2s] feature 55: complete
+[  284.2s] feature 56: clean forward
+[  285.0s] feature 56: SAE forward
+[  286.7s] feature 56: SAE eigenvalues
+[  286.7s] feature 56: complete
+[  286.7s] feature 57: clean forward
+[  287.4s] feature 57: SAE forward
+[  289.2s] feature 57: SAE eigenvalues
+[  289.2s] feature 57: complete
+[  289.2s] feature 58: clean forward
+[  290.0s] feature 58: SAE forward
+[  291.7s] feature 58: SAE eigenvalues
+[  291.7s] feature 58: complete
+[  291.7s] feature 59: clean forward
+[  292.5s] feature 59: SAE forward
+[  294.2s] feature 59: SAE eigenvalues
+[  294.2s] feature 59: complete
+[  294.2s] feature 60: clean forward
+[  295.0s] feature 60: SAE forward
+[  296.8s] feature 60: SAE eigenvalues
+[  296.8s] feature 60: complete
+[  296.8s] feature 61: clean forward
+[  297.5s] feature 61: SAE forward
+[  299.3s] feature 61: SAE eigenvalues
+[  299.3s] feature 61: complete
+[  299.3s] feature 62: clean forward
+[  300.0s] feature 62: SAE forward
+[  301.8s] feature 62: SAE eigenvalues
+[  301.8s] feature 62: complete
+[  301.8s] feature 63: clean forward
+[  302.5s] feature 63: SAE forward
+[  304.3s] feature 63: SAE eigenvalues
+[  304.3s] feature 63: complete
+[  304.3s] feature 64: clean forward
+[  305.0s] feature 64: SAE forward
+[  306.8s] feature 64: SAE eigenvalues
+[  306.8s] feature 64: complete
+[  306.8s] feature 65: clean forward
+[  307.5s] feature 65: SAE forward
+[  309.3s] feature 65: SAE eigenvalues
+[  309.3s] feature 65: complete
+[  309.3s] feature 66: clean forward
+[  310.0s] feature 66: SAE forward
+[  311.8s] feature 66: SAE eigenvalues
+[  311.8s] feature 66: complete
+[  311.8s] feature 67: clean forward
+[  312.5s] feature 67: SAE forward
+[  314.3s] feature 67: SAE eigenvalues
+[  314.3s] feature 67: complete
+[  314.3s] feature 68: clean forward
+[  315.0s] feature 68: SAE forward
+[  316.8s] feature 68: SAE eigenvalues
+[  316.8s] feature 68: complete
+[  316.8s] feature 69: clean forward
+[  317.5s] feature 69: SAE forward
+[  319.3s] feature 69: SAE eigenvalues
+[  319.3s] feature 69: complete
+[  319.3s] feature 70: clean forward
+[  320.1s] feature 70: SAE forward
+[  321.8s] feature 70: SAE eigenvalues
+[  321.8s] feature 70: complete
+[  321.8s] feature 71: clean forward
+[  322.6s] feature 71: SAE forward
+[  324.4s] feature 71: SAE eigenvalues
+[  324.4s] feature 71: complete
+[  324.4s] feature 72: clean forward
+[  325.1s] feature 72: SAE forward
+[  326.9s] feature 72: SAE eigenvalues
+[  326.9s] feature 72: complete
+[  326.9s] feature 73: clean forward
+[  327.6s] feature 73: SAE forward
+[  329.4s] feature 73: SAE eigenvalues
+[  329.4s] feature 73: complete
+[  329.4s] feature 74: clean forward
+[  330.1s] feature 74: SAE forward
+[  331.9s] feature 74: SAE eigenvalues
+[  331.9s] feature 74: complete
+[  331.9s] feature 75: clean forward
+[  332.6s] feature 75: SAE forward
+[  334.4s] feature 75: SAE eigenvalues
+[  334.4s] feature 75: complete
+[  334.4s] feature 76: clean forward
+[  335.1s] feature 76: SAE forward
+[  336.9s] feature 76: SAE eigenvalues
+[  336.9s] feature 76: complete
+[  336.9s] feature 77: clean forward
+[  337.6s] feature 77: SAE forward
+[  339.4s] feature 77: SAE eigenvalues
+[  339.4s] feature 77: complete
+[  339.4s] feature 78: clean forward
+[  340.2s] feature 78: SAE forward
+[  341.9s] feature 78: SAE eigenvalues
+[  341.9s] feature 78: complete
+[  341.9s] feature 79: clean forward
+[  342.7s] feature 79: SAE forward
+[  344.4s] feature 79: SAE eigenvalues
+[  344.4s] feature 79: complete
+[  344.4s] feature 80: clean forward
+[  345.2s] feature 80: SAE forward
+[  346.9s] feature 80: SAE eigenvalues
+[  346.9s] feature 80: complete
+[  346.9s] feature 81: clean forward
+[  347.7s] feature 81: SAE forward
+[  349.4s] feature 81: SAE eigenvalues
+[  349.4s] feature 81: complete
+[  349.4s] feature 82: clean forward
+[  350.2s] feature 82: SAE forward
+[  352.0s] feature 82: SAE eigenvalues
+[  352.0s] feature 82: complete
+[  352.0s] feature 83: clean forward
+[  352.7s] feature 83: SAE forward
+[  354.4s] feature 83: SAE eigenvalues
+[  354.4s] feature 83: complete
+[  354.4s] feature 84: clean forward
+[  355.2s] feature 84: SAE forward
+[  357.0s] feature 84: SAE eigenvalues
+[  357.0s] feature 84: complete
+[  357.0s] feature 85: clean forward
+[  357.7s] feature 85: SAE forward
+[  359.5s] feature 85: SAE eigenvalues
+[  359.5s] feature 85: complete
+[  359.5s] feature 86: clean forward
+[  360.2s] feature 86: SAE forward
+[  362.0s] feature 86: SAE eigenvalues
+[  362.0s] feature 86: complete
+[  362.0s] feature 87: clean forward
+[  362.7s] feature 87: SAE forward
+[  364.4s] feature 87: SAE eigenvalues
+[  364.4s] feature 87: complete
+[  364.4s] feature 88: clean forward
+[  365.2s] feature 88: SAE forward
+[  366.9s] feature 88: SAE eigenvalues
+[  366.9s] feature 88: complete
+[  366.9s] feature 89: clean forward
+[  367.7s] feature 89: SAE forward
+[  369.4s] feature 89: SAE eigenvalues
+[  369.4s] feature 89: complete
+[  369.4s] feature 90: clean forward
+[  370.2s] feature 90: SAE forward
+[  371.9s] feature 90: SAE eigenvalues
+[  371.9s] feature 90: complete
+[  371.9s] feature 91: clean forward
+[  372.7s] feature 91: SAE forward
+[  374.4s] feature 91: SAE eigenvalues
+[  374.4s] feature 91: complete
+[  374.4s] feature 92: clean forward
+[  375.2s] feature 92: SAE forward
+[  377.0s] feature 92: SAE eigenvalues
+[  377.0s] feature 92: complete
+[  377.0s] feature 93: clean forward
+[  377.7s] feature 93: SAE forward
+[  379.4s] feature 93: SAE eigenvalues
+[  379.4s] feature 93: complete
+[  379.4s] feature 94: clean forward
+[  380.2s] feature 94: SAE forward
+[  382.0s] feature 94: SAE eigenvalues
+[  382.0s] feature 94: complete
+[  382.0s] feature 95: clean forward
+[  382.7s] feature 95: SAE forward
+[  384.5s] feature 95: SAE eigenvalues
+[  384.5s] feature 95: complete
+[  384.5s] feature 96: clean forward
+[  385.2s] feature 96: SAE forward
+[  387.0s] feature 96: SAE eigenvalues
+[  387.0s] feature 96: complete
+[  387.0s] feature 97: clean forward
+[  387.7s] feature 97: SAE forward
+[  389.5s] feature 97: SAE eigenvalues
+[  389.5s] feature 97: complete
+[  389.5s] feature 98: clean forward
+[  390.2s] feature 98: SAE forward
+[  392.0s] feature 98: SAE eigenvalues
+[  392.0s] feature 98: complete
+[  392.0s] feature 99: clean forward
+[  392.7s] feature 99: SAE forward
+[  394.5s] feature 99: SAE eigenvalues
+[  394.5s] feature 99: complete
+[  394.5s] feature 100: clean forward
+[  395.2s] feature 100: SAE forward
+[  397.0s] feature 100: SAE eigenvalues
+[  397.0s] feature 100: complete
+[  397.0s]   steered 100/300
+[  397.0s] feature 101: clean forward
+[  397.7s] feature 101: SAE forward
+[  399.5s] feature 101: SAE eigenvalues
+[  399.5s] feature 101: complete
+[  399.5s] feature 102: clean forward
+[  400.2s] feature 102: SAE forward
+[  402.0s] feature 102: SAE eigenvalues
+[  402.0s] feature 102: complete
+[  402.0s] feature 103: clean forward
+[  402.7s] feature 103: SAE forward
+[  404.5s] feature 103: SAE eigenvalues
+[  404.5s] feature 103: complete
+[  404.5s] feature 104: clean forward
+[  405.2s] feature 104: SAE forward
+[  407.0s] feature 104: SAE eigenvalues
+[  407.0s] feature 104: complete
+[  407.0s] feature 105: clean forward
+[  407.7s] feature 105: SAE forward
+[  409.5s] feature 105: SAE eigenvalues
+[  409.5s] feature 105: complete
+[  409.5s] feature 106: clean forward
+[  410.2s] feature 106: SAE forward
+[  412.0s] feature 106: SAE eigenvalues
+[  412.0s] feature 106: complete
+[  412.0s] feature 107: clean forward
+[  412.8s] feature 107: SAE forward
+[  414.5s] feature 107: SAE eigenvalues
+[  414.5s] feature 107: complete
+[  414.5s] feature 108: clean forward
+[  415.3s] feature 108: SAE forward
+[  417.1s] feature 108: SAE eigenvalues
+[  417.1s] feature 108: complete
+[  417.1s] feature 109: clean forward
+[  417.8s] feature 109: SAE forward
+[  419.6s] feature 109: SAE eigenvalues
+[  419.6s] feature 109: complete
+[  419.6s] feature 110: clean forward
+[  420.3s] feature 110: SAE forward
+[  422.1s] feature 110: SAE eigenvalues
+[  422.1s] feature 110: complete
+[  422.1s] feature 111: clean forward
+[  422.8s] feature 111: SAE forward
+[  424.6s] feature 111: SAE eigenvalues
+[  424.6s] feature 111: complete
+[  424.6s] feature 112: clean forward
+[  425.3s] feature 112: SAE forward
+[  427.1s] feature 112: SAE eigenvalues
+[  427.1s] feature 112: complete
+[  427.1s] feature 113: clean forward
+[  427.8s] feature 113: SAE forward
+[  429.6s] feature 113: SAE eigenvalues
+[  429.6s] feature 113: complete
+[  429.6s] feature 114: clean forward
+[  430.3s] feature 114: SAE forward
+[  432.1s] feature 114: SAE eigenvalues
+[  432.1s] feature 114: complete
+[  432.1s] feature 115: clean forward
+[  432.9s] feature 115: SAE forward
+[  434.6s] feature 115: SAE eigenvalues
+[  434.6s] feature 115: complete
+[  434.6s] feature 116: clean forward
+[  435.4s] feature 116: SAE forward
+[  437.1s] feature 116: SAE eigenvalues
+[  437.2s] feature 116: complete
+[  437.2s] feature 117: clean forward
+[  437.9s] feature 117: SAE forward
+[  439.7s] feature 117: SAE eigenvalues
+[  439.7s] feature 117: complete
+[  439.7s] feature 118: clean forward
+[  440.4s] feature 118: SAE forward
+[  442.2s] feature 118: SAE eigenvalues
+[  442.2s] feature 118: complete
+[  442.2s] feature 119: clean forward
+[  443.0s] feature 119: SAE forward
+[  444.7s] feature 119: SAE eigenvalues
+[  444.7s] feature 119: complete
+[  444.7s] feature 120: clean forward
+[  445.5s] feature 120: SAE forward
+[  447.2s] feature 120: SAE eigenvalues
+[  447.2s] feature 120: complete
+[  447.2s] feature 121: clean forward
+[  448.0s] feature 121: SAE forward
+[  449.8s] feature 121: SAE eigenvalues
+[  449.8s] feature 121: complete
+[  449.8s] feature 122: clean forward
+[  450.5s] feature 122: SAE forward
+[  452.3s] feature 122: SAE eigenvalues
+[  452.3s] feature 122: complete
+[  452.3s] feature 123: clean forward
+[  453.0s] feature 123: SAE forward
+[  454.8s] feature 123: SAE eigenvalues
+[  454.8s] feature 123: complete
+[  454.8s] feature 124: clean forward
+[  455.5s] feature 124: SAE forward
+[  457.3s] feature 124: SAE eigenvalues
+[  457.3s] feature 124: complete
+[  457.3s] feature 125: clean forward
+[  458.0s] feature 125: SAE forward
+[  459.8s] feature 125: SAE eigenvalues
+[  459.8s] feature 125: complete
+[  459.8s] feature 126: clean forward
+[  460.5s] feature 126: SAE forward
+[  462.3s] feature 126: SAE eigenvalues
+[  462.3s] feature 126: complete
+[  462.3s] feature 127: clean forward
+[  463.0s] feature 127: SAE forward
+[  464.8s] feature 127: SAE eigenvalues
+[  464.8s] feature 127: complete
+[  464.8s] feature 128: clean forward
+[  465.5s] feature 128: SAE forward
+[  467.3s] feature 128: SAE eigenvalues
+[  467.3s] feature 128: complete
+[  467.3s] feature 129: clean forward
+[  468.1s] feature 129: SAE forward
+[  469.8s] feature 129: SAE eigenvalues
+[  469.8s] feature 129: complete
+[  469.8s] feature 130: clean forward
+[  470.6s] feature 130: SAE forward
+[  472.4s] feature 130: SAE eigenvalues
+[  472.4s] feature 130: complete
+[  472.4s] feature 131: clean forward
+[  473.1s] feature 131: SAE forward
+[  474.9s] feature 131: SAE eigenvalues
+[  474.9s] feature 131: complete
+[  474.9s] feature 132: clean forward
+[  475.6s] feature 132: SAE forward
+[  477.4s] feature 132: SAE eigenvalues
+[  477.4s] feature 132: complete
+[  477.4s] feature 133: clean forward
+[  478.1s] feature 133: SAE forward
+[  479.9s] feature 133: SAE eigenvalues
+[  479.9s] feature 133: complete
+[  479.9s] feature 134: clean forward
+[  480.6s] feature 134: SAE forward
+[  482.4s] feature 134: SAE eigenvalues
+[  482.4s] feature 134: complete
+[  482.4s] feature 135: clean forward
+[  483.2s] feature 135: SAE forward
+[  484.9s] feature 135: SAE eigenvalues
+[  484.9s] feature 135: complete
+[  484.9s] feature 136: clean forward
+[  485.7s] feature 136: SAE forward
+[  487.4s] feature 136: SAE eigenvalues
+[  487.4s] feature 136: complete
+[  487.4s] feature 137: clean forward
+[  488.2s] feature 137: SAE forward
+[  489.9s] feature 137: SAE eigenvalues
+[  489.9s] feature 137: complete
+[  489.9s] feature 138: clean forward
+[  490.7s] feature 138: SAE forward
+[  492.4s] feature 138: SAE eigenvalues
+[  492.4s] feature 138: complete
+[  492.4s] feature 139: clean forward
+[  493.2s] feature 139: SAE forward
+[  494.9s] feature 139: SAE eigenvalues
+[  494.9s] feature 139: complete
+[  494.9s] feature 140: clean forward
+[  495.7s] feature 140: SAE forward
+[  497.5s] feature 140: SAE eigenvalues
+[  497.5s] feature 140: complete
+[  497.5s] feature 141: clean forward
+[  498.2s] feature 141: SAE forward
+[  500.0s] feature 141: SAE eigenvalues
+[  500.0s] feature 141: complete
+[  500.0s] feature 142: clean forward
+[  500.7s] feature 142: SAE forward
+[  502.5s] feature 142: SAE eigenvalues
+[  502.5s] feature 142: complete
+[  502.5s] feature 143: clean forward
+[  503.2s] feature 143: SAE forward
+[  505.0s] feature 143: SAE eigenvalues
+[  505.0s] feature 143: complete
+[  505.0s] feature 144: clean forward
+[  505.8s] feature 144: SAE forward
+[  507.5s] feature 144: SAE eigenvalues
+[  507.5s] feature 144: complete
+[  507.5s] feature 145: clean forward
+[  508.3s] feature 145: SAE forward
+[  510.1s] feature 145: SAE eigenvalues
+[  510.1s] feature 145: complete
+[  510.1s] feature 146: clean forward
+[  510.8s] feature 146: SAE forward
+[  512.6s] feature 146: SAE eigenvalues
+[  512.6s] feature 146: complete
+[  512.6s] feature 147: clean forward
+[  513.3s] feature 147: SAE forward
+[  515.1s] feature 147: SAE eigenvalues
+[  515.1s] feature 147: complete
+[  515.1s] feature 148: clean forward
+[  515.8s] feature 148: SAE forward
+[  517.6s] feature 148: SAE eigenvalues
+[  517.6s] feature 148: complete
+[  517.6s] feature 149: clean forward
+[  518.4s] feature 149: SAE forward
+[  520.1s] feature 149: SAE eigenvalues
+[  520.1s] feature 149: complete
+[  520.1s] feature 150: clean forward
+[  520.9s] feature 150: SAE forward
+[  522.6s] feature 150: SAE eigenvalues
+[  522.7s] feature 150: complete
+[  522.7s]   steered 150/300
+[  522.7s] feature 151: clean forward
+[  523.4s] feature 151: SAE forward
+[  525.2s] feature 151: SAE eigenvalues
+[  525.2s] feature 151: complete
+[  525.2s] feature 152: clean forward
+[  525.9s] feature 152: SAE forward
+[  527.7s] feature 152: SAE eigenvalues
+[  527.7s] feature 152: complete
+[  527.7s] feature 153: clean forward
+[  528.4s] feature 153: SAE forward
+[  530.2s] feature 153: SAE eigenvalues
+[  530.2s] feature 153: complete
+[  530.2s] feature 154: clean forward
+[  530.9s] feature 154: SAE forward
+[  532.7s] feature 154: SAE eigenvalues
+[  532.7s] feature 154: complete
+[  532.7s] feature 155: clean forward
+[  533.4s] feature 155: SAE forward
+[  535.2s] feature 155: SAE eigenvalues
+[  535.2s] feature 155: complete
+[  535.2s] feature 156: clean forward
+[  535.9s] feature 156: SAE forward
+[  537.7s] feature 156: SAE eigenvalues
+[  537.7s] feature 156: complete
+[  537.7s] feature 157: clean forward
+[  538.4s] feature 157: SAE forward
+[  540.2s] feature 157: SAE eigenvalues
+[  540.2s] feature 157: complete
+[  540.2s] feature 158: clean forward
+[  541.0s] feature 158: SAE forward
+[  542.7s] feature 158: SAE eigenvalues
+[  542.7s] feature 158: complete
+[  542.7s] feature 159: clean forward
+[  543.5s] feature 159: SAE forward
+[  545.2s] feature 159: SAE eigenvalues
+[  545.2s] feature 159: complete
+[  545.2s] feature 160: clean forward
+[  546.0s] feature 160: SAE forward
+[  547.8s] feature 160: SAE eigenvalues
+[  547.8s] feature 160: complete
+[  547.8s] feature 161: clean forward
+[  548.5s] feature 161: SAE forward
+[  550.3s] feature 161: SAE eigenvalues
+[  550.3s] feature 161: complete
+[  550.3s] feature 162: clean forward
+[  551.0s] feature 162: SAE forward
+[  552.8s] feature 162: SAE eigenvalues
+[  552.8s] feature 162: complete
+[  552.8s] feature 163: clean forward
+[  553.5s] feature 163: SAE forward
+[  555.2s] feature 163: SAE eigenvalues
+[  555.3s] feature 163: complete
+[  555.3s] feature 164: clean forward
+[  556.0s] feature 164: SAE forward
+[  557.8s] feature 164: SAE eigenvalues
+[  557.8s] feature 164: complete
+[  557.8s] feature 165: clean forward
+[  558.5s] feature 165: SAE forward
+[  560.3s] feature 165: SAE eigenvalues
+[  560.3s] feature 165: complete
+[  560.3s] feature 166: clean forward
+[  561.0s] feature 166: SAE forward
+[  562.9s] feature 166: SAE eigenvalues
+[  562.9s] feature 166: complete
+[  562.9s] feature 167: clean forward
+[  563.6s] feature 167: SAE forward
+[  565.3s] feature 167: SAE eigenvalues
+[  565.4s] feature 167: complete
+[  565.4s] feature 168: clean forward
+[  566.1s] feature 168: SAE forward
+[  567.9s] feature 168: SAE eigenvalues
+[  567.9s] feature 168: complete
+[  567.9s] feature 169: clean forward
+[  568.6s] feature 169: SAE forward
+[  570.4s] feature 169: SAE eigenvalues
+[  570.4s] feature 169: complete
+[  570.4s] feature 170: clean forward
+[  571.1s] feature 170: SAE forward
+[  572.9s] feature 170: SAE eigenvalues
+[  572.9s] feature 170: complete
+[  572.9s] feature 171: clean forward
+[  573.6s] feature 171: SAE forward
+[  575.4s] feature 171: SAE eigenvalues
+[  575.4s] feature 171: complete
+[  575.4s] feature 172: clean forward
+[  576.1s] feature 172: SAE forward
+[  577.9s] feature 172: SAE eigenvalues
+[  577.9s] feature 172: complete
+[  577.9s] feature 173: clean forward
+[  578.6s] feature 173: SAE forward
+[  580.4s] feature 173: SAE eigenvalues
+[  580.4s] feature 173: complete
+[  580.4s] feature 174: clean forward
+[  581.1s] feature 174: SAE forward
+[  582.9s] feature 174: SAE eigenvalues
+[  582.9s] feature 174: complete
+[  582.9s] feature 175: clean forward
+[  583.6s] feature 175: SAE forward
+[  585.4s] feature 175: SAE eigenvalues
+[  585.4s] feature 175: complete
+[  585.4s] feature 176: clean forward
+[  586.2s] feature 176: SAE forward
+[  587.9s] feature 176: SAE eigenvalues
+[  587.9s] feature 176: complete
+[  587.9s] feature 177: clean forward
+[  588.7s] feature 177: SAE forward
+[  590.4s] feature 177: SAE eigenvalues
+[  590.4s] feature 177: complete
+[  590.4s] feature 178: clean forward
+[  591.2s] feature 178: SAE forward
+[  592.9s] feature 178: SAE eigenvalues
+[  592.9s] feature 178: complete
+[  593.0s] feature 179: clean forward
+[  593.7s] feature 179: SAE forward
+[  595.4s] feature 179: SAE eigenvalues
+[  595.5s] feature 179: complete
+[  595.5s] feature 180: clean forward
+[  596.2s] feature 180: SAE forward
+[  598.0s] feature 180: SAE eigenvalues
+[  598.0s] feature 180: complete
+[  598.0s] feature 181: clean forward
+[  598.7s] feature 181: SAE forward
+[  600.4s] feature 181: SAE eigenvalues
+[  600.5s] feature 181: complete
+[  600.5s] feature 182: clean forward
+[  601.2s] feature 182: SAE forward
+[  603.0s] feature 182: SAE eigenvalues
+[  603.0s] feature 182: complete
+[  603.0s] feature 183: clean forward
+[  603.7s] feature 183: SAE forward
+[  605.5s] feature 183: SAE eigenvalues
+[  605.5s] feature 183: complete
+[  605.5s] feature 184: clean forward
+[  606.2s] feature 184: SAE forward
+[  608.0s] feature 184: SAE eigenvalues
+[  608.0s] feature 184: complete
+[  608.0s] feature 185: clean forward
+[  608.8s] feature 185: SAE forward
+[  610.5s] feature 185: SAE eigenvalues
+[  610.5s] feature 185: complete
+[  610.5s] feature 186: clean forward
+[  611.3s] feature 186: SAE forward
+[  613.1s] feature 186: SAE eigenvalues
+[  613.1s] feature 186: complete
+[  613.1s] feature 187: clean forward
+[  613.8s] feature 187: SAE forward
+[  615.6s] feature 187: SAE eigenvalues
+[  615.6s] feature 187: complete
+[  615.6s] feature 188: clean forward
+[  616.3s] feature 188: SAE forward
+[  618.1s] feature 188: SAE eigenvalues
+[  618.1s] feature 188: complete
+[  618.1s] feature 189: clean forward
+[  618.8s] feature 189: SAE forward
+[  620.6s] feature 189: SAE eigenvalues
+[  620.6s] feature 189: complete
+[  620.6s] feature 190: clean forward
+[  621.3s] feature 190: SAE forward
+[  623.1s] feature 190: SAE eigenvalues
+[  623.1s] feature 190: complete
+[  623.1s] feature 191: clean forward
+[  623.9s] feature 191: SAE forward
+[  625.6s] feature 191: SAE eigenvalues
+[  625.6s] feature 191: complete
+[  625.6s] feature 192: clean forward
+[  626.4s] feature 192: SAE forward
+[  628.2s] feature 192: SAE eigenvalues
+[  628.2s] feature 192: complete
+[  628.2s] feature 193: clean forward
+[  628.9s] feature 193: SAE forward
+[  630.7s] feature 193: SAE eigenvalues
+[  630.7s] feature 193: complete
+[  630.7s] feature 194: clean forward
+[  631.4s] feature 194: SAE forward
+[  633.2s] feature 194: SAE eigenvalues
+[  633.2s] feature 194: complete
+[  633.2s] feature 195: clean forward
+[  633.9s] feature 195: SAE forward
+[  635.7s] feature 195: SAE eigenvalues
+[  635.7s] feature 195: complete
+[  635.7s] feature 196: clean forward
+[  636.4s] feature 196: SAE forward
+[  638.2s] feature 196: SAE eigenvalues
+[  638.2s] feature 196: complete
+[  638.2s] feature 197: clean forward
+[  639.0s] feature 197: SAE forward
+[  640.8s] feature 197: SAE eigenvalues
+[  640.8s] feature 197: complete
+[  640.8s] feature 198: clean forward
+[  641.5s] feature 198: SAE forward
+[  643.3s] feature 198: SAE eigenvalues
+[  643.3s] feature 198: complete
+[  643.3s] feature 199: clean forward
+[  644.0s] feature 199: SAE forward
+[  645.8s] feature 199: SAE eigenvalues
+[  645.8s] feature 199: complete
+[  645.8s] feature 200: clean forward
+[  646.5s] feature 200: SAE forward
+[  648.3s] feature 200: SAE eigenvalues
+[  648.3s] feature 200: complete
+[  648.3s]   steered 200/300
+[  648.3s] feature 201: clean forward
+[  649.1s] feature 201: SAE forward
+[  650.8s] feature 201: SAE eigenvalues
+[  650.8s] feature 201: complete
+[  650.8s] feature 202: clean forward
+[  651.6s] feature 202: SAE forward
+[  653.4s] feature 202: SAE eigenvalues
+[  653.4s] feature 202: complete
+[  653.4s] feature 203: clean forward
+[  654.1s] feature 203: SAE forward
+[  655.9s] feature 203: SAE eigenvalues
+[  655.9s] feature 203: complete
+[  655.9s] feature 204: clean forward
+[  656.6s] feature 204: SAE forward
+[  658.4s] feature 204: SAE eigenvalues
+[  658.4s] feature 204: complete
+[  658.4s] feature 205: clean forward
+[  659.1s] feature 205: SAE forward
+[  660.9s] feature 205: SAE eigenvalues
+[  660.9s] feature 205: complete
+[  660.9s] feature 206: clean forward
+[  661.6s] feature 206: SAE forward
+[  663.4s] feature 206: SAE eigenvalues
+[  663.4s] feature 206: complete
+[  663.4s] feature 207: clean forward
+[  664.1s] feature 207: SAE forward
+[  665.9s] feature 207: SAE eigenvalues
+[  665.9s] feature 207: complete
+[  665.9s] feature 208: clean forward
+[  666.7s] feature 208: SAE forward
+[  668.4s] feature 208: SAE eigenvalues
+[  668.4s] feature 208: complete
+[  668.4s] feature 209: clean forward
+[  669.2s] feature 209: SAE forward
+[  670.9s] feature 209: SAE eigenvalues
+[  670.9s] feature 209: complete
+[  670.9s] feature 210: clean forward
+[  671.7s] feature 210: SAE forward
+[  673.4s] feature 210: SAE eigenvalues
+[  673.4s] feature 210: complete
+[  673.4s] feature 211: clean forward
+[  674.2s] feature 211: SAE forward
+[  675.9s] feature 211: SAE eigenvalues
+[  675.9s] feature 211: complete
+[  675.9s] feature 212: clean forward
+[  676.7s] feature 212: SAE forward
+[  678.4s] feature 212: SAE eigenvalues
+[  678.4s] feature 212: complete
+[  678.4s] feature 213: clean forward
+[  679.2s] feature 213: SAE forward
+[  681.0s] feature 213: SAE eigenvalues
+[  681.0s] feature 213: complete
+[  681.0s] feature 214: clean forward
+[  681.7s] feature 214: SAE forward
+[  683.5s] feature 214: SAE eigenvalues
+[  683.5s] feature 214: complete
+[  683.5s] feature 215: clean forward
+[  684.2s] feature 215: SAE forward
+[  686.0s] feature 215: SAE eigenvalues
+[  686.0s] feature 215: complete
+[  686.0s] feature 216: clean forward
+[  686.7s] feature 216: SAE forward
+[  688.5s] feature 216: SAE eigenvalues
+[  688.5s] feature 216: complete
+[  688.5s] feature 217: clean forward
+[  689.2s] feature 217: SAE forward
+[  691.0s] feature 217: SAE eigenvalues
+[  691.0s] feature 217: complete
+[  691.0s] feature 218: clean forward
+[  691.7s] feature 218: SAE forward
+[  693.5s] feature 218: SAE eigenvalues
+[  693.5s] feature 218: complete
+[  693.5s] feature 219: clean forward
+[  694.2s] feature 219: SAE forward
+[  696.0s] feature 219: SAE eigenvalues
+[  696.0s] feature 219: complete
+[  696.0s] feature 220: clean forward
+[  696.7s] feature 220: SAE forward
+[  698.5s] feature 220: SAE eigenvalues
+[  698.5s] feature 220: complete
+[  698.5s] feature 221: clean forward
+[  699.2s] feature 221: SAE forward
+[  701.0s] feature 221: SAE eigenvalues
+[  701.0s] feature 221: complete
+[  701.0s] feature 222: clean forward
+[  701.7s] feature 222: SAE forward
+[  703.5s] feature 222: SAE eigenvalues
+[  703.5s] feature 222: complete
+[  703.5s] feature 223: clean forward
+[  704.2s] feature 223: SAE forward
+[  706.0s] feature 223: SAE eigenvalues
+[  706.0s] feature 223: complete
+[  706.0s] feature 224: clean forward
+[  706.7s] feature 224: SAE forward
+[  708.5s] feature 224: SAE eigenvalues
+[  708.5s] feature 224: complete
+[  708.5s] feature 225: clean forward
+[  709.2s] feature 225: SAE forward
+[  711.0s] feature 225: SAE eigenvalues
+[  711.0s] feature 225: complete
+[  711.0s] feature 226: clean forward
+[  711.7s] feature 226: SAE forward
+[  713.5s] feature 226: SAE eigenvalues
+[  713.5s] feature 226: complete
+[  713.5s] feature 227: clean forward
+[  714.2s] feature 227: SAE forward
+[  716.0s] feature 227: SAE eigenvalues
+[  716.0s] feature 227: complete
+[  716.0s] feature 228: clean forward
+[  716.8s] feature 228: SAE forward
+[  718.5s] feature 228: SAE eigenvalues
+[  718.5s] feature 228: complete
+[  718.5s] feature 229: clean forward
+[  719.2s] feature 229: SAE forward
+[  721.0s] feature 229: SAE eigenvalues
+[  721.0s] feature 229: complete
+[  721.0s] feature 230: clean forward
+[  721.8s] feature 230: SAE forward
+[  723.5s] feature 230: SAE eigenvalues
+[  723.5s] feature 230: complete
+[  723.5s] feature 231: clean forward
+[  724.3s] feature 231: SAE forward
+[  726.0s] feature 231: SAE eigenvalues
+[  726.0s] feature 231: complete
+[  726.0s] feature 232: clean forward
+[  726.8s] feature 232: SAE forward
+[  728.5s] feature 232: SAE eigenvalues
+[  728.5s] feature 232: complete
+[  728.5s] feature 233: clean forward
+[  729.3s] feature 233: SAE forward
+[  731.1s] feature 233: SAE eigenvalues
+[  731.1s] feature 233: complete
+[  731.1s] feature 234: clean forward
+[  731.8s] feature 234: SAE forward
+[  733.6s] feature 234: SAE eigenvalues
+[  733.6s] feature 234: complete
+[  733.6s] feature 235: clean forward
+[  734.3s] feature 235: SAE forward
+[  736.1s] feature 235: SAE eigenvalues
+[  736.1s] feature 235: complete
+[  736.1s] feature 236: clean forward
+[  736.8s] feature 236: SAE forward
+[  738.6s] feature 236: SAE eigenvalues
+[  738.6s] feature 236: complete
+[  738.6s] feature 237: clean forward
+[  739.3s] feature 237: SAE forward
+[  741.1s] feature 237: SAE eigenvalues
+[  741.1s] feature 237: complete
+[  741.1s] feature 238: clean forward
+[  741.9s] feature 238: SAE forward
+[  743.6s] feature 238: SAE eigenvalues
+[  743.7s] feature 238: complete
+[  743.7s] feature 239: clean forward
+[  744.4s] feature 239: SAE forward
+[  746.2s] feature 239: SAE eigenvalues
+[  746.2s] feature 239: complete
+[  746.2s] feature 240: clean forward
+[  746.9s] feature 240: SAE forward
+[  748.7s] feature 240: SAE eigenvalues
+[  748.7s] feature 240: complete
+[  748.7s] feature 241: clean forward
+[  749.4s] feature 241: SAE forward
+[  751.2s] feature 241: SAE eigenvalues
+[  751.2s] feature 241: complete
+[  751.2s] feature 242: clean forward
+[  751.9s] feature 242: SAE forward
+[  753.6s] feature 242: SAE eigenvalues
+[  753.7s] feature 242: complete
+[  753.7s] feature 243: clean forward
+[  754.4s] feature 243: SAE forward
+[  756.2s] feature 243: SAE eigenvalues
+[  756.2s] feature 243: complete
+[  756.2s] feature 244: clean forward
+[  756.9s] feature 244: SAE forward
+[  758.7s] feature 244: SAE eigenvalues
+[  758.7s] feature 244: complete
+[  758.7s] feature 245: clean forward
+[  759.4s] feature 245: SAE forward
+[  761.2s] feature 245: SAE eigenvalues
+[  761.2s] feature 245: complete
+[  761.2s] feature 246: clean forward
+[  761.9s] feature 246: SAE forward
+[  763.7s] feature 246: SAE eigenvalues
+[  763.7s] feature 246: complete
+[  763.7s] feature 247: clean forward
+[  764.4s] feature 247: SAE forward
+[  766.2s] feature 247: SAE eigenvalues
+[  766.2s] feature 247: complete
+[  766.2s] feature 248: clean forward
+[  766.9s] feature 248: SAE forward
+[  768.7s] feature 248: SAE eigenvalues
+[  768.7s] feature 248: complete
+[  768.7s] feature 249: clean forward
+[  769.4s] feature 249: SAE forward
+[  771.2s] feature 249: SAE eigenvalues
+[  771.2s] feature 249: complete
+[  771.2s] feature 250: clean forward
+[  772.0s] feature 250: SAE forward
+[  773.7s] feature 250: SAE eigenvalues
+[  773.7s] feature 250: complete
+[  773.8s]   steered 250/300
+[  773.8s] feature 251: clean forward
+[  774.5s] feature 251: SAE forward
+[  776.2s] feature 251: SAE eigenvalues
+[  776.3s] feature 251: complete
+[  776.3s] feature 252: clean forward
+[  777.0s] feature 252: SAE forward
+[  778.8s] feature 252: SAE eigenvalues
+[  778.8s] feature 252: complete
+[  778.8s] feature 253: clean forward
+[  779.5s] feature 253: SAE forward
+[  781.3s] feature 253: SAE eigenvalues
+[  781.3s] feature 253: complete
+[  781.3s] feature 254: clean forward
+[  782.0s] feature 254: SAE forward
+[  783.8s] feature 254: SAE eigenvalues
+[  783.8s] feature 254: complete
+[  783.8s] feature 255: clean forward
+[  784.6s] feature 255: SAE forward
+[  786.3s] feature 255: SAE eigenvalues
+[  786.3s] feature 255: complete
+[  786.3s] feature 256: clean forward
+[  787.1s] feature 256: SAE forward
+[  788.9s] feature 256: SAE eigenvalues
+[  788.9s] feature 256: complete
+[  788.9s] feature 257: clean forward
+[  789.6s] feature 257: SAE forward
+[  791.4s] feature 257: SAE eigenvalues
+[  791.4s] feature 257: complete
+[  791.4s] feature 258: clean forward
+[  792.1s] feature 258: SAE forward
+[  793.9s] feature 258: SAE eigenvalues
+[  793.9s] feature 258: complete
+[  793.9s] feature 259: clean forward
+[  794.6s] feature 259: SAE forward
+[  796.4s] feature 259: SAE eigenvalues
+[  796.4s] feature 259: complete
+[  796.4s] feature 260: clean forward
+[  797.2s] feature 260: SAE forward
+[  798.9s] feature 260: SAE eigenvalues
+[  798.9s] feature 260: complete
+[  798.9s] feature 261: clean forward
+[  799.7s] feature 261: SAE forward
+[  801.4s] feature 261: SAE eigenvalues
+[  801.4s] feature 261: complete
+[  801.4s] feature 262: clean forward
+[  802.2s] feature 262: SAE forward
+[  804.0s] feature 262: SAE eigenvalues
+[  804.0s] feature 262: complete
+[  804.0s] feature 263: clean forward
+[  804.7s] feature 263: SAE forward
+[  806.5s] feature 263: SAE eigenvalues
+[  806.5s] feature 263: complete
+[  806.5s] feature 264: clean forward
+[  807.3s] feature 264: SAE forward
+[  809.0s] feature 264: SAE eigenvalues
+[  809.0s] feature 264: complete
+[  809.0s] feature 265: clean forward
+[  809.8s] feature 265: SAE forward
+[  811.5s] feature 265: SAE eigenvalues
+[  811.5s] feature 265: complete
+[  811.5s] feature 266: clean forward
+[  812.3s] feature 266: SAE forward
+[  814.1s] feature 266: SAE eigenvalues
+[  814.1s] feature 266: complete
+[  814.1s] feature 267: clean forward
+[  814.8s] feature 267: SAE forward
+[  816.6s] feature 267: SAE eigenvalues
+[  816.6s] feature 267: complete
+[  816.6s] feature 268: clean forward
+[  817.3s] feature 268: SAE forward
+[  819.1s] feature 268: SAE eigenvalues
+[  819.1s] feature 268: complete
+[  819.1s] feature 269: clean forward
+[  819.9s] feature 269: SAE forward
+[  821.6s] feature 269: SAE eigenvalues
+[  821.6s] feature 269: complete
+[  821.6s] feature 270: clean forward
+[  822.4s] feature 270: SAE forward
+[  824.1s] feature 270: SAE eigenvalues
+[  824.1s] feature 270: complete
+[  824.1s] feature 271: clean forward
+[  824.9s] feature 271: SAE forward
+[  826.6s] feature 271: SAE eigenvalues
+[  826.7s] feature 271: complete
+[  826.7s] feature 272: clean forward
+[  827.4s] feature 272: SAE forward
+[  829.2s] feature 272: SAE eigenvalues
+[  829.2s] feature 272: complete
+[  829.2s] feature 273: clean forward
+[  829.9s] feature 273: SAE forward
+[  831.7s] feature 273: SAE eigenvalues
+[  831.7s] feature 273: complete
+[  831.7s] feature 274: clean forward
+[  832.4s] feature 274: SAE forward
+[  834.2s] feature 274: SAE eigenvalues
+[  834.2s] feature 274: complete
+[  834.2s] feature 275: clean forward
+[  834.9s] feature 275: SAE forward
+[  836.7s] feature 275: SAE eigenvalues
+[  836.7s] feature 275: complete
+[  836.7s] feature 276: clean forward
+[  837.4s] feature 276: SAE forward
+[  839.2s] feature 276: SAE eigenvalues
+[  839.2s] feature 276: complete
+[  839.2s] feature 277: clean forward
+[  840.0s] feature 277: SAE forward
+[  841.8s] feature 277: SAE eigenvalues
+[  841.8s] feature 277: complete
+[  841.8s] feature 278: clean forward
+[  842.5s] feature 278: SAE forward
+[  844.3s] feature 278: SAE eigenvalues
+[  844.3s] feature 278: complete
+[  844.3s] feature 279: clean forward
+[  845.0s] feature 279: SAE forward
+[  846.8s] feature 279: SAE eigenvalues
+[  846.8s] feature 279: complete
+[  846.8s] feature 280: clean forward
+[  847.5s] feature 280: SAE forward
+[  849.3s] feature 280: SAE eigenvalues
+[  849.3s] feature 280: complete
+[  849.3s] feature 281: clean forward
+[  850.1s] feature 281: SAE forward
+[  851.9s] feature 281: SAE eigenvalues
+[  851.9s] feature 281: complete
+[  851.9s] feature 282: clean forward
+[  852.6s] feature 282: SAE forward
+[  854.4s] feature 282: SAE eigenvalues
+[  854.4s] feature 282: complete
+[  854.4s] feature 283: clean forward
+[  855.2s] feature 283: SAE forward
+[  856.9s] feature 283: SAE eigenvalues
+[  856.9s] feature 283: complete
+[  856.9s] feature 284: clean forward
+[  857.7s] feature 284: SAE forward
+[  859.4s] feature 284: SAE eigenvalues
+[  859.4s] feature 284: complete
+[  859.4s] feature 285: clean forward
+[  860.2s] feature 285: SAE forward
+[  862.0s] feature 285: SAE eigenvalues
+[  862.0s] feature 285: complete
+[  862.0s] feature 286: clean forward
+[  862.7s] feature 286: SAE forward
+[  864.5s] feature 286: SAE eigenvalues
+[  864.5s] feature 286: complete
+[  864.5s] feature 287: clean forward
+[  865.2s] feature 287: SAE forward
+[  867.0s] feature 287: SAE eigenvalues
+[  867.0s] feature 287: complete
+[  867.0s] feature 288: clean forward
+[  867.7s] feature 288: SAE forward
+[  869.5s] feature 288: SAE eigenvalues
+[  869.5s] feature 288: complete
+[  869.5s] feature 289: clean forward
+[  870.3s] feature 289: SAE forward
+[  872.0s] feature 289: SAE eigenvalues
+[  872.0s] feature 289: complete
+[  872.0s] feature 290: clean forward
+[  872.8s] feature 290: SAE forward
+[  874.5s] feature 290: SAE eigenvalues
+[  874.5s] feature 290: complete
+[  874.5s] feature 291: clean forward
+[  875.3s] feature 291: SAE forward
+[  877.0s] feature 291: SAE eigenvalues
+[  877.0s] feature 291: complete
+[  877.0s] feature 292: clean forward
+[  877.8s] feature 292: SAE forward
+[  879.5s] feature 292: SAE eigenvalues
+[  879.5s] feature 292: complete
+[  879.5s] feature 293: clean forward
+[  880.3s] feature 293: SAE forward
+[  882.1s] feature 293: SAE eigenvalues
+[  882.1s] feature 293: complete
+[  882.1s] feature 294: clean forward
+[  882.8s] feature 294: SAE forward
+[  884.6s] feature 294: SAE eigenvalues
+[  884.6s] feature 294: complete
+[  884.6s] feature 295: clean forward
+[  885.3s] feature 295: SAE forward
+[  887.1s] feature 295: SAE eigenvalues
+[  887.1s] feature 295: complete
+[  887.1s] feature 296: clean forward
+[  887.8s] feature 296: SAE forward
+[  889.6s] feature 296: SAE eigenvalues
+[  889.6s] feature 296: complete
+[  889.6s] feature 297: clean forward
+[  890.3s] feature 297: SAE forward
+[  892.1s] feature 297: SAE eigenvalues
+[  892.1s] feature 297: complete
+[  892.1s] feature 298: clean forward
+[  892.9s] feature 298: SAE forward
+[  894.6s] feature 298: SAE eigenvalues
+[  894.6s] feature 298: complete
+[  894.6s] feature 299: clean forward
+[  895.4s] feature 299: SAE forward
+[  897.1s] feature 299: SAE eigenvalues
+[  897.2s] feature 299: complete
+[  897.2s] feature 300: clean forward
+[  897.9s] feature 300: SAE forward
+[  899.7s] feature 300: SAE eigenvalues
+[  899.7s] feature 300: complete
+[  899.7s]   steered 300/300
+[  899.7s] steering done
+{
+ "rho_crowding__collateral_raw": 0.3318,
+ "rho_frequency__collateral_raw": 0.292,
+ "rho_act_mag__collateral_raw": 0.3587,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.2551,
+ "rho_crowding__collateral_ctilde": 0.3273,
+ "rho_frequency__collateral_ctilde": 0.2944,
+ "rho_act_mag__collateral_ctilde": 0.3545,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.2534,
+ "crowd_rho_lowfreq_half": 0.3211,
+ "crowd_rho_highfreq_half": 0.2516,
+ "rho_crowding__collateral_raw_nodense": 0.3297,
+ "rho_crowding__resid_delta_norm": 0.2014,
+ "mean_resid_reconstruction_norm_ratio": 1.2016,
+ "mean_resid_change_explained_energy": -2.6864
+}
+[  899.7s] wrote results/llama_3_1_8b_seed2/per_feature.csv, selection.json, meta.json
+=== OK    llama_seed2 2026-09-14T00:00:24+01:00
+=== START llama_fp32 2026-09-14T00:00:24+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "llama_3_1_8b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 1024, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.5s] device NVIDIA GB10; loading SAEs
+[    7.3s] SAEs loaded: primary d_sae=32768 (blocks.16.hook_resid_post), downstream d_sae=32768 (blocks.20.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:00<00:59,  4.90it/s]Loading weights:  32%|███▏      | 94/291 [00:00<00:00, 368.94it/s]Loading weights:  54%|█████▍    | 157/291 [00:00<00:00, 454.13it/s]Loading weights:  74%|███████▍  | 216/291 [00:00<00:00, 494.91it/s]Loading weights:  93%|█████████▎| 272/291 [00:00<00:00, 505.52it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 447.27it/s]
+Loaded pretrained model meta-llama/Llama-3.1-8B into HookedTransformer
+[   34.1s] model loaded: meta-llama/Llama-3.1-8B d_model=4096 n_layers=32 norm=RMS dtype=float32
+[   34.1s] streaming wikitext-103 train split
+[   41.2s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   41.8s] 2048 contexts x 48 tokens; short texts dropped (v2): 27; contexts whose final token is the pad token: 0
+[  234.5s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=32.2 downstream=31.4; primary features never firing=60.9%
+[  235.3s] predictors: crowding done
+eligible features: 2837 of 32768 | sampled: 300
+panel 1024 features; 1005 with firing frequency <= 0.1
+[  235.5s] predictors: all done
+[  235.5s] steering 300 features x 48 contexts
+[  235.5s] feature 1: clean forward
+[  238.0s] feature 1: SAE forward
+[  244.3s] feature 1: SAE eigenvalues
+[  244.3s] feature 1: complete
+[  244.3s] feature 2: clean forward
+[  246.9s] feature 2: SAE forward
+[  253.1s] feature 2: SAE eigenvalues
+[  253.1s] feature 2: complete
+[  253.1s] feature 3: clean forward
+[  255.6s] feature 3: SAE forward
+[  262.0s] feature 3: SAE eigenvalues
+[  262.0s] feature 3: complete
+[  262.0s] feature 4: clean forward
+[  264.5s] feature 4: SAE forward
+[  271.0s] feature 4: SAE eigenvalues
+[  271.0s] feature 4: complete
+[  271.0s] feature 5: clean forward
+[  273.5s] feature 5: SAE forward
+[  279.9s] feature 5: SAE eigenvalues
+[  279.9s] feature 5: complete
+[  279.9s] feature 6: clean forward
+[  282.4s] feature 6: SAE forward
+[  288.8s] feature 6: SAE eigenvalues
+[  288.8s] feature 6: complete
+[  288.8s] feature 7: clean forward
+[  291.3s] feature 7: SAE forward
+[  297.7s] feature 7: SAE eigenvalues
+[  297.7s] feature 7: complete
+[  297.7s] feature 8: clean forward
+[  300.2s] feature 8: SAE forward
+[  306.6s] feature 8: SAE eigenvalues
+[  306.6s] feature 8: complete
+[  306.6s] feature 9: clean forward
+[  309.1s] feature 9: SAE forward
+[  315.5s] feature 9: SAE eigenvalues
+[  315.5s] feature 9: complete
+[  315.5s] feature 10: clean forward
+[  318.0s] feature 10: SAE forward
+[  324.3s] feature 10: SAE eigenvalues
+[  324.3s] feature 10: complete
+[  324.3s] feature 11: clean forward
+[  326.8s] feature 11: SAE forward
+[  333.0s] feature 11: SAE eigenvalues
+[  333.0s] feature 11: complete
+[  333.0s] feature 12: clean forward
+[  335.5s] feature 12: SAE forward
+[  341.8s] feature 12: SAE eigenvalues
+[  341.8s] feature 12: complete
+[  341.8s] feature 13: clean forward
+[  344.2s] feature 13: SAE forward
+[  350.6s] feature 13: SAE eigenvalues
+[  350.6s] feature 13: complete
+[  350.6s] feature 14: clean forward
+[  353.1s] feature 14: SAE forward
+[  359.4s] feature 14: SAE eigenvalues
+[  359.4s] feature 14: complete
+[  359.4s] feature 15: clean forward
+[  361.9s] feature 15: SAE forward
+[  368.3s] feature 15: SAE eigenvalues
+[  368.3s] feature 15: complete
+[  368.3s] feature 16: clean forward
+[  370.8s] feature 16: SAE forward
+[  377.3s] feature 16: SAE eigenvalues
+[  377.3s] feature 16: complete
+[  377.3s] feature 17: clean forward
+[  379.8s] feature 17: SAE forward
+[  386.3s] feature 17: SAE eigenvalues
+[  386.3s] feature 17: complete
+[  386.3s] feature 18: clean forward
+[  388.8s] feature 18: SAE forward
+[  395.2s] feature 18: SAE eigenvalues
+[  395.2s] feature 18: complete
+[  395.3s] feature 19: clean forward
+[  397.7s] feature 19: SAE forward
+[  404.1s] feature 19: SAE eigenvalues
+[  404.1s] feature 19: complete
+[  404.1s] feature 20: clean forward
+[  406.6s] feature 20: SAE forward
+[  412.9s] feature 20: SAE eigenvalues
+[  412.9s] feature 20: complete
+[  412.9s] feature 21: clean forward
+[  415.3s] feature 21: SAE forward
+[  421.6s] feature 21: SAE eigenvalues
+[  421.6s] feature 21: complete
+[  421.6s] feature 22: clean forward
+[  424.1s] feature 22: SAE forward
+[  430.3s] feature 22: SAE eigenvalues
+[  430.3s] feature 22: complete
+[  430.3s] feature 23: clean forward
+[  432.8s] feature 23: SAE forward
+[  439.1s] feature 23: SAE eigenvalues
+[  439.1s] feature 23: complete
+[  439.1s] feature 24: clean forward
+[  441.6s] feature 24: SAE forward
+[  448.1s] feature 24: SAE eigenvalues
+[  448.1s] feature 24: complete
+[  448.1s] feature 25: clean forward
+[  450.6s] feature 25: SAE forward
+[  456.9s] feature 25: SAE eigenvalues
+[  456.9s] feature 25: complete
+[  456.9s] feature 26: clean forward
+[  459.4s] feature 26: SAE forward
+[  465.7s] feature 26: SAE eigenvalues
+[  465.7s] feature 26: complete
+[  465.7s] feature 27: clean forward
+[  468.2s] feature 27: SAE forward
+[  474.5s] feature 27: SAE eigenvalues
+[  474.6s] feature 27: complete
+[  474.6s] feature 28: clean forward
+[  477.0s] feature 28: SAE forward
+[  483.3s] feature 28: SAE eigenvalues
+[  483.3s] feature 28: complete
+[  483.3s] feature 29: clean forward
+[  485.8s] feature 29: SAE forward
+[  492.1s] feature 29: SAE eigenvalues
+[  492.1s] feature 29: complete
+[  492.1s] feature 30: clean forward
+[  494.6s] feature 30: SAE forward
+[  501.0s] feature 30: SAE eigenvalues
+[  501.0s] feature 30: complete
+[  501.0s] feature 31: clean forward
+[  503.4s] feature 31: SAE forward
+[  509.7s] feature 31: SAE eigenvalues
+[  509.7s] feature 31: complete
+[  509.7s] feature 32: clean forward
+[  512.2s] feature 32: SAE forward
+[  518.4s] feature 32: SAE eigenvalues
+[  518.4s] feature 32: complete
+[  518.4s] feature 33: clean forward
+[  520.9s] feature 33: SAE forward
+[  527.1s] feature 33: SAE eigenvalues
+[  527.1s] feature 33: complete
+[  527.1s] feature 34: clean forward
+[  529.6s] feature 34: SAE forward
+[  536.1s] feature 34: SAE eigenvalues
+[  536.1s] feature 34: complete
+[  536.1s] feature 35: clean forward
+[  538.6s] feature 35: SAE forward
+[  545.0s] feature 35: SAE eigenvalues
+[  545.0s] feature 35: complete
+[  545.0s] feature 36: clean forward
+[  547.5s] feature 36: SAE forward
+[  554.0s] feature 36: SAE eigenvalues
+[  554.0s] feature 36: complete
+[  554.0s] feature 37: clean forward
+[  556.5s] feature 37: SAE forward
+[  562.9s] feature 37: SAE eigenvalues
+[  562.9s] feature 37: complete
+[  562.9s] feature 38: clean forward
+[  565.4s] feature 38: SAE forward
+[  571.7s] feature 38: SAE eigenvalues
+[  571.7s] feature 38: complete
+[  571.7s] feature 39: clean forward
+[  574.3s] feature 39: SAE forward
+[  580.7s] feature 39: SAE eigenvalues
+[  580.7s] feature 39: complete
+[  580.7s] feature 40: clean forward
+[  583.2s] feature 40: SAE forward
+[  589.6s] feature 40: SAE eigenvalues
+[  589.6s] feature 40: complete
+[  589.6s] feature 41: clean forward
+[  592.1s] feature 41: SAE forward
+[  598.5s] feature 41: SAE eigenvalues
+[  598.5s] feature 41: complete
+[  598.5s] feature 42: clean forward
+[  601.0s] feature 42: SAE forward
+[  607.2s] feature 42: SAE eigenvalues
+[  607.2s] feature 42: complete
+[  607.2s] feature 43: clean forward
+[  609.6s] feature 43: SAE forward
+[  615.9s] feature 43: SAE eigenvalues
+[  615.9s] feature 43: complete
+[  615.9s] feature 44: clean forward
+[  618.3s] feature 44: SAE forward
+[  624.7s] feature 44: SAE eigenvalues
+[  624.7s] feature 44: complete
+[  624.7s] feature 45: clean forward
+[  627.2s] feature 45: SAE forward
+[  633.5s] feature 45: SAE eigenvalues
+[  633.5s] feature 45: complete
+[  633.5s] feature 46: clean forward
+[  636.0s] feature 46: SAE forward
+[  642.3s] feature 46: SAE eigenvalues
+[  642.3s] feature 46: complete
+[  642.3s] feature 47: clean forward
+[  644.8s] feature 47: SAE forward
+[  651.1s] feature 47: SAE eigenvalues
+[  651.1s] feature 47: complete
+[  651.1s] feature 48: clean forward
+[  653.6s] feature 48: SAE forward
+[  659.9s] feature 48: SAE eigenvalues
+[  659.9s] feature 48: complete
+[  659.9s] feature 49: clean forward
+[  662.4s] feature 49: SAE forward
+[  668.7s] feature 49: SAE eigenvalues
+[  668.7s] feature 49: complete
+[  668.7s] feature 50: clean forward
+[  671.2s] feature 50: SAE forward
+[  677.6s] feature 50: SAE eigenvalues
+[  677.6s] feature 50: complete
+[  677.6s]   steered 50/300
+[  677.6s] feature 51: clean forward
+[  680.2s] feature 51: SAE forward
+[  686.6s] feature 51: SAE eigenvalues
+[  686.6s] feature 51: complete
+[  686.6s] feature 52: clean forward
+[  689.1s] feature 52: SAE forward
+[  695.4s] feature 52: SAE eigenvalues
+[  695.4s] feature 52: complete
+[  695.4s] feature 53: clean forward
+[  697.9s] feature 53: SAE forward
+[  704.2s] feature 53: SAE eigenvalues
+[  704.2s] feature 53: complete
+[  704.2s] feature 54: clean forward
+[  706.7s] feature 54: SAE forward
+[  713.1s] feature 54: SAE eigenvalues
+[  713.1s] feature 54: complete
+[  713.1s] feature 55: clean forward
+[  715.5s] feature 55: SAE forward
+[  721.9s] feature 55: SAE eigenvalues
+[  721.9s] feature 55: complete
+[  721.9s] feature 56: clean forward
+[  724.4s] feature 56: SAE forward
+[  730.9s] feature 56: SAE eigenvalues
+[  730.9s] feature 56: complete
+[  730.9s] feature 57: clean forward
+[  733.4s] feature 57: SAE forward
+[  739.8s] feature 57: SAE eigenvalues
+[  739.8s] feature 57: complete
+[  739.8s] feature 58: clean forward
+[  742.4s] feature 58: SAE forward
+[  748.8s] feature 58: SAE eigenvalues
+[  748.8s] feature 58: complete
+[  748.8s] feature 59: clean forward
+[  751.3s] feature 59: SAE forward
+[  757.8s] feature 59: SAE eigenvalues
+[  757.8s] feature 59: complete
+[  757.8s] feature 60: clean forward
+[  760.3s] feature 60: SAE forward
+[  766.7s] feature 60: SAE eigenvalues
+[  766.7s] feature 60: complete
+[  766.7s] feature 61: clean forward
+[  769.2s] feature 61: SAE forward
+[  775.6s] feature 61: SAE eigenvalues
+[  775.6s] feature 61: complete
+[  775.6s] feature 62: clean forward
+[  778.1s] feature 62: SAE forward
+[  784.5s] feature 62: SAE eigenvalues
+[  784.5s] feature 62: complete
+[  784.5s] feature 63: clean forward
+[  787.1s] feature 63: SAE forward
+[  793.5s] feature 63: SAE eigenvalues
+[  793.5s] feature 63: complete
+[  793.5s] feature 64: clean forward
+[  796.0s] feature 64: SAE forward
+[  802.4s] feature 64: SAE eigenvalues
+[  802.4s] feature 64: complete
+[  802.4s] feature 65: clean forward
+[  804.8s] feature 65: SAE forward
+[  811.1s] feature 65: SAE eigenvalues
+[  811.1s] feature 65: complete
+[  811.1s] feature 66: clean forward
+[  813.5s] feature 66: SAE forward
+[  819.9s] feature 66: SAE eigenvalues
+[  819.9s] feature 66: complete
+[  819.9s] feature 67: clean forward
+[  822.4s] feature 67: SAE forward
+[  828.6s] feature 67: SAE eigenvalues
+[  828.7s] feature 67: complete
+[  828.7s] feature 68: clean forward
+[  831.1s] feature 68: SAE forward
+[  837.4s] feature 68: SAE eigenvalues
+[  837.4s] feature 68: complete
+[  837.4s] feature 69: clean forward
+[  839.8s] feature 69: SAE forward
+[  846.1s] feature 69: SAE eigenvalues
+[  846.1s] feature 69: complete
+[  846.1s] feature 70: clean forward
+[  848.6s] feature 70: SAE forward
+[  855.0s] feature 70: SAE eigenvalues
+[  855.0s] feature 70: complete
+[  855.0s] feature 71: clean forward
+[  857.5s] feature 71: SAE forward
+[  864.0s] feature 71: SAE eigenvalues
+[  864.0s] feature 71: complete
+[  864.0s] feature 72: clean forward
+[  866.4s] feature 72: SAE forward
+[  872.8s] feature 72: SAE eigenvalues
+[  872.8s] feature 72: complete
+[  872.8s] feature 73: clean forward
+[  875.3s] feature 73: SAE forward
+[  881.6s] feature 73: SAE eigenvalues
+[  881.6s] feature 73: complete
+[  881.6s] feature 74: clean forward
+[  884.1s] feature 74: SAE forward
+[  890.4s] feature 74: SAE eigenvalues
+[  890.4s] feature 74: complete
+[  890.4s] feature 75: clean forward
+[  892.8s] feature 75: SAE forward
+[  899.2s] feature 75: SAE eigenvalues
+[  899.2s] feature 75: complete
+[  899.2s] feature 76: clean forward
+[  901.6s] feature 76: SAE forward
+[  908.0s] feature 76: SAE eigenvalues
+[  908.0s] feature 76: complete
+[  908.0s] feature 77: clean forward
+[  910.4s] feature 77: SAE forward
+[  916.8s] feature 77: SAE eigenvalues
+[  916.8s] feature 77: complete
+[  916.8s] feature 78: clean forward
+[  919.3s] feature 78: SAE forward
+[  925.7s] feature 78: SAE eigenvalues
+[  925.7s] feature 78: complete
+[  925.7s] feature 79: clean forward
+[  928.3s] feature 79: SAE forward
+[  934.6s] feature 79: SAE eigenvalues
+[  934.6s] feature 79: complete
+[  934.6s] feature 80: clean forward
+[  937.2s] feature 80: SAE forward
+[  943.5s] feature 80: SAE eigenvalues
+[  943.5s] feature 80: complete
+[  943.5s] feature 81: clean forward
+[  946.0s] feature 81: SAE forward
+[  952.3s] feature 81: SAE eigenvalues
+[  952.3s] feature 81: complete
+[  952.3s] feature 82: clean forward
+[  954.8s] feature 82: SAE forward
+[  961.1s] feature 82: SAE eigenvalues
+[  961.1s] feature 82: complete
+[  961.1s] feature 83: clean forward
+[  963.6s] feature 83: SAE forward
+[  970.1s] feature 83: SAE eigenvalues
+[  970.1s] feature 83: complete
+[  970.1s] feature 84: clean forward
+[  972.6s] feature 84: SAE forward
+[  979.0s] feature 84: SAE eigenvalues
+[  979.0s] feature 84: complete
+[  979.0s] feature 85: clean forward
+[  981.5s] feature 85: SAE forward
+[  987.8s] feature 85: SAE eigenvalues
+[  987.8s] feature 85: complete
+[  987.8s] feature 86: clean forward
+[  990.3s] feature 86: SAE forward
+[  996.6s] feature 86: SAE eigenvalues
+[  996.6s] feature 86: complete
+[  996.6s] feature 87: clean forward
+[  999.1s] feature 87: SAE forward
+[ 1005.4s] feature 87: SAE eigenvalues
+[ 1005.4s] feature 87: complete
+[ 1005.4s] feature 88: clean forward
+[ 1008.0s] feature 88: SAE forward
+[ 1014.4s] feature 88: SAE eigenvalues
+[ 1014.4s] feature 88: complete
+[ 1014.4s] feature 89: clean forward
+[ 1016.9s] feature 89: SAE forward
+[ 1023.3s] feature 89: SAE eigenvalues
+[ 1023.3s] feature 89: complete
+[ 1023.3s] feature 90: clean forward
+[ 1025.8s] feature 90: SAE forward
+[ 1032.2s] feature 90: SAE eigenvalues
+[ 1032.2s] feature 90: complete
+[ 1032.2s] feature 91: clean forward
+[ 1034.7s] feature 91: SAE forward
+[ 1041.1s] feature 91: SAE eigenvalues
+[ 1041.1s] feature 91: complete
+[ 1041.1s] feature 92: clean forward
+[ 1043.6s] feature 92: SAE forward
+[ 1050.0s] feature 92: SAE eigenvalues
+[ 1050.0s] feature 92: complete
+[ 1050.0s] feature 93: clean forward
+[ 1052.4s] feature 93: SAE forward
+[ 1058.6s] feature 93: SAE eigenvalues
+[ 1058.6s] feature 93: complete
+[ 1058.6s] feature 94: clean forward
+[ 1061.0s] feature 94: SAE forward
+[ 1067.3s] feature 94: SAE eigenvalues
+[ 1067.3s] feature 94: complete
+[ 1067.3s] feature 95: clean forward
+[ 1069.7s] feature 95: SAE forward
+[ 1075.9s] feature 95: SAE eigenvalues
+[ 1075.9s] feature 95: complete
+[ 1075.9s] feature 96: clean forward
+[ 1078.3s] feature 96: SAE forward
+[ 1084.6s] feature 96: SAE eigenvalues
+[ 1084.6s] feature 96: complete
+[ 1084.6s] feature 97: clean forward
+[ 1087.1s] feature 97: SAE forward
+[ 1093.5s] feature 97: SAE eigenvalues
+[ 1093.5s] feature 97: complete
+[ 1093.5s] feature 98: clean forward
+[ 1095.9s] feature 98: SAE forward
+[ 1102.2s] feature 98: SAE eigenvalues
+[ 1102.2s] feature 98: complete
+[ 1102.2s] feature 99: clean forward
+[ 1104.6s] feature 99: SAE forward
+[ 1110.9s] feature 99: SAE eigenvalues
+[ 1110.9s] feature 99: complete
+[ 1110.9s] feature 100: clean forward
+[ 1113.4s] feature 100: SAE forward
+[ 1119.7s] feature 100: SAE eigenvalues
+[ 1119.7s] feature 100: complete
+[ 1119.7s]   steered 100/300
+[ 1119.7s] feature 101: clean forward
+[ 1122.2s] feature 101: SAE forward
+[ 1128.6s] feature 101: SAE eigenvalues
+[ 1128.6s] feature 101: complete
+[ 1128.6s] feature 102: clean forward
+[ 1131.1s] feature 102: SAE forward
+[ 1137.5s] feature 102: SAE eigenvalues
+[ 1137.5s] feature 102: complete
+[ 1137.5s] feature 103: clean forward
+[ 1140.0s] feature 103: SAE forward
+[ 1146.4s] feature 103: SAE eigenvalues
+[ 1146.4s] feature 103: complete
+[ 1146.4s] feature 104: clean forward
+[ 1148.9s] feature 104: SAE forward
+[ 1155.2s] feature 104: SAE eigenvalues
+[ 1155.2s] feature 104: complete
+[ 1155.2s] feature 105: clean forward
+[ 1157.7s] feature 105: SAE forward
+[ 1164.1s] feature 105: SAE eigenvalues
+[ 1164.1s] feature 105: complete
+[ 1164.1s] feature 106: clean forward
+[ 1166.5s] feature 106: SAE forward
+[ 1172.6s] feature 106: SAE eigenvalues
+[ 1172.6s] feature 106: complete
+[ 1172.6s] feature 107: clean forward
+[ 1175.1s] feature 107: SAE forward
+[ 1181.3s] feature 107: SAE eigenvalues
+[ 1181.3s] feature 107: complete
+[ 1181.3s] feature 108: clean forward
+[ 1183.7s] feature 108: SAE forward
+[ 1189.9s] feature 108: SAE eigenvalues
+[ 1189.9s] feature 108: complete
+[ 1189.9s] feature 109: clean forward
+[ 1192.4s] feature 109: SAE forward
+[ 1198.7s] feature 109: SAE eigenvalues
+[ 1198.7s] feature 109: complete
+[ 1198.7s] feature 110: clean forward
+[ 1201.2s] feature 110: SAE forward
+[ 1207.5s] feature 110: SAE eigenvalues
+[ 1207.5s] feature 110: complete
+[ 1207.5s] feature 111: clean forward
+[ 1209.9s] feature 111: SAE forward
+[ 1216.2s] feature 111: SAE eigenvalues
+[ 1216.2s] feature 111: complete
+[ 1216.2s] feature 112: clean forward
+[ 1218.6s] feature 112: SAE forward
+[ 1225.0s] feature 112: SAE eigenvalues
+[ 1225.0s] feature 112: complete
+[ 1225.0s] feature 113: clean forward
+[ 1227.5s] feature 113: SAE forward
+[ 1233.8s] feature 113: SAE eigenvalues
+[ 1233.8s] feature 113: complete
+[ 1233.8s] feature 114: clean forward
+[ 1236.3s] feature 114: SAE forward
+[ 1242.7s] feature 114: SAE eigenvalues
+[ 1242.7s] feature 114: complete
+[ 1242.7s] feature 115: clean forward
+[ 1245.1s] feature 115: SAE forward
+[ 1251.4s] feature 115: SAE eigenvalues
+[ 1251.4s] feature 115: complete
+[ 1251.4s] feature 116: clean forward
+[ 1253.8s] feature 116: SAE forward
+[ 1260.0s] feature 116: SAE eigenvalues
+[ 1260.0s] feature 116: complete
+[ 1260.0s] feature 117: clean forward
+[ 1262.5s] feature 117: SAE forward
+[ 1268.7s] feature 117: SAE eigenvalues
+[ 1268.7s] feature 117: complete
+[ 1268.7s] feature 118: clean forward
+[ 1271.1s] feature 118: SAE forward
+[ 1277.3s] feature 118: SAE eigenvalues
+[ 1277.3s] feature 118: complete
+[ 1277.3s] feature 119: clean forward
+[ 1279.7s] feature 119: SAE forward
+[ 1285.9s] feature 119: SAE eigenvalues
+[ 1285.9s] feature 119: complete
+[ 1285.9s] feature 120: clean forward
+[ 1288.3s] feature 120: SAE forward
+[ 1294.5s] feature 120: SAE eigenvalues
+[ 1294.5s] feature 120: complete
+[ 1294.5s] feature 121: clean forward
+[ 1296.9s] feature 121: SAE forward
+[ 1303.1s] feature 121: SAE eigenvalues
+[ 1303.1s] feature 121: complete
+[ 1303.1s] feature 122: clean forward
+[ 1305.5s] feature 122: SAE forward
+[ 1311.6s] feature 122: SAE eigenvalues
+[ 1311.6s] feature 122: complete
+[ 1311.6s] feature 123: clean forward
+[ 1314.0s] feature 123: SAE forward
+[ 1320.2s] feature 123: SAE eigenvalues
+[ 1320.2s] feature 123: complete
+[ 1320.2s] feature 124: clean forward
+[ 1322.6s] feature 124: SAE forward
+[ 1328.8s] feature 124: SAE eigenvalues
+[ 1328.8s] feature 124: complete
+[ 1328.8s] feature 125: clean forward
+[ 1331.3s] feature 125: SAE forward
+[ 1337.5s] feature 125: SAE eigenvalues
+[ 1337.5s] feature 125: complete
+[ 1337.5s] feature 126: clean forward
+[ 1339.9s] feature 126: SAE forward
+[ 1346.2s] feature 126: SAE eigenvalues
+[ 1346.2s] feature 126: complete
+[ 1346.2s] feature 127: clean forward
+[ 1348.6s] feature 127: SAE forward
+[ 1354.9s] feature 127: SAE eigenvalues
+[ 1354.9s] feature 127: complete
+[ 1354.9s] feature 128: clean forward
+[ 1357.4s] feature 128: SAE forward
+[ 1363.6s] feature 128: SAE eigenvalues
+[ 1363.6s] feature 128: complete
+[ 1363.6s] feature 129: clean forward
+[ 1366.0s] feature 129: SAE forward
+[ 1372.2s] feature 129: SAE eigenvalues
+[ 1372.2s] feature 129: complete
+[ 1372.2s] feature 130: clean forward
+[ 1374.6s] feature 130: SAE forward
+[ 1380.8s] feature 130: SAE eigenvalues
+[ 1380.8s] feature 130: complete
+[ 1380.8s] feature 131: clean forward
+[ 1383.2s] feature 131: SAE forward
+[ 1389.4s] feature 131: SAE eigenvalues
+[ 1389.4s] feature 131: complete
+[ 1389.4s] feature 132: clean forward
+[ 1391.8s] feature 132: SAE forward
+[ 1398.0s] feature 132: SAE eigenvalues
+[ 1398.0s] feature 132: complete
+[ 1398.0s] feature 133: clean forward
+[ 1400.5s] feature 133: SAE forward
+[ 1406.7s] feature 133: SAE eigenvalues
+[ 1406.7s] feature 133: complete
+[ 1406.7s] feature 134: clean forward
+[ 1409.2s] feature 134: SAE forward
+[ 1415.4s] feature 134: SAE eigenvalues
+[ 1415.4s] feature 134: complete
+[ 1415.4s] feature 135: clean forward
+[ 1417.8s] feature 135: SAE forward
+[ 1423.9s] feature 135: SAE eigenvalues
+[ 1423.9s] feature 135: complete
+[ 1423.9s] feature 136: clean forward
+[ 1426.4s] feature 136: SAE forward
+[ 1432.6s] feature 136: SAE eigenvalues
+[ 1432.6s] feature 136: complete
+[ 1432.6s] feature 137: clean forward
+[ 1435.1s] feature 137: SAE forward
+[ 1441.4s] feature 137: SAE eigenvalues
+[ 1441.4s] feature 137: complete
+[ 1441.4s] feature 138: clean forward
+[ 1443.9s] feature 138: SAE forward
+[ 1450.2s] feature 138: SAE eigenvalues
+[ 1450.2s] feature 138: complete
+[ 1450.2s] feature 139: clean forward
+[ 1452.7s] feature 139: SAE forward
+[ 1459.0s] feature 139: SAE eigenvalues
+[ 1459.0s] feature 139: complete
+[ 1459.0s] feature 140: clean forward
+[ 1461.5s] feature 140: SAE forward
+[ 1467.7s] feature 140: SAE eigenvalues
+[ 1467.7s] feature 140: complete
+[ 1467.7s] feature 141: clean forward
+[ 1470.1s] feature 141: SAE forward
+[ 1476.3s] feature 141: SAE eigenvalues
+[ 1476.4s] feature 141: complete
+[ 1476.4s] feature 142: clean forward
+[ 1478.8s] feature 142: SAE forward
+[ 1485.0s] feature 142: SAE eigenvalues
+[ 1485.0s] feature 142: complete
+[ 1485.0s] feature 143: clean forward
+[ 1487.5s] feature 143: SAE forward
+[ 1493.8s] feature 143: SAE eigenvalues
+[ 1493.8s] feature 143: complete
+[ 1493.8s] feature 144: clean forward
+[ 1496.3s] feature 144: SAE forward
+[ 1502.7s] feature 144: SAE eigenvalues
+[ 1502.7s] feature 144: complete
+[ 1502.7s] feature 145: clean forward
+[ 1505.2s] feature 145: SAE forward
+[ 1511.4s] feature 145: SAE eigenvalues
+[ 1511.4s] feature 145: complete
+[ 1511.4s] feature 146: clean forward
+[ 1513.8s] feature 146: SAE forward
+[ 1520.1s] feature 146: SAE eigenvalues
+[ 1520.1s] feature 146: complete
+[ 1520.1s] feature 147: clean forward
+[ 1522.6s] feature 147: SAE forward
+[ 1529.0s] feature 147: SAE eigenvalues
+[ 1529.0s] feature 147: complete
+[ 1529.0s] feature 148: clean forward
+[ 1531.4s] feature 148: SAE forward
+[ 1537.7s] feature 148: SAE eigenvalues
+[ 1537.7s] feature 148: complete
+[ 1537.7s] feature 149: clean forward
+[ 1540.2s] feature 149: SAE forward
+[ 1546.5s] feature 149: SAE eigenvalues
+[ 1546.5s] feature 149: complete
+[ 1546.5s] feature 150: clean forward
+[ 1549.0s] feature 150: SAE forward
+[ 1555.2s] feature 150: SAE eigenvalues
+[ 1555.2s] feature 150: complete
+[ 1555.2s]   steered 150/300
+[ 1555.2s] feature 151: clean forward
+[ 1557.6s] feature 151: SAE forward
+[ 1564.0s] feature 151: SAE eigenvalues
+[ 1564.0s] feature 151: complete
+[ 1564.0s] feature 152: clean forward
+[ 1566.5s] feature 152: SAE forward
+[ 1572.8s] feature 152: SAE eigenvalues
+[ 1572.8s] feature 152: complete
+[ 1572.8s] feature 153: clean forward
+[ 1575.3s] feature 153: SAE forward
+[ 1581.6s] feature 153: SAE eigenvalues
+[ 1581.6s] feature 153: complete
+[ 1581.6s] feature 154: clean forward
+[ 1584.1s] feature 154: SAE forward
+[ 1590.4s] feature 154: SAE eigenvalues
+[ 1590.4s] feature 154: complete
+[ 1590.4s] feature 155: clean forward
+[ 1592.9s] feature 155: SAE forward
+[ 1599.3s] feature 155: SAE eigenvalues
+[ 1599.3s] feature 155: complete
+[ 1599.3s] feature 156: clean forward
+[ 1601.8s] feature 156: SAE forward
+[ 1608.1s] feature 156: SAE eigenvalues
+[ 1608.1s] feature 156: complete
+[ 1608.1s] feature 157: clean forward
+[ 1610.6s] feature 157: SAE forward
+[ 1616.8s] feature 157: SAE eigenvalues
+[ 1616.8s] feature 157: complete
+[ 1616.8s] feature 158: clean forward
+[ 1619.2s] feature 158: SAE forward
+[ 1625.5s] feature 158: SAE eigenvalues
+[ 1625.5s] feature 158: complete
+[ 1625.5s] feature 159: clean forward
+[ 1627.9s] feature 159: SAE forward
+[ 1634.1s] feature 159: SAE eigenvalues
+[ 1634.1s] feature 159: complete
+[ 1634.1s] feature 160: clean forward
+[ 1636.5s] feature 160: SAE forward
+[ 1642.9s] feature 160: SAE eigenvalues
+[ 1642.9s] feature 160: complete
+[ 1642.9s] feature 161: clean forward
+[ 1645.3s] feature 161: SAE forward
+[ 1651.6s] feature 161: SAE eigenvalues
+[ 1651.6s] feature 161: complete
+[ 1651.6s] feature 162: clean forward
+[ 1654.1s] feature 162: SAE forward
+[ 1660.4s] feature 162: SAE eigenvalues
+[ 1660.4s] feature 162: complete
+[ 1660.4s] feature 163: clean forward
+[ 1662.9s] feature 163: SAE forward
+[ 1669.2s] feature 163: SAE eigenvalues
+[ 1669.2s] feature 163: complete
+[ 1669.2s] feature 164: clean forward
+[ 1671.7s] feature 164: SAE forward
+[ 1678.1s] feature 164: SAE eigenvalues
+[ 1678.1s] feature 164: complete
+[ 1678.1s] feature 165: clean forward
+[ 1680.5s] feature 165: SAE forward
+[ 1686.7s] feature 165: SAE eigenvalues
+[ 1686.8s] feature 165: complete
+[ 1686.8s] feature 166: clean forward
+[ 1689.2s] feature 166: SAE forward
+[ 1695.4s] feature 166: SAE eigenvalues
+[ 1695.4s] feature 166: complete
+[ 1695.4s] feature 167: clean forward
+[ 1697.9s] feature 167: SAE forward
+[ 1704.2s] feature 167: SAE eigenvalues
+[ 1704.2s] feature 167: complete
+[ 1704.2s] feature 168: clean forward
+[ 1706.7s] feature 168: SAE forward
+[ 1713.1s] feature 168: SAE eigenvalues
+[ 1713.1s] feature 168: complete
+[ 1713.1s] feature 169: clean forward
+[ 1715.5s] feature 169: SAE forward
+[ 1721.8s] feature 169: SAE eigenvalues
+[ 1721.8s] feature 169: complete
+[ 1721.8s] feature 170: clean forward
+[ 1724.3s] feature 170: SAE forward
+[ 1730.5s] feature 170: SAE eigenvalues
+[ 1730.5s] feature 170: complete
+[ 1730.5s] feature 171: clean forward
+[ 1733.0s] feature 171: SAE forward
+[ 1739.4s] feature 171: SAE eigenvalues
+[ 1739.4s] feature 171: complete
+[ 1739.4s] feature 172: clean forward
+[ 1741.8s] feature 172: SAE forward
+[ 1748.0s] feature 172: SAE eigenvalues
+[ 1748.0s] feature 172: complete
+[ 1748.0s] feature 173: clean forward
+[ 1750.4s] feature 173: SAE forward
+[ 1756.7s] feature 173: SAE eigenvalues
+[ 1756.7s] feature 173: complete
+[ 1756.7s] feature 174: clean forward
+[ 1759.1s] feature 174: SAE forward
+[ 1765.3s] feature 174: SAE eigenvalues
+[ 1765.3s] feature 174: complete
+[ 1765.3s] feature 175: clean forward
+[ 1767.7s] feature 175: SAE forward
+[ 1773.8s] feature 175: SAE eigenvalues
+[ 1773.9s] feature 175: complete
+[ 1773.9s] feature 176: clean forward
+[ 1776.3s] feature 176: SAE forward
+[ 1782.6s] feature 176: SAE eigenvalues
+[ 1782.6s] feature 176: complete
+[ 1782.6s] feature 177: clean forward
+[ 1785.1s] feature 177: SAE forward
+[ 1791.4s] feature 177: SAE eigenvalues
+[ 1791.4s] feature 177: complete
+[ 1791.4s] feature 178: clean forward
+[ 1793.8s] feature 178: SAE forward
+[ 1800.0s] feature 178: SAE eigenvalues
+[ 1800.0s] feature 178: complete
+[ 1800.0s] feature 179: clean forward
+[ 1802.4s] feature 179: SAE forward
+[ 1808.8s] feature 179: SAE eigenvalues
+[ 1808.8s] feature 179: complete
+[ 1808.8s] feature 180: clean forward
+[ 1811.2s] feature 180: SAE forward
+[ 1817.5s] feature 180: SAE eigenvalues
+[ 1817.5s] feature 180: complete
+[ 1817.5s] feature 181: clean forward
+[ 1820.0s] feature 181: SAE forward
+[ 1826.4s] feature 181: SAE eigenvalues
+[ 1826.4s] feature 181: complete
+[ 1826.4s] feature 182: clean forward
+[ 1828.9s] feature 182: SAE forward
+[ 1835.1s] feature 182: SAE eigenvalues
+[ 1835.1s] feature 182: complete
+[ 1835.1s] feature 183: clean forward
+[ 1837.5s] feature 183: SAE forward
+[ 1843.7s] feature 183: SAE eigenvalues
+[ 1843.7s] feature 183: complete
+[ 1843.7s] feature 184: clean forward
+[ 1846.1s] feature 184: SAE forward
+[ 1852.3s] feature 184: SAE eigenvalues
+[ 1852.3s] feature 184: complete
+[ 1852.3s] feature 185: clean forward
+[ 1854.8s] feature 185: SAE forward
+[ 1861.1s] feature 185: SAE eigenvalues
+[ 1861.1s] feature 185: complete
+[ 1861.1s] feature 186: clean forward
+[ 1863.6s] feature 186: SAE forward
+[ 1869.9s] feature 186: SAE eigenvalues
+[ 1869.9s] feature 186: complete
+[ 1869.9s] feature 187: clean forward
+[ 1872.4s] feature 187: SAE forward
+[ 1878.7s] feature 187: SAE eigenvalues
+[ 1878.7s] feature 187: complete
+[ 1878.7s] feature 188: clean forward
+[ 1881.2s] feature 188: SAE forward
+[ 1887.6s] feature 188: SAE eigenvalues
+[ 1887.6s] feature 188: complete
+[ 1887.6s] feature 189: clean forward
+[ 1890.1s] feature 189: SAE forward
+[ 1896.4s] feature 189: SAE eigenvalues
+[ 1896.4s] feature 189: complete
+[ 1896.4s] feature 190: clean forward
+[ 1898.8s] feature 190: SAE forward
+[ 1905.1s] feature 190: SAE eigenvalues
+[ 1905.1s] feature 190: complete
+[ 1905.1s] feature 191: clean forward
+[ 1907.5s] feature 191: SAE forward
+[ 1913.7s] feature 191: SAE eigenvalues
+[ 1913.7s] feature 191: complete
+[ 1913.7s] feature 192: clean forward
+[ 1916.2s] feature 192: SAE forward
+[ 1922.6s] feature 192: SAE eigenvalues
+[ 1922.6s] feature 192: complete
+[ 1922.6s] feature 193: clean forward
+[ 1925.1s] feature 193: SAE forward
+[ 1931.3s] feature 193: SAE eigenvalues
+[ 1931.3s] feature 193: complete
+[ 1931.3s] feature 194: clean forward
+[ 1933.8s] feature 194: SAE forward
+[ 1940.2s] feature 194: SAE eigenvalues
+[ 1940.2s] feature 194: complete
+[ 1940.2s] feature 195: clean forward
+[ 1942.6s] feature 195: SAE forward
+[ 1949.0s] feature 195: SAE eigenvalues
+[ 1949.0s] feature 195: complete
+[ 1949.0s] feature 196: clean forward
+[ 1951.4s] feature 196: SAE forward
+[ 1957.6s] feature 196: SAE eigenvalues
+[ 1957.6s] feature 196: complete
+[ 1957.6s] feature 197: clean forward
+[ 1960.1s] feature 197: SAE forward
+[ 1966.3s] feature 197: SAE eigenvalues
+[ 1966.3s] feature 197: complete
+[ 1966.3s] feature 198: clean forward
+[ 1968.8s] feature 198: SAE forward
+[ 1975.1s] feature 198: SAE eigenvalues
+[ 1975.1s] feature 198: complete
+[ 1975.1s] feature 199: clean forward
+[ 1977.6s] feature 199: SAE forward
+[ 1983.9s] feature 199: SAE eigenvalues
+[ 1983.9s] feature 199: complete
+[ 1983.9s] feature 200: clean forward
+[ 1986.3s] feature 200: SAE forward
+[ 1992.5s] feature 200: SAE eigenvalues
+[ 1992.5s] feature 200: complete
+[ 1992.5s]   steered 200/300
+[ 1992.5s] feature 201: clean forward
+[ 1994.9s] feature 201: SAE forward
+[ 2001.2s] feature 201: SAE eigenvalues
+[ 2001.2s] feature 201: complete
+[ 2001.2s] feature 202: clean forward
+[ 2003.6s] feature 202: SAE forward
+[ 2010.0s] feature 202: SAE eigenvalues
+[ 2010.0s] feature 202: complete
+[ 2010.0s] feature 203: clean forward
+[ 2012.5s] feature 203: SAE forward
+[ 2018.8s] feature 203: SAE eigenvalues
+[ 2018.8s] feature 203: complete
+[ 2018.8s] feature 204: clean forward
+[ 2021.3s] feature 204: SAE forward
+[ 2027.6s] feature 204: SAE eigenvalues
+[ 2027.6s] feature 204: complete
+[ 2027.6s] feature 205: clean forward
+[ 2030.1s] feature 205: SAE forward
+[ 2036.4s] feature 205: SAE eigenvalues
+[ 2036.4s] feature 205: complete
+[ 2036.4s] feature 206: clean forward
+[ 2038.8s] feature 206: SAE forward
+[ 2045.1s] feature 206: SAE eigenvalues
+[ 2045.1s] feature 206: complete
+[ 2045.1s] feature 207: clean forward
+[ 2047.5s] feature 207: SAE forward
+[ 2053.7s] feature 207: SAE eigenvalues
+[ 2053.7s] feature 207: complete
+[ 2053.7s] feature 208: clean forward
+[ 2056.2s] feature 208: SAE forward
+[ 2062.5s] feature 208: SAE eigenvalues
+[ 2062.5s] feature 208: complete
+[ 2062.5s] feature 209: clean forward
+[ 2064.9s] feature 209: SAE forward
+[ 2071.2s] feature 209: SAE eigenvalues
+[ 2071.2s] feature 209: complete
+[ 2071.2s] feature 210: clean forward
+[ 2073.6s] feature 210: SAE forward
+[ 2080.0s] feature 210: SAE eigenvalues
+[ 2080.0s] feature 210: complete
+[ 2080.0s] feature 211: clean forward
+[ 2082.5s] feature 211: SAE forward
+[ 2088.8s] feature 211: SAE eigenvalues
+[ 2088.8s] feature 211: complete
+[ 2088.8s] feature 212: clean forward
+[ 2091.3s] feature 212: SAE forward
+[ 2097.6s] feature 212: SAE eigenvalues
+[ 2097.6s] feature 212: complete
+[ 2097.6s] feature 213: clean forward
+[ 2100.1s] feature 213: SAE forward
+[ 2106.5s] feature 213: SAE eigenvalues
+[ 2106.5s] feature 213: complete
+[ 2106.5s] feature 214: clean forward
+[ 2109.0s] feature 214: SAE forward
+[ 2115.4s] feature 214: SAE eigenvalues
+[ 2115.4s] feature 214: complete
+[ 2115.4s] feature 215: clean forward
+[ 2117.8s] feature 215: SAE forward
+[ 2124.0s] feature 215: SAE eigenvalues
+[ 2124.0s] feature 215: complete
+[ 2124.0s] feature 216: clean forward
+[ 2126.4s] feature 216: SAE forward
+[ 2132.6s] feature 216: SAE eigenvalues
+[ 2132.6s] feature 216: complete
+[ 2132.6s] feature 217: clean forward
+[ 2135.0s] feature 217: SAE forward
+[ 2141.1s] feature 217: SAE eigenvalues
+[ 2141.1s] feature 217: complete
+[ 2141.1s] feature 218: clean forward
+[ 2143.5s] feature 218: SAE forward
+[ 2149.7s] feature 218: SAE eigenvalues
+[ 2149.7s] feature 218: complete
+[ 2149.7s] feature 219: clean forward
+[ 2152.1s] feature 219: SAE forward
+[ 2158.3s] feature 219: SAE eigenvalues
+[ 2158.3s] feature 219: complete
+[ 2158.3s] feature 220: clean forward
+[ 2160.7s] feature 220: SAE forward
+[ 2166.9s] feature 220: SAE eigenvalues
+[ 2166.9s] feature 220: complete
+[ 2166.9s] feature 221: clean forward
+[ 2169.3s] feature 221: SAE forward
+[ 2175.5s] feature 221: SAE eigenvalues
+[ 2175.5s] feature 221: complete
+[ 2175.5s] feature 222: clean forward
+[ 2177.9s] feature 222: SAE forward
+[ 2184.1s] feature 222: SAE eigenvalues
+[ 2184.1s] feature 222: complete
+[ 2184.1s] feature 223: clean forward
+[ 2186.5s] feature 223: SAE forward
+[ 2192.7s] feature 223: SAE eigenvalues
+[ 2192.7s] feature 223: complete
+[ 2192.7s] feature 224: clean forward
+[ 2195.1s] feature 224: SAE forward
+[ 2201.4s] feature 224: SAE eigenvalues
+[ 2201.4s] feature 224: complete
+[ 2201.4s] feature 225: clean forward
+[ 2203.8s] feature 225: SAE forward
+[ 2210.0s] feature 225: SAE eigenvalues
+[ 2210.1s] feature 225: complete
+[ 2210.1s] feature 226: clean forward
+[ 2212.5s] feature 226: SAE forward
+[ 2218.9s] feature 226: SAE eigenvalues
+[ 2218.9s] feature 226: complete
+[ 2218.9s] feature 227: clean forward
+[ 2221.3s] feature 227: SAE forward
+[ 2227.6s] feature 227: SAE eigenvalues
+[ 2227.6s] feature 227: complete
+[ 2227.6s] feature 228: clean forward
+[ 2230.1s] feature 228: SAE forward
+[ 2236.3s] feature 228: SAE eigenvalues
+[ 2236.3s] feature 228: complete
+[ 2236.3s] feature 229: clean forward
+[ 2238.8s] feature 229: SAE forward
+[ 2245.1s] feature 229: SAE eigenvalues
+[ 2245.1s] feature 229: complete
+[ 2245.1s] feature 230: clean forward
+[ 2247.6s] feature 230: SAE forward
+[ 2253.7s] feature 230: SAE eigenvalues
+[ 2253.8s] feature 230: complete
+[ 2253.8s] feature 231: clean forward
+[ 2256.2s] feature 231: SAE forward
+[ 2262.4s] feature 231: SAE eigenvalues
+[ 2262.4s] feature 231: complete
+[ 2262.4s] feature 232: clean forward
+[ 2264.9s] feature 232: SAE forward
+[ 2271.2s] feature 232: SAE eigenvalues
+[ 2271.2s] feature 232: complete
+[ 2271.2s] feature 233: clean forward
+[ 2273.7s] feature 233: SAE forward
+[ 2280.1s] feature 233: SAE eigenvalues
+[ 2280.1s] feature 233: complete
+[ 2280.1s] feature 234: clean forward
+[ 2282.5s] feature 234: SAE forward
+[ 2288.9s] feature 234: SAE eigenvalues
+[ 2288.9s] feature 234: complete
+[ 2288.9s] feature 235: clean forward
+[ 2291.4s] feature 235: SAE forward
+[ 2297.7s] feature 235: SAE eigenvalues
+[ 2297.7s] feature 235: complete
+[ 2297.7s] feature 236: clean forward
+[ 2300.2s] feature 236: SAE forward
+[ 2306.4s] feature 236: SAE eigenvalues
+[ 2306.4s] feature 236: complete
+[ 2306.4s] feature 237: clean forward
+[ 2308.8s] feature 237: SAE forward
+[ 2315.0s] feature 237: SAE eigenvalues
+[ 2315.0s] feature 237: complete
+[ 2315.0s] feature 238: clean forward
+[ 2317.5s] feature 238: SAE forward
+[ 2323.7s] feature 238: SAE eigenvalues
+[ 2323.7s] feature 238: complete
+[ 2323.7s] feature 239: clean forward
+[ 2326.2s] feature 239: SAE forward
+[ 2332.5s] feature 239: SAE eigenvalues
+[ 2332.5s] feature 239: complete
+[ 2332.5s] feature 240: clean forward
+[ 2335.0s] feature 240: SAE forward
+[ 2341.2s] feature 240: SAE eigenvalues
+[ 2341.2s] feature 240: complete
+[ 2341.2s] feature 241: clean forward
+[ 2343.6s] feature 241: SAE forward
+[ 2349.9s] feature 241: SAE eigenvalues
+[ 2349.9s] feature 241: complete
+[ 2349.9s] feature 242: clean forward
+[ 2352.5s] feature 242: SAE forward
+[ 2358.8s] feature 242: SAE eigenvalues
+[ 2358.8s] feature 242: complete
+[ 2358.8s] feature 243: clean forward
+[ 2361.3s] feature 243: SAE forward
+[ 2367.5s] feature 243: SAE eigenvalues
+[ 2367.5s] feature 243: complete
+[ 2367.5s] feature 244: clean forward
+[ 2370.0s] feature 244: SAE forward
+[ 2376.1s] feature 244: SAE eigenvalues
+[ 2376.1s] feature 244: complete
+[ 2376.1s] feature 245: clean forward
+[ 2378.5s] feature 245: SAE forward
+[ 2384.8s] feature 245: SAE eigenvalues
+[ 2384.9s] feature 245: complete
+[ 2384.9s] feature 246: clean forward
+[ 2387.3s] feature 246: SAE forward
+[ 2393.6s] feature 246: SAE eigenvalues
+[ 2393.7s] feature 246: complete
+[ 2393.7s] feature 247: clean forward
+[ 2396.1s] feature 247: SAE forward
+[ 2402.3s] feature 247: SAE eigenvalues
+[ 2402.4s] feature 247: complete
+[ 2402.4s] feature 248: clean forward
+[ 2404.8s] feature 248: SAE forward
+[ 2411.2s] feature 248: SAE eigenvalues
+[ 2411.2s] feature 248: complete
+[ 2411.2s] feature 249: clean forward
+[ 2413.7s] feature 249: SAE forward
+[ 2420.2s] feature 249: SAE eigenvalues
+[ 2420.2s] feature 249: complete
+[ 2420.2s] feature 250: clean forward
+[ 2422.6s] feature 250: SAE forward
+[ 2428.9s] feature 250: SAE eigenvalues
+[ 2429.0s] feature 250: complete
+[ 2429.0s]   steered 250/300
+[ 2429.0s] feature 251: clean forward
+[ 2431.4s] feature 251: SAE forward
+[ 2437.6s] feature 251: SAE eigenvalues
+[ 2437.6s] feature 251: complete
+[ 2437.6s] feature 252: clean forward
+[ 2440.0s] feature 252: SAE forward
+[ 2446.2s] feature 252: SAE eigenvalues
+[ 2446.2s] feature 252: complete
+[ 2446.2s] feature 253: clean forward
+[ 2448.7s] feature 253: SAE forward
+[ 2454.9s] feature 253: SAE eigenvalues
+[ 2455.0s] feature 253: complete
+[ 2455.0s] feature 254: clean forward
+[ 2457.3s] feature 254: SAE forward
+[ 2463.5s] feature 254: SAE eigenvalues
+[ 2463.5s] feature 254: complete
+[ 2463.5s] feature 255: clean forward
+[ 2466.0s] feature 255: SAE forward
+[ 2472.2s] feature 255: SAE eigenvalues
+[ 2472.2s] feature 255: complete
+[ 2472.2s] feature 256: clean forward
+[ 2474.6s] feature 256: SAE forward
+[ 2480.9s] feature 256: SAE eigenvalues
+[ 2480.9s] feature 256: complete
+[ 2480.9s] feature 257: clean forward
+[ 2483.4s] feature 257: SAE forward
+[ 2489.7s] feature 257: SAE eigenvalues
+[ 2489.7s] feature 257: complete
+[ 2489.7s] feature 258: clean forward
+[ 2492.2s] feature 258: SAE forward
+[ 2498.5s] feature 258: SAE eigenvalues
+[ 2498.5s] feature 258: complete
+[ 2498.5s] feature 259: clean forward
+[ 2501.0s] feature 259: SAE forward
+[ 2507.3s] feature 259: SAE eigenvalues
+[ 2507.3s] feature 259: complete
+[ 2507.3s] feature 260: clean forward
+[ 2509.8s] feature 260: SAE forward
+[ 2516.1s] feature 260: SAE eigenvalues
+[ 2516.1s] feature 260: complete
+[ 2516.1s] feature 261: clean forward
+[ 2518.6s] feature 261: SAE forward
+[ 2524.9s] feature 261: SAE eigenvalues
+[ 2524.9s] feature 261: complete
+[ 2524.9s] feature 262: clean forward
+[ 2527.3s] feature 262: SAE forward
+[ 2533.6s] feature 262: SAE eigenvalues
+[ 2533.6s] feature 262: complete
+[ 2533.6s] feature 263: clean forward
+[ 2536.0s] feature 263: SAE forward
+[ 2542.3s] feature 263: SAE eigenvalues
+[ 2542.3s] feature 263: complete
+[ 2542.3s] feature 264: clean forward
+[ 2544.7s] feature 264: SAE forward
+[ 2551.0s] feature 264: SAE eigenvalues
+[ 2551.0s] feature 264: complete
+[ 2551.0s] feature 265: clean forward
+[ 2553.4s] feature 265: SAE forward
+[ 2559.6s] feature 265: SAE eigenvalues
+[ 2559.6s] feature 265: complete
+[ 2559.6s] feature 266: clean forward
+[ 2562.1s] feature 266: SAE forward
+[ 2568.4s] feature 266: SAE eigenvalues
+[ 2568.4s] feature 266: complete
+[ 2568.4s] feature 267: clean forward
+[ 2570.8s] feature 267: SAE forward
+[ 2577.2s] feature 267: SAE eigenvalues
+[ 2577.2s] feature 267: complete
+[ 2577.2s] feature 268: clean forward
+[ 2579.6s] feature 268: SAE forward
+[ 2586.0s] feature 268: SAE eigenvalues
+[ 2586.0s] feature 268: complete
+[ 2586.0s] feature 269: clean forward
+[ 2588.5s] feature 269: SAE forward
+[ 2594.8s] feature 269: SAE eigenvalues
+[ 2594.8s] feature 269: complete
+[ 2594.8s] feature 270: clean forward
+[ 2597.3s] feature 270: SAE forward
+[ 2603.6s] feature 270: SAE eigenvalues
+[ 2603.6s] feature 270: complete
+[ 2603.6s] feature 271: clean forward
+[ 2606.0s] feature 271: SAE forward
+[ 2612.3s] feature 271: SAE eigenvalues
+[ 2612.3s] feature 271: complete
+[ 2612.3s] feature 272: clean forward
+[ 2614.7s] feature 272: SAE forward
+[ 2620.9s] feature 272: SAE eigenvalues
+[ 2620.9s] feature 272: complete
+[ 2620.9s] feature 273: clean forward
+[ 2623.3s] feature 273: SAE forward
+[ 2629.6s] feature 273: SAE eigenvalues
+[ 2629.6s] feature 273: complete
+[ 2629.6s] feature 274: clean forward
+[ 2632.0s] feature 274: SAE forward
+[ 2638.2s] feature 274: SAE eigenvalues
+[ 2638.2s] feature 274: complete
+[ 2638.2s] feature 275: clean forward
+[ 2640.6s] feature 275: SAE forward
+[ 2646.8s] feature 275: SAE eigenvalues
+[ 2646.8s] feature 275: complete
+[ 2646.8s] feature 276: clean forward
+[ 2649.3s] feature 276: SAE forward
+[ 2655.5s] feature 276: SAE eigenvalues
+[ 2655.5s] feature 276: complete
+[ 2655.5s] feature 277: clean forward
+[ 2657.9s] feature 277: SAE forward
+[ 2664.2s] feature 277: SAE eigenvalues
+[ 2664.2s] feature 277: complete
+[ 2664.2s] feature 278: clean forward
+[ 2666.7s] feature 278: SAE forward
+[ 2673.0s] feature 278: SAE eigenvalues
+[ 2673.0s] feature 278: complete
+[ 2673.0s] feature 279: clean forward
+[ 2675.5s] feature 279: SAE forward
+[ 2681.8s] feature 279: SAE eigenvalues
+[ 2681.8s] feature 279: complete
+[ 2681.8s] feature 280: clean forward
+[ 2684.3s] feature 280: SAE forward
+[ 2690.5s] feature 280: SAE eigenvalues
+[ 2690.5s] feature 280: complete
+[ 2690.5s] feature 281: clean forward
+[ 2693.0s] feature 281: SAE forward
+[ 2699.3s] feature 281: SAE eigenvalues
+[ 2699.3s] feature 281: complete
+[ 2699.3s] feature 282: clean forward
+[ 2701.8s] feature 282: SAE forward
+[ 2708.2s] feature 282: SAE eigenvalues
+[ 2708.2s] feature 282: complete
+[ 2708.2s] feature 283: clean forward
+[ 2710.7s] feature 283: SAE forward
+[ 2717.0s] feature 283: SAE eigenvalues
+[ 2717.0s] feature 283: complete
+[ 2717.0s] feature 284: clean forward
+[ 2719.5s] feature 284: SAE forward
+[ 2725.8s] feature 284: SAE eigenvalues
+[ 2725.8s] feature 284: complete
+[ 2725.8s] feature 285: clean forward
+[ 2728.3s] feature 285: SAE forward
+[ 2734.5s] feature 285: SAE eigenvalues
+[ 2734.5s] feature 285: complete
+[ 2734.5s] feature 286: clean forward
+[ 2737.0s] feature 286: SAE forward
+[ 2743.3s] feature 286: SAE eigenvalues
+[ 2743.3s] feature 286: complete
+[ 2743.3s] feature 287: clean forward
+[ 2745.8s] feature 287: SAE forward
+[ 2752.1s] feature 287: SAE eigenvalues
+[ 2752.1s] feature 287: complete
+[ 2752.1s] feature 288: clean forward
+[ 2754.6s] feature 288: SAE forward
+[ 2760.9s] feature 288: SAE eigenvalues
+[ 2760.9s] feature 288: complete
+[ 2760.9s] feature 289: clean forward
+[ 2763.4s] feature 289: SAE forward
+[ 2769.7s] feature 289: SAE eigenvalues
+[ 2769.7s] feature 289: complete
+[ 2769.7s] feature 290: clean forward
+[ 2772.2s] feature 290: SAE forward
+[ 2778.5s] feature 290: SAE eigenvalues
+[ 2778.5s] feature 290: complete
+[ 2778.5s] feature 291: clean forward
+[ 2781.0s] feature 291: SAE forward
+[ 2787.4s] feature 291: SAE eigenvalues
+[ 2787.4s] feature 291: complete
+[ 2787.4s] feature 292: clean forward
+[ 2789.9s] feature 292: SAE forward
+[ 2796.2s] feature 292: SAE eigenvalues
+[ 2796.2s] feature 292: complete
+[ 2796.2s] feature 293: clean forward
+[ 2798.7s] feature 293: SAE forward
+[ 2805.0s] feature 293: SAE eigenvalues
+[ 2805.0s] feature 293: complete
+[ 2805.0s] feature 294: clean forward
+[ 2807.4s] feature 294: SAE forward
+[ 2813.6s] feature 294: SAE eigenvalues
+[ 2813.6s] feature 294: complete
+[ 2813.6s] feature 295: clean forward
+[ 2816.1s] feature 295: SAE forward
+[ 2822.4s] feature 295: SAE eigenvalues
+[ 2822.4s] feature 295: complete
+[ 2822.4s] feature 296: clean forward
+[ 2824.9s] feature 296: SAE forward
+[ 2831.2s] feature 296: SAE eigenvalues
+[ 2831.2s] feature 296: complete
+[ 2831.2s] feature 297: clean forward
+[ 2833.7s] feature 297: SAE forward
+[ 2840.1s] feature 297: SAE eigenvalues
+[ 2840.1s] feature 297: complete
+[ 2840.1s] feature 298: clean forward
+[ 2842.5s] feature 298: SAE forward
+[ 2848.8s] feature 298: SAE eigenvalues
+[ 2848.8s] feature 298: complete
+[ 2848.8s] feature 299: clean forward
+[ 2851.3s] feature 299: SAE forward
+[ 2857.6s] feature 299: SAE eigenvalues
+[ 2857.6s] feature 299: complete
+[ 2857.6s] feature 300: clean forward
+[ 2860.1s] feature 300: SAE forward
+[ 2866.4s] feature 300: SAE eigenvalues
+[ 2866.4s] feature 300: complete
+[ 2866.4s]   steered 300/300
+[ 2866.4s] steering done
+{
+ "rho_crowding__collateral_raw": 0.2205,
+ "rho_frequency__collateral_raw": 0.2077,
+ "rho_act_mag__collateral_raw": 0.219,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.1895,
+ "rho_crowding__collateral_ctilde": 0.1445,
+ "rho_frequency__collateral_ctilde": 0.1812,
+ "rho_act_mag__collateral_ctilde": 0.0995,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.1537,
+ "crowd_rho_lowfreq_half": 0.1392,
+ "crowd_rho_highfreq_half": 0.2596,
+ "rho_crowding__collateral_raw_nodense": 0.2205,
+ "rho_crowding__resid_delta_norm": 0.1813,
+ "mean_resid_reconstruction_norm_ratio": 1.2532,
+ "mean_resid_change_explained_energy": -2.9777
+}
+[ 2866.4s] wrote results/llama_3_1_8b_fp32/per_feature.csv, selection.json, meta.json
+=== OK    llama_fp32 2026-09-14T00:48:13+01:00
+=== START gemma_alpha0.5 2026-09-14T00:48:13+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "gemma_2_2b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 0.5, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.5s] device NVIDIA GB10; loading SAEs
+[    6.3s] SAEs loaded: primary d_sae=16384 (blocks.12.hook_resid_post), downstream d_sae=16384 (blocks.16.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:194: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+WARNING:root:You tried to specify center_unembed=True for a model using logit softcap, but this can't be done! Softcapping is not invariant upon adding a constant Setting center_unembed=False instead.
+Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights: 100%|██████████| 288/288 [00:00<00:00, 3029.81it/s]
+Loaded pretrained model google/gemma-2-2b into HookedTransformer
+[   15.1s] model loaded: google/gemma-2-2b d_model=2304 n_layers=26 norm=RMSPre dtype=float32
+[   15.1s] streaming wikitext-103 train split
+[   23.4s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   23.9s] 2048 contexts x 48 tokens; short texts dropped (v2): 32; contexts whose final token is the pad token: 0
+[  103.0s] cached clean final-token activations: prim (2048, 16384) down (2048, 16384); mean L0 primary=83.0 downstream=79.2; primary features never firing=28.6%
+[  103.2s] predictors: crowding done
+eligible features: 7517 of 16384 | sampled: 300
+panel 2048 features; 2011 with firing frequency <= 0.1
+[  103.3s] predictors: all done
+[  103.3s] steering 300 features x 48 contexts
+[  267.8s]   steered 50/300
+[  432.2s]   steered 100/300
+[  594.4s]   steered 150/300
+[  756.3s]   steered 200/300
+[  918.3s]   steered 250/300
+[ 1080.1s]   steered 300/300
+[ 1080.1s] steering done
+{
+ "rho_crowding__collateral_raw": 0.5549,
+ "rho_frequency__collateral_raw": 0.3529,
+ "rho_act_mag__collateral_raw": 0.4942,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.5032,
+ "rho_crowding__collateral_ctilde": 0.317,
+ "rho_frequency__collateral_ctilde": 0.46,
+ "rho_act_mag__collateral_ctilde": 0.5253,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.2594,
+ "crowd_rho_lowfreq_half": 0.6656,
+ "crowd_rho_highfreq_half": 0.456,
+ "rho_crowding__collateral_raw_nodense": 0.5408,
+ "rho_crowding__resid_delta_norm": 0.6261,
+ "mean_resid_reconstruction_norm_ratio": 2.394,
+ "mean_resid_change_explained_energy": -27.0578
+}
+[ 1080.1s] wrote results/gemma_2_2b_alpha0.5/per_feature.csv, selection.json, meta.json
+=== OK    gemma_alpha0.5 2026-09-14T01:06:15+01:00
+=== START gemma_alpha2 2026-09-14T01:06:15+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "gemma_2_2b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 2.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.5s] device NVIDIA GB10; loading SAEs
+[    5.9s] SAEs loaded: primary d_sae=16384 (blocks.12.hook_resid_post), downstream d_sae=16384 (blocks.16.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:194: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+WARNING:root:You tried to specify center_unembed=True for a model using logit softcap, but this can't be done! Softcapping is not invariant upon adding a constant Setting center_unembed=False instead.
+Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights: 100%|██████████| 288/288 [00:00<00:00, 9059.58it/s]
+Loaded pretrained model google/gemma-2-2b into HookedTransformer
+[   13.6s] model loaded: google/gemma-2-2b d_model=2304 n_layers=26 norm=RMSPre dtype=float32
+[   13.6s] streaming wikitext-103 train split
+[   20.9s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   21.4s] 2048 contexts x 48 tokens; short texts dropped (v2): 32; contexts whose final token is the pad token: 0
+[  100.6s] cached clean final-token activations: prim (2048, 16384) down (2048, 16384); mean L0 primary=83.0 downstream=79.2; primary features never firing=28.6%
+[  100.8s] predictors: crowding done
+eligible features: 7517 of 16384 | sampled: 300
+panel 2048 features; 2011 with firing frequency <= 0.1
+[  100.9s] predictors: all done
+[  100.9s] steering 300 features x 48 contexts
+[  264.4s]   steered 50/300
+[  427.0s]   steered 100/300
+[  589.0s]   steered 150/300
+[  751.1s]   steered 200/300
+[  913.3s]   steered 250/300
+[ 1075.6s]   steered 300/300
+[ 1075.6s] steering done
+{
+ "rho_crowding__collateral_raw": 0.4131,
+ "rho_frequency__collateral_raw": 0.3822,
+ "rho_act_mag__collateral_raw": 0.4603,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.3649,
+ "rho_crowding__collateral_ctilde": -0.3184,
+ "rho_frequency__collateral_ctilde": 0.3166,
+ "rho_act_mag__collateral_ctilde": 0.1991,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": -0.304,
+ "crowd_rho_lowfreq_half": 0.504,
+ "crowd_rho_highfreq_half": 0.3441,
+ "rho_crowding__collateral_raw_nodense": 0.4152,
+ "rho_crowding__resid_delta_norm": 0.6252,
+ "mean_resid_reconstruction_norm_ratio": 2.1039,
+ "mean_resid_change_explained_energy": -7.0138
+}
+[ 1075.6s] wrote results/gemma_2_2b_alpha2/per_feature.csv, selection.json, meta.json
+=== OK    gemma_alpha2 2026-09-14T01:24:13+01:00
+=== START llama_alpha0.5 2026-09-14T01:24:13+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "llama_3_1_8b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 1024, "SEQ_LEN": 48, "ALPHA": 0.5, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "bfloat16", "seed": 0}
+[    3.6s] device NVIDIA GB10; loading SAEs
+[    6.8s] SAEs loaded: primary d_sae=32768 (blocks.16.hook_resid_post), downstream d_sae=32768 (blocks.20.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 12945.11it/s]
+Loaded pretrained model meta-llama/Llama-3.1-8B into HookedTransformer
+[   28.9s] model loaded: meta-llama/Llama-3.1-8B d_model=4096 n_layers=32 norm=RMS dtype=bfloat16
+[   28.9s] streaming wikitext-103 train split
+[   35.4s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   36.0s] 2048 contexts x 48 tokens; short texts dropped (v2): 27; contexts whose final token is the pad token: 0
+[  142.9s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=32.2 downstream=31.4; primary features never firing=61.0%
+[  143.7s] predictors: crowding done
+eligible features: 2837 of 32768 | sampled: 300
+panel 1024 features; 1005 with firing frequency <= 0.1
+[  143.9s] predictors: all done
+[  143.9s] steering 300 features x 48 contexts
+[  268.4s]   steered 50/300
+[  393.4s]   steered 100/300
+[  517.5s]   steered 150/300
+[  642.4s]   steered 200/300
+[  766.7s]   steered 250/300
+[  890.9s]   steered 300/300
+[  890.9s] steering done
+{
+ "rho_crowding__collateral_raw": 0.2509,
+ "rho_frequency__collateral_raw": 0.2625,
+ "rho_act_mag__collateral_raw": 0.2761,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.2015,
+ "rho_crowding__collateral_ctilde": 0.2411,
+ "rho_frequency__collateral_ctilde": 0.281,
+ "rho_act_mag__collateral_ctilde": 0.279,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.1972,
+ "crowd_rho_lowfreq_half": 0.2007,
+ "crowd_rho_highfreq_half": 0.2737,
+ "rho_crowding__collateral_raw_nodense": 0.2629,
+ "rho_crowding__resid_delta_norm": 0.1694,
+ "mean_resid_reconstruction_norm_ratio": 1.2123,
+ "mean_resid_change_explained_energy": -4.3182
+}
+[  890.9s] wrote results/llama_3_1_8b_alpha0.5/per_feature.csv, selection.json, meta.json
+=== OK    llama_alpha0.5 2026-09-14T01:39:06+01:00
+=== START llama_alpha2 2026-09-14T01:39:06+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "llama_3_1_8b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 1024, "SEQ_LEN": 48, "ALPHA": 2.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "bfloat16", "seed": 0}
+[    3.4s] device NVIDIA GB10; loading SAEs
+[    6.9s] SAEs loaded: primary d_sae=32768 (blocks.16.hook_resid_post), downstream d_sae=32768 (blocks.20.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 11019.01it/s]
+Loaded pretrained model meta-llama/Llama-3.1-8B into HookedTransformer
+[   29.3s] model loaded: meta-llama/Llama-3.1-8B d_model=4096 n_layers=32 norm=RMS dtype=bfloat16
+[   29.3s] streaming wikitext-103 train split
+[   36.0s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   36.6s] 2048 contexts x 48 tokens; short texts dropped (v2): 27; contexts whose final token is the pad token: 0
+[  143.8s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=32.2 downstream=31.4; primary features never firing=61.0%
+[  144.6s] predictors: crowding done
+eligible features: 2837 of 32768 | sampled: 300
+panel 1024 features; 1005 with firing frequency <= 0.1
+[  144.8s] predictors: all done
+[  144.8s] steering 300 features x 48 contexts
+[  270.3s]   steered 50/300
+[  395.5s]   steered 100/300
+[  520.6s]   steered 150/300
+[  645.7s]   steered 200/300
+[  771.3s]   steered 250/300
+[  896.3s]   steered 300/300
+[  896.3s] steering done
+{
+ "rho_crowding__collateral_raw": 0.1928,
+ "rho_frequency__collateral_raw": 0.1329,
+ "rho_act_mag__collateral_raw": 0.1746,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.1472,
+ "rho_crowding__collateral_ctilde": 0.0595,
+ "rho_frequency__collateral_ctilde": 0.0414,
+ "rho_act_mag__collateral_ctilde": 0.0077,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.0756,
+ "crowd_rho_lowfreq_half": 0.1806,
+ "crowd_rho_highfreq_half": 0.1998,
+ "rho_crowding__collateral_raw_nodense": 0.2007,
+ "rho_crowding__resid_delta_norm": 0.1731,
+ "mean_resid_reconstruction_norm_ratio": 1.0839,
+ "mean_resid_change_explained_energy": -1.3694
+}
+[  896.3s] wrote results/llama_3_1_8b_alpha2/per_feature.csv, selection.json, meta.json
+=== OK    llama_alpha2 2026-09-14T01:54:04+01:00
+=== START gpt2_bandb 2026-09-14T01:54:04+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "gpt2_small_bandb", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.005, 0.3], "dtype": "float32", "seed": 0}
+[    3.6s] device NVIDIA GB10; loading SAEs
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/sae_lens/saes/sae.py:254: UserWarning: 
+This SAE has non-empty model_from_pretrained_kwargs. 
+For optimal performance, load the model like so:
+model = HookedSAETransformer.from_pretrained_no_processing(..., **cfg.model_from_pretrained_kwargs)
+  warnings.warn(
+[    6.6s] SAEs loaded: primary d_sae=24576 (blocks.8.hook_resid_pre), downstream d_sae=24576 (blocks.10.hook_resid_pre); model_from_pretrained_kwargs={'center_writing_weights': True}; prepend_bos=True
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:194: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+Loading weights:   0%|          | 0/148 [00:00<?, ?it/s]Loading weights: 100%|██████████| 148/148 [00:00<00:00, 4553.31it/s]
+Loaded pretrained model gpt2 into HookedTransformer
+[    8.7s] model loaded: gpt2 d_model=768 n_layers=12 norm=LNPre dtype=float32
+[    8.7s] streaming wikitext-103 train split
+[   15.2s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   15.7s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   21.2s] cached clean final-token activations: prim (2048, 24576) down (2048, 24576); mean L0 primary=71.8 downstream=60.0; primary features never firing=26.5%
+[   21.6s] predictors: crowding done
+eligible features: 3546 of 24576 | sampled: 300
+panel 2048 features; 2042 with firing frequency <= 0.1
+[   21.7s] predictors: all done
+[   21.7s] steering 300 features x 48 contexts
+[   32.5s]   steered 50/300
+[   43.4s]   steered 100/300
+[   54.2s]   steered 150/300
+[   65.1s]   steered 200/300
+[   75.9s]   steered 250/300
+[   86.8s]   steered 300/300
+[   86.8s] steering done
+{
+ "rho_crowding__collateral_raw": 0.4601,
+ "rho_frequency__collateral_raw": 0.2826,
+ "rho_act_mag__collateral_raw": 0.1741,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.4882,
+ "rho_crowding__collateral_ctilde": 0.2438,
+ "rho_frequency__collateral_ctilde": 0.1886,
+ "rho_act_mag__collateral_ctilde": 0.0796,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.2636,
+ "crowd_rho_lowfreq_half": 0.4146,
+ "crowd_rho_highfreq_half": 0.5633,
+ "rho_crowding__collateral_raw_nodense": 0.4573,
+ "rho_crowding__resid_delta_norm": 0.3783,
+ "mean_resid_reconstruction_norm_ratio": 0.8055,
+ "mean_resid_change_explained_energy": -0.2386
+}
+[   86.8s] wrote results/gpt2_small_bandb/per_feature.csv, selection.json, meta.json
+=== OK    gpt2_bandb 2026-09-14T01:55:32+01:00
+=== START pythia_bandb 2026-09-14T01:55:32+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "pythia_70m_deduped_bandb", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.05, "TOPK_CROWD": 20, "FREQ_BAND": [0.005, 0.3], "dtype": "float32", "seed": 0}
+[    3.4s] device NVIDIA GB10; loading SAEs
+[    6.4s] SAEs loaded: primary d_sae=32768 (blocks.4.hook_resid_post), downstream d_sae=32768 (blocks.5.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=False
+Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 2108.74it/s]
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:194: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+Loaded pretrained model pythia-70m-deduped into HookedTransformer
+[    8.2s] model loaded: pythia-70m-deduped d_model=512 n_layers=6 norm=LNPre dtype=float32
+[    8.2s] streaming wikitext-103 train split
+[   15.6s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   16.1s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   20.0s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=68.3 downstream=118.6; primary features never firing=79.2%
+[   20.5s] predictors: crowding done
+eligible features: 2945 of 32768 | sampled: 300
+panel 2048 features; 1969 with firing frequency <= 0.1
+[   20.6s] predictors: all done
+[   20.6s] steering 300 features x 48 contexts
+[   24.5s]   steered 50/300
+[   28.3s]   steered 100/300
+[   32.2s]   steered 150/300
+[   36.1s]   steered 200/300
+[   40.0s]   steered 250/300
+[   43.9s]   steered 300/300
+[   43.9s] steering done
+{
+ "rho_crowding__collateral_raw": -0.0229,
+ "rho_frequency__collateral_raw": 0.1297,
+ "rho_act_mag__collateral_raw": 0.1767,
+ "partial_crowding__collateral_raw__given_freq_actmag": -0.0787,
+ "rho_crowding__collateral_ctilde": 0.0156,
+ "rho_frequency__collateral_ctilde": 0.3363,
+ "rho_act_mag__collateral_ctilde": 0.2849,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": -0.0365,
+ "crowd_rho_lowfreq_half": -0.0034,
+ "crowd_rho_highfreq_half": -0.0886,
+ "rho_crowding__collateral_raw_nodense": -0.1184,
+ "rho_crowding__resid_delta_norm": 0.121,
+ "mean_resid_reconstruction_norm_ratio": 0.7951,
+ "mean_resid_change_explained_energy": 0.4613
+}
+[   43.9s] wrote results/pythia_70m_deduped_bandb/per_feature.csv, selection.json, meta.json
+=== OK    pythia_bandb 2026-09-14T01:56:18+01:00
+=== BATTERY DONE 2026-09-14T01:56:18+01:00

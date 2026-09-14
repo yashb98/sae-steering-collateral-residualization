@@ -228,7 +228,7 @@ def main(results="results"):
           "- Effect magnitude E_f and the stability cosines are computed on final-token logit differences in float32.",
           "- The collateral count measures downstream SAE activation changes, not independently labeled unrelated behaviors. Reconstruction-residual changes require the separate measurements in Section 7.",
           "- The context-pool split estimates conditional reproducibility; independent corpus draws and independently trained SAE seeds remain untested.",
-          "- Coefficient sweeps cover only GPT-2 and Pythia. Fixed-alpha results for Gemma and Llama do not establish coefficient robustness.",
+          "- Coefficient sweeps cover alpha in {0.5, 1, 2, 4} for GPT-2 and Pythia but only {0.5, 1, 2} for Gemma and Llama; the q95 firing-scale variant exists only for the two small settings.",
           "- Feature bootstrap intervals condition on the shared dictionary, panel and corpus pool. They do not account for uncertainty from drawing a different model or dictionary.", ""]
     L += ["## 10. Relation to recent work", "",
           "The literature review was refreshed on 7 September 2026, including papers submitted through 4 September. "

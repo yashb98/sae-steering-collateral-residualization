@@ -45,7 +45,7 @@ PRED_SETS = {
     "full_all": ALL_PREDICTORS,
 }
 TARGETS = ["collateral_raw", "collateral_ctilde"]
-EXTRA_TARGETS = ["kl_mean", "kl_per_effect", "collateral_raw_nodense", "collateral_ctilde_nodense", "resid_delta_norm", "resid_error_delta_norm", "resid_change_explained_energy", "stab_anti_frac", "effect_pc1_ratio"]
+EXTRA_TARGETS = ["kl_mean", "kl_per_effect", "collateral_w2", "collateral_w2_per_effect", "collateral_raw_nodense", "collateral_ctilde_nodense", "resid_delta_norm", "resid_error_delta_norm", "resid_change_explained_energy", "stab_anti_frac", "effect_pc1_ratio"]
 CONTROLS = {
     "none": [],
     "primary": ["effect_l2", "intervention_value", "act_mag", "frequency"],
