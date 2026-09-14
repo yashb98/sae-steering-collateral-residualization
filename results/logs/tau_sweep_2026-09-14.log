@@ -1,0 +1,577 @@
+=== START gpt2_tau0.02 2026-09-14T11:55:28+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "gpt2_small", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.02, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.4s] device NVIDIA GB10; loading SAEs
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/sae_lens/saes/sae.py:254: UserWarning: 
+This SAE has non-empty model_from_pretrained_kwargs. 
+For optimal performance, load the model like so:
+model = HookedSAETransformer.from_pretrained_no_processing(..., **cfg.model_from_pretrained_kwargs)
+  warnings.warn(
+[    6.5s] SAEs loaded: primary d_sae=24576 (blocks.8.hook_resid_pre), downstream d_sae=24576 (blocks.10.hook_resid_pre); model_from_pretrained_kwargs={'center_writing_weights': True}; prepend_bos=True
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:197: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+Loading weights:   0%|          | 0/148 [00:00<?, ?it/s]Loading weights: 100%|██████████| 148/148 [00:00<00:00, 10378.12it/s]
+Loaded pretrained model gpt2 into HookedTransformer
+[    8.6s] model loaded: gpt2 d_model=768 n_layers=12 norm=LNPre dtype=float32
+[    8.6s] streaming wikitext-103 train split
+[   16.6s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   17.1s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   22.8s] cached clean final-token activations: prim (2048, 24576) down (2048, 24576); mean L0 primary=71.8 downstream=60.0; primary features never firing=26.5%
+[   23.2s] predictors: crowding done
+eligible features: 7532 of 24576 | sampled: 300
+panel 2048 features; 2042 with firing frequency <= 0.1
+[   23.3s] predictors: all done
+[   23.3s] steering 300 features x 48 contexts
+[   34.3s]   steered 50/300
+[   45.3s]   steered 100/300
+[   56.4s]   steered 150/300
+[   67.5s]   steered 200/300
+[   78.6s]   steered 250/300
+[   89.6s]   steered 300/300
+[   89.6s] steering done
+{
+ "rho_crowding__collateral_raw": 0.4345,
+ "rho_frequency__collateral_raw": 0.1443,
+ "rho_act_mag__collateral_raw": 0.13,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.4603,
+ "rho_crowding__collateral_ctilde": 0.0885,
+ "rho_frequency__collateral_ctilde": 0.0008,
+ "rho_act_mag__collateral_ctilde": 0.0624,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.0681,
+ "crowd_rho_lowfreq_half": 0.5987,
+ "crowd_rho_highfreq_half": 0.2672,
+ "rho_crowding__collateral_raw_nodense": 0.429,
+ "rho_crowding__resid_delta_norm": 0.3285,
+ "mean_resid_reconstruction_norm_ratio": 0.8448,
+ "mean_resid_change_explained_energy": -0.3768
+}
+[   89.7s] wrote results/gpt2_small_tau0.02/per_feature.csv, selection.json, meta.json
+=== OK    gpt2_tau0.02 2026-09-14T11:56:59+01:00
+=== START pythia_tau0.02 2026-09-14T11:56:59+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "pythia_70m_deduped", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.02, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.5s] device NVIDIA GB10; loading SAEs
+[    7.0s] SAEs loaded: primary d_sae=32768 (blocks.4.hook_resid_post), downstream d_sae=32768 (blocks.5.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=False
+Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 3413.03it/s]
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:197: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+Loaded pretrained model pythia-70m-deduped into HookedTransformer
+[    9.0s] model loaded: pythia-70m-deduped d_model=512 n_layers=6 norm=LNPre dtype=float32
+[    9.0s] streaming wikitext-103 train split
+[   17.0s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   17.5s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   21.7s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=68.3 downstream=118.6; primary features never firing=79.2%
+[   22.2s] predictors: crowding done
+eligible features: 4375 of 32768 | sampled: 300
+panel 2048 features; 1969 with firing frequency <= 0.1
+[   22.3s] predictors: all done
+[   22.3s] steering 300 features x 48 contexts
+[   26.2s]   steered 50/300
+[   30.1s]   steered 100/300
+[   34.0s]   steered 150/300
+[   38.0s]   steered 200/300
+[   41.9s]   steered 250/300
+[   45.9s]   steered 300/300
+[   45.9s] steering done
+{
+ "rho_crowding__collateral_raw": -0.0286,
+ "rho_frequency__collateral_raw": 0.2537,
+ "rho_act_mag__collateral_raw": 0.1831,
+ "partial_crowding__collateral_raw__given_freq_actmag": -0.0421,
+ "rho_crowding__collateral_ctilde": 0.0575,
+ "rho_frequency__collateral_ctilde": 0.3742,
+ "rho_act_mag__collateral_ctilde": 0.2937,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.0359,
+ "crowd_rho_lowfreq_half": 0.1188,
+ "crowd_rho_highfreq_half": -0.1796,
+ "rho_crowding__collateral_raw_nodense": -0.0831,
+ "rho_crowding__resid_delta_norm": 0.1443,
+ "mean_resid_reconstruction_norm_ratio": 0.7776,
+ "mean_resid_change_explained_energy": 0.4663
+}
+[   45.9s] wrote results/pythia_70m_deduped_tau0.02/per_feature.csv, selection.json, meta.json
+=== OK    pythia_tau0.02 2026-09-14T11:57:47+01:00
+=== START gemma_tau0.02 2026-09-14T11:57:47+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "gemma_2_2b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.02, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.4s] device NVIDIA GB10; loading SAEs
+[    5.7s] SAEs loaded: primary d_sae=16384 (blocks.12.hook_resid_post), downstream d_sae=16384 (blocks.16.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:197: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+WARNING:root:You tried to specify center_unembed=True for a model using logit softcap, but this can't be done! Softcapping is not invariant upon adding a constant Setting center_unembed=False instead.
+Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights: 100%|██████████| 288/288 [00:00<00:00, 7836.46it/s]
+Loaded pretrained model google/gemma-2-2b into HookedTransformer
+[   13.6s] model loaded: google/gemma-2-2b d_model=2304 n_layers=26 norm=RMSPre dtype=float32
+[   13.6s] streaming wikitext-103 train split
+[   21.4s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   21.9s] 2048 contexts x 48 tokens; short texts dropped (v2): 32; contexts whose final token is the pad token: 0
+[  100.7s] cached clean final-token activations: prim (2048, 16384) down (2048, 16384); mean L0 primary=83.0 downstream=79.2; primary features never firing=28.6%
+[  100.9s] predictors: crowding done
+eligible features: 7517 of 16384 | sampled: 300
+panel 2048 features; 2011 with firing frequency <= 0.1
+[  101.0s] predictors: all done
+[  101.0s] steering 300 features x 48 contexts
+[  263.6s]   steered 50/300
+[  427.1s]   steered 100/300
+[  589.5s]   steered 150/300
+[  754.9s]   steered 200/300
+[  922.5s]   steered 250/300
+[ 1090.1s]   steered 300/300
+[ 1090.1s] steering done
+{
+ "rho_crowding__collateral_raw": 0.3797,
+ "rho_frequency__collateral_raw": 0.4005,
+ "rho_act_mag__collateral_raw": 0.4717,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.3301,
+ "rho_crowding__collateral_ctilde": -0.4154,
+ "rho_frequency__collateral_ctilde": 0.2673,
+ "rho_act_mag__collateral_ctilde": 0.1363,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": -0.3939,
+ "crowd_rho_lowfreq_half": 0.4801,
+ "crowd_rho_highfreq_half": 0.3039,
+ "rho_crowding__collateral_raw_nodense": 0.3793,
+ "rho_crowding__resid_delta_norm": 0.6257,
+ "mean_resid_reconstruction_norm_ratio": 2.2892,
+ "mean_resid_change_explained_energy": -13.7657
+}
+[ 1090.2s] wrote results/gemma_2_2b_tau0.02/per_feature.csv, selection.json, meta.json
+=== OK    gemma_tau0.02 2026-09-14T12:15:59+01:00
+=== START llama_tau0.02 2026-09-14T12:15:59+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "llama_3_1_8b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 1024, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.02, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "bfloat16", "seed": 0}
+[    3.5s] device NVIDIA GB10; loading SAEs
+[    7.0s] SAEs loaded: primary d_sae=32768 (blocks.16.hook_resid_post), downstream d_sae=32768 (blocks.20.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 8635.26it/s]
+Loaded pretrained model meta-llama/Llama-3.1-8B into HookedTransformer
+[   29.3s] model loaded: meta-llama/Llama-3.1-8B d_model=4096 n_layers=32 norm=RMS dtype=bfloat16
+[   29.3s] streaming wikitext-103 train split
+[   37.2s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   37.7s] 2048 contexts x 48 tokens; short texts dropped (v2): 27; contexts whose final token is the pad token: 0
+[  149.9s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=32.2 downstream=31.4; primary features never firing=61.0%
+[  150.7s] predictors: crowding done
+eligible features: 2837 of 32768 | sampled: 300
+panel 1024 features; 1005 with firing frequency <= 0.1
+[  150.9s] predictors: all done
+[  150.9s] steering 300 features x 48 contexts
+[  280.7s]   steered 50/300
+[  410.8s]   steered 100/300
+[  540.1s]   steered 150/300
+[  669.5s]   steered 200/300
+[  798.9s]   steered 250/300
+[  928.7s]   steered 300/300
+[  928.7s] steering done
+{
+ "rho_crowding__collateral_raw": 0.2032,
+ "rho_frequency__collateral_raw": 0.1331,
+ "rho_act_mag__collateral_raw": 0.1738,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.159,
+ "rho_crowding__collateral_ctilde": 0.0595,
+ "rho_frequency__collateral_ctilde": 0.0275,
+ "rho_act_mag__collateral_ctilde": -0.007,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.0794,
+ "crowd_rho_lowfreq_half": 0.2043,
+ "crowd_rho_highfreq_half": 0.2059,
+ "rho_crowding__collateral_raw_nodense": 0.2102,
+ "rho_crowding__resid_delta_norm": 0.1716,
+ "mean_resid_reconstruction_norm_ratio": 1.186,
+ "mean_resid_change_explained_energy": -2.6584
+}
+[  928.7s] wrote results/llama_3_1_8b_tau0.02/per_feature.csv, selection.json, meta.json
+=== OK    llama_tau0.02 2026-09-14T12:31:30+01:00
+=== START gpt2_tau0.1 2026-09-14T12:31:30+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "gpt2_small", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.1, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.5s] device NVIDIA GB10; loading SAEs
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/sae_lens/saes/sae.py:254: UserWarning: 
+This SAE has non-empty model_from_pretrained_kwargs. 
+For optimal performance, load the model like so:
+model = HookedSAETransformer.from_pretrained_no_processing(..., **cfg.model_from_pretrained_kwargs)
+  warnings.warn(
+[    6.4s] SAEs loaded: primary d_sae=24576 (blocks.8.hook_resid_pre), downstream d_sae=24576 (blocks.10.hook_resid_pre); model_from_pretrained_kwargs={'center_writing_weights': True}; prepend_bos=True
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:197: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+Loading weights:   0%|          | 0/148 [00:00<?, ?it/s]Loading weights: 100%|██████████| 148/148 [00:00<00:00, 10122.74it/s]
+Loaded pretrained model gpt2 into HookedTransformer
+[    8.4s] model loaded: gpt2 d_model=768 n_layers=12 norm=LNPre dtype=float32
+[    8.4s] streaming wikitext-103 train split
+[   15.7s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   16.3s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   21.9s] cached clean final-token activations: prim (2048, 24576) down (2048, 24576); mean L0 primary=71.8 downstream=60.0; primary features never firing=26.5%
+[   22.3s] predictors: crowding done
+eligible features: 7532 of 24576 | sampled: 300
+panel 2048 features; 2042 with firing frequency <= 0.1
+[   22.4s] predictors: all done
+[   22.4s] steering 300 features x 48 contexts
+[   33.6s]   steered 50/300
+[   44.8s]   steered 100/300
+[   56.2s]   steered 150/300
+[   67.4s]   steered 200/300
+[   78.7s]   steered 250/300
+[   90.0s]   steered 300/300
+[   90.0s] steering done
+{
+ "rho_crowding__collateral_raw": 0.4873,
+ "rho_frequency__collateral_raw": 0.1898,
+ "rho_act_mag__collateral_raw": 0.1187,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.541,
+ "rho_crowding__collateral_ctilde": 0.4713,
+ "rho_frequency__collateral_ctilde": 0.1611,
+ "rho_act_mag__collateral_ctilde": 0.1023,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.5178,
+ "crowd_rho_lowfreq_half": 0.5866,
+ "crowd_rho_highfreq_half": 0.4205,
+ "rho_crowding__collateral_raw_nodense": 0.4896,
+ "rho_crowding__resid_delta_norm": 0.3285,
+ "mean_resid_reconstruction_norm_ratio": 0.8448,
+ "mean_resid_change_explained_energy": -0.3768
+}
+[   90.0s] wrote results/gpt2_small_tau0.1/per_feature.csv, selection.json, meta.json
+=== OK    gpt2_tau0.1 2026-09-14T12:33:01+01:00
+=== START pythia_tau0.1 2026-09-14T12:33:01+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "pythia_70m_deduped", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.1, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.6s] device NVIDIA GB10; loading SAEs
+[    6.5s] SAEs loaded: primary d_sae=32768 (blocks.4.hook_resid_post), downstream d_sae=32768 (blocks.5.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=False
+Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 4222.25it/s]
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:197: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+Loaded pretrained model pythia-70m-deduped into HookedTransformer
+[    8.8s] model loaded: pythia-70m-deduped d_model=512 n_layers=6 norm=LNPre dtype=float32
+[    8.8s] streaming wikitext-103 train split
+[   15.9s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   16.5s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   20.7s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=68.3 downstream=118.6; primary features never firing=79.2%
+[   21.1s] predictors: crowding done
+eligible features: 4375 of 32768 | sampled: 300
+panel 2048 features; 1969 with firing frequency <= 0.1
+[   21.2s] predictors: all done
+[   21.2s] steering 300 features x 48 contexts
+[   25.3s]   steered 50/300
+[   29.4s]   steered 100/300
+[   33.4s]   steered 150/300
+[   37.5s]   steered 200/300
+[   41.5s]   steered 250/300
+[   45.6s]   steered 300/300
+[   45.6s] steering done
+{
+ "rho_crowding__collateral_raw": 0.1105,
+ "rho_frequency__collateral_raw": 0.1815,
+ "rho_act_mag__collateral_raw": 0.1849,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.084,
+ "rho_crowding__collateral_ctilde": 0.1517,
+ "rho_frequency__collateral_ctilde": 0.3143,
+ "rho_act_mag__collateral_ctilde": 0.3148,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.1101,
+ "crowd_rho_lowfreq_half": 0.2151,
+ "crowd_rho_highfreq_half": -0.0026,
+ "rho_crowding__collateral_raw_nodense": -0.0011,
+ "rho_crowding__resid_delta_norm": 0.1443,
+ "mean_resid_reconstruction_norm_ratio": 0.7776,
+ "mean_resid_change_explained_energy": 0.4663
+}
+[   45.6s] wrote results/pythia_70m_deduped_tau0.1/per_feature.csv, selection.json, meta.json
+=== OK    pythia_tau0.1 2026-09-14T12:33:49+01:00
+=== START gemma_tau0.1 2026-09-14T12:33:49+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "gemma_2_2b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.1, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.4s] device NVIDIA GB10; loading SAEs
+[    6.0s] SAEs loaded: primary d_sae=16384 (blocks.12.hook_resid_post), downstream d_sae=16384 (blocks.16.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:197: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+WARNING:root:You tried to specify center_unembed=True for a model using logit softcap, but this can't be done! Softcapping is not invariant upon adding a constant Setting center_unembed=False instead.
+Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights: 100%|██████████| 288/288 [00:00<00:00, 11846.46it/s]
+Loaded pretrained model google/gemma-2-2b into HookedTransformer
+[   13.9s] model loaded: google/gemma-2-2b d_model=2304 n_layers=26 norm=RMSPre dtype=float32
+[   13.9s] streaming wikitext-103 train split
+[   21.3s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   21.9s] 2048 contexts x 48 tokens; short texts dropped (v2): 32; contexts whose final token is the pad token: 0
+[  106.8s] cached clean final-token activations: prim (2048, 16384) down (2048, 16384); mean L0 primary=83.0 downstream=79.2; primary features never firing=28.6%
+[  107.1s] predictors: crowding done
+eligible features: 7517 of 16384 | sampled: 300
+panel 2048 features; 2011 with firing frequency <= 0.1
+[  107.2s] predictors: all done
+[  107.2s] steering 300 features x 48 contexts
+[  283.9s]   steered 50/300
+[  459.1s]   steered 100/300
+[  636.6s]   steered 150/300
+[  815.6s]   steered 200/300
+[  993.6s]   steered 250/300
+[ 1171.5s]   steered 300/300
+[ 1171.5s] steering done
+{
+ "rho_crowding__collateral_raw": 0.5527,
+ "rho_frequency__collateral_raw": 0.3554,
+ "rho_act_mag__collateral_raw": 0.4965,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.5008,
+ "rho_crowding__collateral_ctilde": 0.2803,
+ "rho_frequency__collateral_ctilde": 0.4664,
+ "rho_act_mag__collateral_ctilde": 0.5187,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.2243,
+ "crowd_rho_lowfreq_half": 0.6667,
+ "crowd_rho_highfreq_half": 0.4585,
+ "rho_crowding__collateral_raw_nodense": 0.5383,
+ "rho_crowding__resid_delta_norm": 0.6257,
+ "mean_resid_reconstruction_norm_ratio": 2.2892,
+ "mean_resid_change_explained_energy": -13.7657
+}
+[ 1171.5s] wrote results/gemma_2_2b_tau0.1/per_feature.csv, selection.json, meta.json
+=== OK    gemma_tau0.1 2026-09-14T12:53:22+01:00
+=== START llama_tau0.1 2026-09-14T12:53:22+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "llama_3_1_8b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 1024, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.1, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "bfloat16", "seed": 0}
+[    3.4s] device NVIDIA GB10; loading SAEs
+[    6.7s] SAEs loaded: primary d_sae=32768 (blocks.16.hook_resid_post), downstream d_sae=32768 (blocks.20.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 11402.25it/s]
+Loaded pretrained model meta-llama/Llama-3.1-8B into HookedTransformer
+[   28.3s] model loaded: meta-llama/Llama-3.1-8B d_model=4096 n_layers=32 norm=RMS dtype=bfloat16
+[   28.3s] streaming wikitext-103 train split
+[   36.6s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   37.2s] 2048 contexts x 48 tokens; short texts dropped (v2): 27; contexts whose final token is the pad token: 0
+[  155.3s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=32.2 downstream=31.4; primary features never firing=61.0%
+[  156.1s] predictors: crowding done
+eligible features: 2837 of 32768 | sampled: 300
+panel 1024 features; 1005 with firing frequency <= 0.1
+[  156.3s] predictors: all done
+[  156.3s] steering 300 features x 48 contexts
+[  294.2s]   steered 50/300
+[  431.7s]   steered 100/300
+[  569.3s]   steered 150/300
+[  706.9s]   steered 200/300
+[  844.5s]   steered 250/300
+[  982.0s]   steered 300/300
+[  982.0s] steering done
+{
+ "rho_crowding__collateral_raw": 0.2514,
+ "rho_frequency__collateral_raw": 0.2459,
+ "rho_act_mag__collateral_raw": 0.2539,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.2088,
+ "rho_crowding__collateral_ctilde": 0.2288,
+ "rho_frequency__collateral_ctilde": 0.249,
+ "rho_act_mag__collateral_ctilde": 0.2307,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.2007,
+ "crowd_rho_lowfreq_half": 0.1907,
+ "crowd_rho_highfreq_half": 0.2832,
+ "rho_crowding__collateral_raw_nodense": 0.2625,
+ "rho_crowding__resid_delta_norm": 0.1716,
+ "mean_resid_reconstruction_norm_ratio": 1.186,
+ "mean_resid_change_explained_energy": -2.6584
+}
+[  982.0s] wrote results/llama_3_1_8b_tau0.1/per_feature.csv, selection.json, meta.json
+=== OK    llama_tau0.1 2026-09-14T13:09:46+01:00
+=== START gpt2_tau0.2 2026-09-14T13:09:46+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "gpt2_small", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.2, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.6s] device NVIDIA GB10; loading SAEs
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/sae_lens/saes/sae.py:254: UserWarning: 
+This SAE has non-empty model_from_pretrained_kwargs. 
+For optimal performance, load the model like so:
+model = HookedSAETransformer.from_pretrained_no_processing(..., **cfg.model_from_pretrained_kwargs)
+  warnings.warn(
+[    6.8s] SAEs loaded: primary d_sae=24576 (blocks.8.hook_resid_pre), downstream d_sae=24576 (blocks.10.hook_resid_pre); model_from_pretrained_kwargs={'center_writing_weights': True}; prepend_bos=True
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:197: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+Loading weights:   0%|          | 0/148 [00:00<?, ?it/s]Loading weights: 100%|██████████| 148/148 [00:00<00:00, 8380.79it/s]
+Loaded pretrained model gpt2 into HookedTransformer
+[    8.9s] model loaded: gpt2 d_model=768 n_layers=12 norm=LNPre dtype=float32
+[    8.9s] streaming wikitext-103 train split
+[   16.0s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   16.6s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   22.6s] cached clean final-token activations: prim (2048, 24576) down (2048, 24576); mean L0 primary=71.8 downstream=60.0; primary features never firing=26.5%
+[   22.9s] predictors: crowding done
+eligible features: 7532 of 24576 | sampled: 300
+panel 2048 features; 2042 with firing frequency <= 0.1
+[   23.1s] predictors: all done
+[   23.1s] steering 300 features x 48 contexts
+[   35.0s]   steered 50/300
+[   46.8s]   steered 100/300
+[   58.7s]   steered 150/300
+[   70.6s]   steered 200/300
+[   82.5s]   steered 250/300
+[   94.4s]   steered 300/300
+[   94.4s] steering done
+{
+ "rho_crowding__collateral_raw": 0.4466,
+ "rho_frequency__collateral_raw": 0.3861,
+ "rho_act_mag__collateral_raw": 0.3167,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.5183,
+ "rho_crowding__collateral_ctilde": 0.4417,
+ "rho_frequency__collateral_ctilde": 0.3826,
+ "rho_act_mag__collateral_ctilde": 0.3132,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.512,
+ "crowd_rho_lowfreq_half": 0.5455,
+ "crowd_rho_highfreq_half": 0.4636,
+ "rho_crowding__collateral_raw_nodense": 0.4403,
+ "rho_crowding__resid_delta_norm": 0.3285,
+ "mean_resid_reconstruction_norm_ratio": 0.8448,
+ "mean_resid_change_explained_energy": -0.3768
+}
+[   94.4s] wrote results/gpt2_small_tau0.2/per_feature.csv, selection.json, meta.json
+=== OK    gpt2_tau0.2 2026-09-14T13:11:22+01:00
+=== START pythia_tau0.2 2026-09-14T13:11:22+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "pythia_70m_deduped", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.2, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.6s] device NVIDIA GB10; loading SAEs
+[    7.2s] SAEs loaded: primary d_sae=32768 (blocks.4.hook_resid_post), downstream d_sae=32768 (blocks.5.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=False
+Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 2710.07it/s]
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:197: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+Loaded pretrained model pythia-70m-deduped into HookedTransformer
+[    9.8s] model loaded: pythia-70m-deduped d_model=512 n_layers=6 norm=LNPre dtype=float32
+[    9.8s] streaming wikitext-103 train split
+[   17.3s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   17.9s] 2048 contexts x 48 tokens; short texts dropped (v2): 36; contexts whose final token is the pad token: 0
+[   22.0s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=68.3 downstream=118.6; primary features never firing=79.2%
+[   22.5s] predictors: crowding done
+eligible features: 4375 of 32768 | sampled: 300
+panel 2048 features; 1969 with firing frequency <= 0.1
+[   22.6s] predictors: all done
+[   22.6s] steering 300 features x 48 contexts
+[   26.9s]   steered 50/300
+[   31.2s]   steered 100/300
+[   35.4s]   steered 150/300
+[   39.7s]   steered 200/300
+[   43.9s]   steered 250/300
+[   48.2s]   steered 300/300
+[   48.2s] steering done
+{
+ "rho_crowding__collateral_raw": 0.1648,
+ "rho_frequency__collateral_raw": 0.1582,
+ "rho_act_mag__collateral_raw": 0.2226,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.1171,
+ "rho_crowding__collateral_ctilde": 0.1995,
+ "rho_frequency__collateral_ctilde": 0.213,
+ "rho_act_mag__collateral_ctilde": 0.275,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.1478,
+ "crowd_rho_lowfreq_half": 0.2342,
+ "crowd_rho_highfreq_half": 0.0958,
+ "rho_crowding__collateral_raw_nodense": 0.0969,
+ "rho_crowding__resid_delta_norm": 0.1443,
+ "mean_resid_reconstruction_norm_ratio": 0.7776,
+ "mean_resid_change_explained_energy": 0.4663
+}
+[   48.2s] wrote results/pythia_70m_deduped_tau0.2/per_feature.csv, selection.json, meta.json
+=== OK    pythia_tau0.2 2026-09-14T13:12:12+01:00
+=== START gemma_tau0.2 2026-09-14T13:12:12+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "gemma_2_2b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 2048, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.2, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "float32", "seed": 0}
+[    3.6s] device NVIDIA GB10; loading SAEs
+[    6.0s] SAEs loaded: primary d_sae=16384 (blocks.12.hook_resid_post), downstream d_sae=16384 (blocks.16.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+/home/yashb98/Downloads/sae-steering-collateral-residualization/src/run_setting.py:197: DeprecationWarning: HookedTransformer.from_pretrained is deprecated and will be removed in a future major release. Use TransformerBridge.boot_transformers(...) instead, then call enable_compatibility_mode() for HookedTransformer-equivalent numerics. See docs/source/content/migrating_to_v3.md.
+  model = loader(cfg["model_name"], hf_model=hf_model, device=device, dtype=dtype, **model_kwargs).eval()
+WARNING:root:You tried to specify center_unembed=True for a model using logit softcap, but this can't be done! Softcapping is not invariant upon adding a constant Setting center_unembed=False instead.
+Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights: 100%|██████████| 288/288 [00:00<00:00, 13303.96it/s]
+Loaded pretrained model google/gemma-2-2b into HookedTransformer
+[   14.0s] model loaded: google/gemma-2-2b d_model=2304 n_layers=26 norm=RMSPre dtype=float32
+[   14.0s] streaming wikitext-103 train split
+[   21.4s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   22.0s] 2048 contexts x 48 tokens; short texts dropped (v2): 32; contexts whose final token is the pad token: 0
+[  108.1s] cached clean final-token activations: prim (2048, 16384) down (2048, 16384); mean L0 primary=83.0 downstream=79.2; primary features never firing=28.6%
+[  108.3s] predictors: crowding done
+eligible features: 7517 of 16384 | sampled: 300
+panel 2048 features; 2011 with firing frequency <= 0.1
+[  108.5s] predictors: all done
+[  108.5s] steering 300 features x 48 contexts
+[  286.8s]   steered 50/300
+[  464.2s]   steered 100/300
+[  641.2s]   steered 150/300
+[  818.6s]   steered 200/300
+[  995.8s]   steered 250/300
+[ 1173.1s]   steered 300/300
+[ 1173.1s] steering done
+{
+ "rho_crowding__collateral_raw": 0.4783,
+ "rho_frequency__collateral_raw": 0.3306,
+ "rho_act_mag__collateral_raw": 0.4865,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.3974,
+ "rho_crowding__collateral_ctilde": 0.2029,
+ "rho_frequency__collateral_ctilde": 0.4028,
+ "rho_act_mag__collateral_ctilde": 0.479,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.1111,
+ "crowd_rho_lowfreq_half": 0.5651,
+ "crowd_rho_highfreq_half": 0.425,
+ "rho_crowding__collateral_raw_nodense": 0.4042,
+ "rho_crowding__resid_delta_norm": 0.6257,
+ "mean_resid_reconstruction_norm_ratio": 2.2892,
+ "mean_resid_change_explained_energy": -13.7657
+}
+[ 1173.1s] wrote results/gemma_2_2b_tau0.2/per_feature.csv, selection.json, meta.json
+=== OK    gemma_tau0.2 2026-09-14T13:31:48+01:00
+=== START llama_tau0.2 2026-09-14T13:31:48+01:00
+/home/yashb98/venvs/duan/lib/python3.12/site-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+/opt/miniforge3/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (6.0.0.post1)/charset_normalizer (3.4.2) doesn't match a supported version!
+  warnings.warn(
+config: {"name": "llama_3_1_8b", "protocol": "v2", "smoke": false, "N_TEXTS": 8000, "N_CONTEXTS": 2048, "N_FEATURES": 300, "CTX_PER_TYPE": 16, "PANEL": 1024, "SEQ_LEN": 48, "ALPHA": 1.0, "alpha_mode": "fixed", "context_split": "none", "random_directions": false, "TAU": 0.2, "TOPK_CROWD": 20, "FREQ_BAND": [0.002, 0.5], "dtype": "bfloat16", "seed": 0}
+[    3.4s] device NVIDIA GB10; loading SAEs
+[    7.1s] SAEs loaded: primary d_sae=32768 (blocks.16.hook_resid_post), downstream d_sae=32768 (blocks.20.hook_resid_post); model_from_pretrained_kwargs={}; prepend_bos=True
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights: 100%|██████████| 291/291 [00:00<00:00, 11346.81it/s]
+Loaded pretrained model meta-llama/Llama-3.1-8B into HookedTransformer
+[   28.9s] model loaded: meta-llama/Llama-3.1-8B d_model=4096 n_layers=32 norm=RMS dtype=bfloat16
+[   28.9s] streaming wikitext-103 train split
+[   37.6s] collected 8000 texts (dupes removed: 0); tokenising and caching clean activations
+[   38.2s] 2048 contexts x 48 tokens; short texts dropped (v2): 27; contexts whose final token is the pad token: 0
+[  157.2s] cached clean final-token activations: prim (2048, 32768) down (2048, 32768); mean L0 primary=32.2 downstream=31.4; primary features never firing=61.0%
+[  158.0s] predictors: crowding done
+eligible features: 2837 of 32768 | sampled: 300
+panel 1024 features; 1005 with firing frequency <= 0.1
+[  158.2s] predictors: all done
+[  158.2s] steering 300 features x 48 contexts
+[  296.3s]   steered 50/300
+[  436.7s]   steered 100/300
+[  574.7s]   steered 150/300
+[  714.6s]   steered 200/300
+[  859.7s]   steered 250/300
+[  999.4s]   steered 300/300
+[  999.4s] steering done
+{
+ "rho_crowding__collateral_raw": 0.2451,
+ "rho_frequency__collateral_raw": 0.2775,
+ "rho_act_mag__collateral_raw": 0.2985,
+ "partial_crowding__collateral_raw__given_freq_actmag": 0.1874,
+ "rho_crowding__collateral_ctilde": 0.2321,
+ "rho_frequency__collateral_ctilde": 0.2898,
+ "rho_act_mag__collateral_ctilde": 0.2974,
+ "partial_crowding__collateral_ctilde__given_freq_actmag": 0.1792,
+ "crowd_rho_lowfreq_half": 0.1782,
+ "crowd_rho_highfreq_half": 0.2909,
+ "rho_crowding__collateral_raw_nodense": 0.2223,
+ "rho_crowding__resid_delta_norm": 0.1716,
+ "mean_resid_reconstruction_norm_ratio": 1.186,
+ "mean_resid_change_explained_energy": -2.6584
+}
+[  999.4s] wrote results/llama_3_1_8b_tau0.2/per_feature.csv, selection.json, meta.json
+=== OK    llama_tau0.2 2026-09-14T13:48:29+01:00
+=== SWEEP DONE 2026-09-14T13:48:29+01:00

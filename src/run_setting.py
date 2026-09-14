@@ -82,6 +82,7 @@ def main():
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--alpha", type=float, default=None, help="override the config's steering coefficient")
+    ap.add_argument("--tau", type=float, default=None, help="override the config's collateral threshold")
     ap.add_argument("--alpha-mode", choices=["fixed", "q95"], default="fixed",
                     help="fixed: add alpha * d_f; q95: add alpha * q95(natural activation of f) * d_f")
     ap.add_argument("--context-split", choices=["none", "A", "B"], default="none",
@@ -107,6 +108,8 @@ def main():
         suffix += f"_alpha{args.alpha:g}"
     if args.alpha_mode == "q95":
         suffix += "_q95"
+    if args.tau is not None and args.tau != float(cfg["tau"]):
+        suffix += f"_tau{args.tau:g}"
     if args.context_split != "none":
         suffix += f"_ctx{args.context_split}"
     if args.random_directions:
@@ -120,7 +123,7 @@ def main():
         N_TEXTS, N_CONTEXTS, N_FEATURES = cfg["n_texts"], cfg["n_contexts"], cfg["n_features"]
         CTX_PER_TYPE, PANEL = cfg["ctx_per_type"], cfg["panel_size"]
     SEQ_LEN = cfg["seq_len"]
-    TAU = float(cfg["tau"])
+    TAU = float(args.tau) if args.tau is not None else float(cfg["tau"])
     EPS_FIRE = float(cfg["eps_fire"])
     TOPK_CROWD = int(cfg["topk_crowding"])
     FREQ_LO, FREQ_HI = cfg["freq_band"]
@@ -583,7 +586,7 @@ def main():
     meta = {
         "setting": name, "protocol": args.protocol, "smoke": args.smoke, "seed": SEED, "config": cfg,
         "variant": dict(alpha=ALPHA, alpha_mode=args.alpha_mode, context_split=args.context_split,
-                        random_directions=args.random_directions, dense_freq=args.dense_freq,
+                        random_directions=args.random_directions, dense_freq=args.dense_freq, tau=TAU,
                         n_panel_nodense=int(panel_nodense.sum()), paired_random_control=args.paired_random_control,
                         residual_metric_version=2, saved_residual_deltas=args.save_residual_deltas),
         "sizes": dict(n_texts=len(texts), n_contexts=N, seq_len=SEQ_LEN, n_features=len(feats), n_eligible=int(len(elig)),

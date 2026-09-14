@@ -119,6 +119,31 @@ def main():
 
     df_bf16, df_fp32 = load(root, "llama_3_1_8b"), load(root, "llama_3_1_8b_fp32")
     overlap = len(set(df_bf16.feature) & set(df_fp32.feature))
+    lines += ["", "## Collateral threshold", "",
+              "The canonical threshold is tau = 0.05 on absolute downstream SAE activation change (Section 3.4). The sweep "
+              "repeats the full pipeline at tau in {0.02, 0.1, 0.2} with identical settings otherwise; each tau resamples "
+              "nothing, so within a setting the 300 features coincide across rows and only the labels change. "
+              "C-tilde inherits the threshold through the count. These are threshold sensitivity checks on the labeling "
+              "rule, not evidence for any particular threshold.", "",
+              "| Setting | tau | raw count: rho | primary partial [95% CI] | C-tilde: rho | primary partial [95% CI] | median count |",
+              "|---|---|---|---|---|---|---|"]
+    for s in ORDER:
+        for suffix, tau_name in [("", "0.05"), ("_tau0.02", "0.02"), ("_tau0.1", "0.1"), ("_tau0.2", "0.2")]:
+            if not (root/(s + suffix)/"per_feature.csv").exists():
+                continue
+            df = load(root, s + suffix)
+            r = crowding_stats(df, a.n_boot, rng, ("none", "primary"))
+            r["median_collateral_raw"] = float(df.collateral_raw.median())
+            out.setdefault("tau", {}).setdefault(s, {})[tau_name] = r
+            lines.append(f"| {PRETTY[s]} | {tau_name} | {r['collateral_raw|none']['rho']:+.3f} | {fmt(r['collateral_raw|primary'])} | "
+                         f"{r['collateral_ctilde|none']['rho']:+.3f} | {fmt(r['collateral_ctilde|primary'])} | {df.collateral_raw.median():.1f} |")
+    lines += ["",
+              "The GPT-2, Gemma and Llama primary partials change little across the sweep, so the crowding result in those "
+              "settings is not an artifact of the 0.05 choice. Pythia, null at the canonical threshold, shows a small "
+              "positive partial at tau = 0.1 and 0.2 with intervals that exclude zero; at those thresholds the median "
+              "Pythia count falls below 7 of 2,048 panel features, so the label is sparse and the shift should be read "
+              "with that caution.", ""]
+
     lines += ["", "## Llama precision: bfloat16 vs float32", "",
               "The canonical Llama run loads in bfloat16 with TransformerLens weight processing off; the retry loads the same "
               "checkpoint in float32. Both have 2,837 eligible features, but only "
