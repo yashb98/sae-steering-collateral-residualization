@@ -7,6 +7,8 @@ The repository includes the completed four-setting residualization, the Septembe
 - [Four-setting results](RESULTS.md), [proposed manuscript text](PAPER_INSERT_2026-09-15.md), and [LaTeX appendix table](results/analysis/table_collateral_residualized.tex).
 - [Behavioral research update PDF](behavioral_followup/RESEARCH_UPDATE_2026-09-18.pdf), [complete results](behavioral_followup/RESULTS.md), and [manuscript addendum](behavioral_followup/PAPER_ADDENDUM.md).
 
+The [September 19 diagnostic audit](behavioral_followup_v2/V1_DIAGNOSTIC_AUDIT.md) additionally checks intended gains against unsteered generation and judge coverage. The [next-study design](behavioral_followup_v2/PROTOCOL.md) is a draft; no v2 experiments have run.
+
 The behavioral study contains 7,296 held-out outputs across GPT-2-small and Gemma-2-2B. Neither setting demonstrates a factual-preservation advantage under the frozen joint criterion. This exploratory result does not change the original activation-collateral findings. The PDF is supplementary research material for manuscript integration.
 
 

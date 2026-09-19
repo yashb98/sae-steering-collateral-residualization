@@ -1,0 +1,323 @@
+{
+  "date": "2026-09-19",
+  "status": "post-hoc exploratory diagnostic; no new generations",
+  "bootstrap": "5000 feature/prompt resamples; two review seeds averaged within prompt; pointwise 95% intervals",
+  "source_sha256": {
+    "audit_v1.py": "0e9b5ee38ab1eefc0e94221add90f4bb0608bcddb14ef7a7d1af2ee4065a61be",
+    "v1_analyze.py": "0d3bf42b9b986ed7f17c1a9d80f07e08ffb641328ba9b2fb86494522274a894d",
+    "v1_prompts.json": "a8b92c515684b89c32789cbf433be3bda572035753cb30d0ce3d755088d187a2"
+  },
+  "v1_unchanged_files_checked": 73,
+  "settings": [
+    {
+      "setting": "gpt2_small",
+      "input_sha256": {
+        "test.jsonl": "9db51aebeed53b3b15d98447c5cdeee9943f3b3c44c7207c6e03b870dbf73cba",
+        "test_manifest.json": "de681309823c07e2861f1b78eaf4f88705fe0b856c397efb63b5cb464966fcaa",
+        "selection.json": "3cae8ad545fd06bfc2d5ccc9f35611d2d965e3213b91e49a2856c6927b409394",
+        "analysis.json": "7ab13ee15435bd7a1b4b7e8c17d32e83029c22d7a37f8d9f12a09ae1bd5689ff",
+        "development_features.csv": "d31f0ca1fecfbd91b95c98a8b5c77f5c321d276ac6aa98d65c84454adc9af290",
+        "test_features.csv": "b9994c8eb3ed91cb9955553e27c07ddcb1ce772895106e5a392e8788f6eee204",
+        "blind_judge_scored.csv": "eed35ff46aafe30a82abcce5cda831d2079faf66748b3881685a3051558d8745"
+      },
+      "n_outputs": 3648,
+      "arms": {
+        "low": {
+          "test_gain_vs_unsteered": {
+            "difference": 0.04779895534973853,
+            "ci_low": -0.01886350001387695,
+            "ci_high": 0.11481153925406014,
+            "n_prompts": 64,
+            "n_boot": 5000,
+            "n_features": 6
+          },
+          "selected_development_mean_gain": 0.08901356290476135,
+          "features_with_positive_test_point_estimate": 6,
+          "features_with_test_gain_at_least_5pp": 3,
+          "n_features": 6
+        },
+        "high": {
+          "test_gain_vs_unsteered": {
+            "difference": 0.005694001615514353,
+            "ci_low": -0.054407980540171715,
+            "ci_high": 0.06724747399848828,
+            "n_prompts": 64,
+            "n_boot": 5000,
+            "n_features": 6
+          },
+          "selected_development_mean_gain": 0.09655152151471053,
+          "features_with_positive_test_point_estimate": 3,
+          "features_with_test_gain_at_least_5pp": 1,
+          "n_features": 6
+        },
+        "random": {
+          "test_gain_vs_unsteered": {
+            "difference": 0.020212454229029713,
+            "ci_low": -0.04261112478551281,
+            "ci_high": 0.08624706801023578,
+            "n_prompts": 64,
+            "n_boot": 5000,
+            "n_features": 6
+          },
+          "selected_development_mean_gain": -0.06936518949724914,
+          "features_with_positive_test_point_estimate": 5,
+          "features_with_test_gain_at_least_5pp": 0,
+          "n_features": 6
+        }
+      },
+      "original_primary_contrast_reproduced": true,
+      "factual": {
+        "baseline_accuracy": 0.96875,
+        "n_feature_prompt_comparisons": 1152,
+        "correctness_changes": 0,
+        "broken_baseline_correct": 0,
+        "changed_full_continuation_text": 6
+      },
+      "judge_coverage": {
+        "n_outputs": 76,
+        "n_prompt_ids": 4,
+        "n_templates": 1,
+        "total_test_templates": 8,
+        "nondegenerate_but_judged_incoherent": 34,
+        "caveat": "Automated judge on a fixed homogeneous subset; not human truth."
+      },
+      "template_diagnostics": [
+        {
+          "template": "After spending time with the {item}, here is my opinion. I found it",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.5618165025152844,
+          "arm_gain_point_estimates": {
+            "low": 0.12446046012640488,
+            "high": 0.07265628219768895,
+            "random": 0.09291450791837026
+          }
+        },
+        {
+          "template": "An honest review of the {item}: The experience left me feeling",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.5663537487816935,
+          "arm_gain_point_estimates": {
+            "low": 0.026319045910592254,
+            "high": -0.035156134434752705,
+            "random": -0.0660050356224627
+          }
+        },
+        {
+          "template": "Customer review of the {item}: I had a chance to try it and found it",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.9364628411458393,
+          "arm_gain_point_estimates": {
+            "low": 0.035528846770224366,
+            "high": -0.020476321204114262,
+            "random": 0.020732779704000514
+          }
+        },
+        {
+          "template": "I want to describe my experience with the {item}. For me, it was",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.7488971810889775,
+          "arm_gain_point_estimates": {
+            "low": 0.0504931213326927,
+            "high": -0.022772499418351754,
+            "random": 0.020791770291907624
+          }
+        },
+        {
+          "template": "My thoughts on the {item}: Based on my experience, it was",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.7487907304966934,
+          "arm_gain_point_estimates": {
+            "low": 5.9520466796379734e-05,
+            "high": -0.003223421267345365,
+            "random": -0.021484593650408626
+          }
+        },
+        {
+          "template": "Personal review: the {item}. Having tried it myself, I would say it",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.9361188742332156,
+          "arm_gain_point_estimates": {
+            "low": 0.03104775582384413,
+            "high": 0.0002714885552753121,
+            "random": -0.00994592294773608
+          }
+        },
+        {
+          "template": "Review notes about the {item}: Looking back, I think it was",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.8731843885761914,
+          "arm_gain_point_estimates": {
+            "low": -0.030762703335009616,
+            "high": -0.020016167649979755,
+            "random": 0.00044118915138831777
+          }
+        },
+        {
+          "template": "This is my account of trying the {item}. Overall, I felt it was",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.7493725160929894,
+          "arm_gain_point_estimates": {
+            "low": 0.14524559570236314,
+            "high": 0.07426878614569439,
+            "random": 0.12425493898717839
+          }
+        }
+      ]
+    },
+    {
+      "setting": "gemma_2_2b",
+      "input_sha256": {
+        "test.jsonl": "f3cc706334d976b590ffd3cfc0bfc10f37d1e9173dadce7662801b8ff8c02a26",
+        "test_manifest.json": "d974dbd5a5c2bc38403f56ac9ffacc4f68a3465e623ae4963e5449428f038269",
+        "selection.json": "2465a4b33373277d819780d67a88a466c4fb6e14c736718d96a3a5d4fc8e054d",
+        "analysis.json": "c5a7f0fdad183894333e058012a89d2d73ac4f7d1df5f5ce777be33a6b538e40",
+        "development_features.csv": "c6e09735d019303a3ba4007a9f62db589a9f123975941a269cae741c39cbfb63",
+        "test_features.csv": "63d7d292354a818b065b2d7a500cbc80e54357fb113844cef36175f288079feb",
+        "blind_judge_scored.csv": "35850e24dd6b1d1dc0750071c46b39d15e5eae683976fdbfcf2675dd2ed0f45b"
+      },
+      "n_outputs": 3648,
+      "arms": {
+        "low": {
+          "test_gain_vs_unsteered": {
+            "difference": -0.0038029972051465914,
+            "ci_low": -0.03897617629998157,
+            "ci_high": 0.03212463238686308,
+            "n_prompts": 64,
+            "n_boot": 5000,
+            "n_features": 6
+          },
+          "selected_development_mean_gain": 0.07899568603736237,
+          "features_with_positive_test_point_estimate": 2,
+          "features_with_test_gain_at_least_5pp": 0,
+          "n_features": 6
+        },
+        "high": {
+          "test_gain_vs_unsteered": {
+            "difference": -0.010210854847173288,
+            "ci_low": -0.05086639913120054,
+            "ci_high": 0.029527067254548487,
+            "n_prompts": 64,
+            "n_boot": 5000,
+            "n_features": 6
+          },
+          "selected_development_mean_gain": 0.082207974679477,
+          "features_with_positive_test_point_estimate": 1,
+          "features_with_test_gain_at_least_5pp": 0,
+          "n_features": 6
+        },
+        "random": {
+          "test_gain_vs_unsteered": {
+            "difference": -0.013626574840031902,
+            "ci_low": -0.054447825091652094,
+            "ci_high": 0.02510839877633086,
+            "n_prompts": 64,
+            "n_boot": 5000,
+            "n_features": 6
+          },
+          "selected_development_mean_gain": -0.06222308151174926,
+          "features_with_positive_test_point_estimate": 0,
+          "features_with_test_gain_at_least_5pp": 0,
+          "n_features": 6
+        }
+      },
+      "original_primary_contrast_reproduced": true,
+      "factual": {
+        "baseline_accuracy": 1.0,
+        "n_feature_prompt_comparisons": 1152,
+        "correctness_changes": 0,
+        "broken_baseline_correct": 0,
+        "changed_full_continuation_text": 5
+      },
+      "judge_coverage": {
+        "n_outputs": 76,
+        "n_prompt_ids": 4,
+        "n_templates": 1,
+        "total_test_templates": 8,
+        "nondegenerate_but_judged_incoherent": 0,
+        "caveat": "Automated judge on a fixed homogeneous subset; not human truth."
+      },
+      "template_diagnostics": [
+        {
+          "template": "After spending time with the {item}, here is my opinion. I found it",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.8735739459370957,
+          "arm_gain_point_estimates": {
+            "low": -0.07112180541904906,
+            "high": -0.0827349783036576,
+            "random": -0.06994654862925614
+          }
+        },
+        {
+          "template": "An honest review of the {item}: The experience left me feeling",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.25175098507679605,
+          "arm_gain_point_estimates": {
+            "low": 0.0282552684493567,
+            "high": -0.0011255101908318535,
+            "random": -0.0008402514425445521
+          }
+        },
+        {
+          "template": "Customer review of the {item}: I had a chance to try it and found it",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.9988490082323547,
+          "arm_gain_point_estimates": {
+            "low": -0.00012758312125990776,
+            "high": -0.010430400279195276,
+            "random": -0.01037720556875364
+          }
+        },
+        {
+          "template": "I want to describe my experience with the {item}. For me, it was",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.8739910170224897,
+          "arm_gain_point_estimates": {
+            "low": -0.00011208527575939005,
+            "high": -0.010340569565717697,
+            "random": -0.010415464018781904
+          }
+        },
+        {
+          "template": "My thoughts on the {item}: Based on my experience, it was",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.8746098750525557,
+          "arm_gain_point_estimates": {
+            "low": 0.0514161106129904,
+            "high": 0.0615205330680813,
+            "random": 0.06181020083204198
+          }
+        },
+        {
+          "template": "Personal review: the {item}. Having tried it myself, I would say it",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.8746973787201565,
+          "arm_gain_point_estimates": {
+            "low": -0.008850480135758261,
+            "high": 0.023194575924208028,
+            "random": 0.04113118857821968
+          }
+        },
+        {
+          "template": "Review notes about the {item}: Looking back, I think it was",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.8121447038793118,
+          "arm_gain_point_estimates": {
+            "low": 0.020506006662496124,
+            "high": -0.0005481643001985642,
+            "random": -0.01029765680565717
+          }
+        },
+        {
+          "template": "This is my account of trying the {item}. Overall, I felt it was",
+          "n_prompts": 8,
+          "baseline_positive_probability": 0.6858122416488182,
+          "arm_gain_point_estimates": {
+            "low": -0.05038940941418935,
+            "high": -0.06122232513007466,
+            "random": -0.11007686166552348
+          }
+        }
+      ]
+    }
+  ]
+}

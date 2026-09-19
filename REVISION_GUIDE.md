@@ -14,6 +14,12 @@ Read the [six-page PDF](behavioral_followup/RESEARCH_UPDATE_2026-09-18.pdf), [fu
 
 The low-minus-high sentiment differences are +4.2 percentage points in GPT-2 (95% CI -0.8 to +9.2) and +0.6 in Gemma (-2.4 to +3.9). Factual correctness is identical across every arm in each setting: 96.9% in GPT-2 and 100% in Gemma. Neither meets the joint behavioral-transfer criterion. These outcomes were retained without retuning the frozen experiment.
 
+## Diagnostic continuation and planned validation
+
+The [September 19 saved-output audit](behavioral_followup_v2/V1_DIAGNOSTIC_AUDIT.md) finds low-score sentiment gain versus unsteered of +4.78 pp (95% pointwise interval -1.89 to +11.48) in GPT-2 and -0.38 pp (-3.90 to +3.21) in Gemma. Neither interval establishes intended benefit. This is a post-hoc diagnostic, distinct from the original low/high criterion. The secondary judge covers one of eight review templates.
+
+The [revised follow-up design](behavioral_followup_v2/PROTOCOL.md) proposes validating useful steering and damage sensitivity, then measuring the forecast-to-activation and activation-to-behavior links under matched intervention schedules. [Protocol amendments](behavioral_followup_v2/AMENDMENTS.md) correct unsupported statements in an earlier draft. New model generations, human ratings, pilot-based sample-size estimates and prospective confirmation remain pending.
+
 ## Verification
 
 The publication checks cover the 17 original tests and seven behavioral tests, independent canonical-artifact checks, and both behavioral audits. See [canonical verification](results/analysis/artifact_verification.json) and [behavioral verification](behavioral_followup/VERIFICATION.json). The original dated behavioral audit is retained separately. [Behavioral reproduction instructions](behavioral_followup/README.md) explain the recorded environment and portable checkout paths.
