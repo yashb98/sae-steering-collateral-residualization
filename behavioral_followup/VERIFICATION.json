@@ -1,0 +1,111 @@
+{
+  "checked_utc": "2026-09-19T11:11:26Z",
+  "settings": {
+    "gpt2_small": {
+      "passed": true,
+      "n_candidates": 45,
+      "n_pairs": 6,
+      "n_test_outputs": 3648,
+      "candidate_training_overlap": 0,
+      "score_reconstruction_max_error": {
+        "predicted_collateral": 3.552713678800501e-15,
+        "predicted_residual_collateral": 4.440892098500626e-16
+      },
+      "predictor_fit": {
+        "passed": true,
+        "excluded_source_features": 864,
+        "candidate_overlap": 0,
+        "canonical_training_sha256": "9ffec82aaba3cda0d6f53d374bc25f504df93b8338ce7dd3fc0012259632b02b",
+        "refit_max_coefficient_errors": {
+          "predicted_collateral": 4.929390229335695e-14,
+          "predicted_residual_collateral": 3.907985046680551e-14
+        }
+      },
+      "package_versions_match_manifest": true,
+      "score_precision_note": "Candidate predictors were computed and standardized as float32. Restore that dtype after CSV loading and use the original StandardScaler transformation before applying saved coefficients. Absolute reconstruction error must be at most 1e-10 and every candidate rank must agree exactly.",
+      "checks": [
+        "independently refitted predictor coefficients",
+        "independently reconstructed predictor scores",
+        "disjoint prompts and all three source feature samples",
+        "complete development and test job metadata and score reconstruction",
+        "complete output grid including failures",
+        "development-only matched selection",
+        "exact saved source for generation",
+        "unchanged frozen prompt/selection/protocol hashes"
+      ],
+      "hashes": {
+        "candidates.csv": "a60cc4481b009ec3395ed05d46c129f1faaae9e62079a873f7b376e83da55ec1",
+        "selection.json": "3cae8ad545fd06bfc2d5ccc9f35611d2d965e3213b91e49a2856c6927b409394",
+        "development.jsonl": "ed396053356b8657090fc09d7cb4908c5c91b100654a9180d235a8b125ba3b55",
+        "test.jsonl": "9db51aebeed53b3b15d98447c5cdeee9943f3b3c44c7207c6e03b870dbf73cba",
+        "analysis.json": "7ab13ee15435bd7a1b4b7e8c17d32e83029c22d7a37f8d9f12a09ae1bd5689ff"
+      },
+      "secondary_judge": {
+        "passed": true,
+        "n_outputs": 76,
+        "n_judgments": 228,
+        "calibration_accuracy": 1.0,
+        "calibration_passed": true,
+        "source_sha256": "efb4564bbfda41a498270f20d181805a07c9a42e52e82839a0617ea72d968222"
+      }
+    },
+    "gemma_2_2b": {
+      "passed": true,
+      "n_candidates": 48,
+      "n_pairs": 6,
+      "n_test_outputs": 3648,
+      "candidate_training_overlap": 0,
+      "score_reconstruction_max_error": {
+        "predicted_collateral": 8.881784197001252e-16,
+        "predicted_residual_collateral": 2.220446049250313e-16
+      },
+      "predictor_fit": {
+        "passed": true,
+        "excluded_source_features": 860,
+        "candidate_overlap": 0,
+        "canonical_training_sha256": "6aff23709b8d50310c2d690f0a24c9fd0be2ab0c23c2579ce9723dbda78850ed",
+        "refit_max_coefficient_errors": {
+          "predicted_collateral": 1.7763568394002505e-15,
+          "predicted_residual_collateral": 1.3322676295501878e-15
+        }
+      },
+      "package_versions_match_manifest": true,
+      "score_precision_note": "Candidate predictors were computed and standardized as float32. Restore that dtype after CSV loading and use the original StandardScaler transformation before applying saved coefficients. Absolute reconstruction error must be at most 1e-10 and every candidate rank must agree exactly.",
+      "checks": [
+        "independently refitted predictor coefficients",
+        "independently reconstructed predictor scores",
+        "disjoint prompts and all three source feature samples",
+        "complete development and test job metadata and score reconstruction",
+        "complete output grid including failures",
+        "development-only matched selection",
+        "exact saved source for generation",
+        "unchanged frozen prompt/selection/protocol hashes"
+      ],
+      "hashes": {
+        "candidates.csv": "16fa9d5594563d5ae4850c41539c4e30b5b0670db472a262207d98e66bd8de03",
+        "selection.json": "2465a4b33373277d819780d67a88a466c4fb6e14c736718d96a3a5d4fc8e054d",
+        "development.jsonl": "cddcd9921c908d5f46e6464f75ce3efb488bfa9d5bbb429581866b3fff16fe2e",
+        "test.jsonl": "f3cc706334d976b590ffd3cfc0bfc10f37d1e9173dadce7662801b8ff8c02a26",
+        "analysis.json": "c5a7f0fdad183894333e058012a89d2d73ac4f7d1df5f5ce777be33a6b538e40"
+      },
+      "secondary_judge": {
+        "passed": true,
+        "n_outputs": 76,
+        "n_judgments": 228,
+        "calibration_accuracy": 1.0,
+        "calibration_passed": true,
+        "source_sha256": "efb4564bbfda41a498270f20d181805a07c9a42e52e82839a0617ea72d968222"
+      }
+    }
+  },
+  "source_sha256": {
+    "run.py": "e8c5b9ee60b83ff65d13088f2ede3ce1314117e38ea803c400409452c968fb3e",
+    "analyze.py": "0d3bf42b9b986ed7f17c1a9d80f07e08ffb641328ba9b2fb86494522274a894d",
+    "verify.py": "e135f00a8afce842333482366d5cfa72c5e937c8271fcfab1bd14527e8980956",
+    "blind_judge.py": "efb4564bbfda41a498270f20d181805a07c9a42e52e82839a0617ea72d968222",
+    "prompts.py": "3f4084ad9caccf3043034adb282ede3806b49155d081410e5ebdddadd116a6a4",
+    "test_followup.py": "e4556bcbc1c56497d0732acb1dba3112dc3721982cb5185f59ec693c83d8c790"
+  },
+  "resume_preserved": true,
+  "complete": true
+}

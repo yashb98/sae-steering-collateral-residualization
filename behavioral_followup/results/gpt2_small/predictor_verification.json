@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "max_absolute_error": {
+    "crowding": 8.326672684688674e-17,
+    "crowd_max": 5.551115123125783e-17,
+    "dec_norm": 2.220446049250313e-16,
+    "enc_norm": 2.384185791015625e-07,
+    "enc_dec_cos": 1.1920928955078125e-07,
+    "frequency": 0.0,
+    "bin_entropy": 9.71445146547012e-17,
+    "act_entropy": 2.9802322387695312e-08,
+    "act_kurtosis": 1.1368683772161603e-13,
+    "coact_entropy": 8.881784197001252e-16,
+    "coact_count": 1.4210854715202004e-14,
+    "logit_l2": 7.105427357601002e-15,
+    "logit_linf": 4.440892098500626e-16,
+    "logit_entropy": 1.7763568394002505e-15,
+    "logit_top10_mass": 9.974659986866641e-17
+  },
+  "training_csv_sha256": "9ffec82aaba3cda0d6f53d374bc25f504df93b8338ce7dd3fc0012259632b02b",
+  "excluded_feature_count": 864,
+  "candidate_overlap_with_training": 0
+}

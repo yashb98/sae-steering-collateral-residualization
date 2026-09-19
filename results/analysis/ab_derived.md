@@ -3,27 +3,29 @@
 Inputs: canonical per-feature CSVs, alpha-variant CSVs, variants.json,
 partial_correlations.csv. No new GPU measurements.
 
+Reviewed 2026-09-15. Context splits share one corpus pool and dictionary; no measurement ceiling or attenuation correction is established. Top-decile precision and the selection summaries are descriptive results on the measured sample, without fresh held-out validation. Selection summaries group by broad effect-size thirds and do not establish matched effects or causal benefits. Predictor rankings are not tests of differences between correlations. Top-decile scores use the upper tail of every listed predictor, including negatively associated predictors; they are not optimized selectors.
+
 ## gpt2_small
 
-Measurement ceiling (ctxA/ctxB split-half, Spearman-Brown) and attenuation-corrected crowding partial rho:
+Context-pool reproducibility and uncorrected primary partial correlation:
 
-| target | split-half r | SB reliability R | partial rho | corrected |
+| target | split-pool rho | partial rho |
+|---|---|---|
+| collateral_raw | +0.960 | +0.475 |
+| collateral_ctilde | +0.938 | +0.425 |
+
+Top-decile precision on the measured sample; baseline is observed target prevalence:
+
+| target | predictor | precision | baseline | n flagged |
 |---|---|---|---|---|
-| collateral_raw | +0.960 | 0.979 | +0.475 | +0.480 |
-| collateral_ctilde | +0.938 | 0.968 | +0.425 | +0.432 |
-
-Top-decile precision (fraction of predictor-top-decile features in collateral top decile; baseline 0.10):
-
-| target | predictor | precision | n flagged |
-|---|---|---|---|
-| collateral_raw | crowding | 0.400 | 30 |
-| collateral_raw | crowd_max | 0.267 | 30 |
-| collateral_raw | logit_l2 | 0.067 | 30 |
-| collateral_raw | enc_dec_cos | 0.067 | 30 |
-| collateral_ctilde | crowding | 0.267 | 30 |
-| collateral_ctilde | crowd_max | 0.233 | 30 |
-| collateral_ctilde | logit_l2 | 0.067 | 30 |
-| collateral_ctilde | enc_dec_cos | 0.033 | 30 |
+| collateral_raw | crowding | 0.400 | 0.100 | 30 |
+| collateral_raw | crowd_max | 0.267 | 0.100 | 30 |
+| collateral_raw | logit_l2 | 0.067 | 0.100 | 30 |
+| collateral_raw | enc_dec_cos | 0.067 | 0.100 | 30 |
+| collateral_ctilde | crowding | 0.267 | 0.100 | 30 |
+| collateral_ctilde | crowd_max | 0.233 | 0.100 | 30 |
+| collateral_ctilde | logit_l2 | 0.067 | 0.100 | 30 |
+| collateral_ctilde | enc_dec_cos | 0.033 | 0.100 | 30 |
 
 Max-vs-mean crowding aggregation (primary control):
 
@@ -32,7 +34,7 @@ Max-vs-mean crowding aggregation (primary control):
 | collateral_raw | +0.475 [+0.373, +0.567] | +0.333 [+0.215, +0.440] |
 | collateral_ctilde | +0.425 [+0.317, +0.524] | +0.300 [+0.177, +0.417] |
 
-Orthogonal-selection demo (median raw collateral within effect_l2 terciles):
+Descriptive selection summary (median raw collateral within effect_l2 terciles):
 
 | effect tercile | low crowding | high crowding |
 |---|---|---|
@@ -49,25 +51,25 @@ Dose-response over alphas [0.5, 1.0, 2.0, 4.0] (n=300 common features):
 
 ## pythia_70m_deduped
 
-Measurement ceiling (ctxA/ctxB split-half, Spearman-Brown) and attenuation-corrected crowding partial rho:
+Context-pool reproducibility and uncorrected primary partial correlation:
 
-| target | split-half r | SB reliability R | partial rho | corrected |
+| target | split-pool rho | partial rho |
+|---|---|---|
+| collateral_raw | +0.906 | -0.004 |
+| collateral_ctilde | +0.759 | +0.001 |
+
+Top-decile precision on the measured sample; baseline is observed target prevalence:
+
+| target | predictor | precision | baseline | n flagged |
 |---|---|---|---|---|
-| collateral_raw | +0.906 | 0.951 | -0.004 | -0.005 |
-| collateral_ctilde | +0.759 | 0.863 | +0.001 | +0.002 |
-
-Top-decile precision (fraction of predictor-top-decile features in collateral top decile; baseline 0.10):
-
-| target | predictor | precision | n flagged |
-|---|---|---|---|
-| collateral_raw | crowding | 0.133 | 30 |
-| collateral_raw | crowd_max | 0.100 | 30 |
-| collateral_raw | logit_l2 | 0.167 | 30 |
-| collateral_raw | enc_dec_cos | 0.067 | 30 |
-| collateral_ctilde | crowding | 0.100 | 30 |
-| collateral_ctilde | crowd_max | 0.067 | 30 |
-| collateral_ctilde | logit_l2 | 0.167 | 30 |
-| collateral_ctilde | enc_dec_cos | 0.200 | 30 |
+| collateral_raw | crowding | 0.133 | 0.100 | 30 |
+| collateral_raw | crowd_max | 0.100 | 0.100 | 30 |
+| collateral_raw | logit_l2 | 0.167 | 0.100 | 30 |
+| collateral_raw | enc_dec_cos | 0.067 | 0.100 | 30 |
+| collateral_ctilde | crowding | 0.100 | 0.100 | 30 |
+| collateral_ctilde | crowd_max | 0.067 | 0.100 | 30 |
+| collateral_ctilde | logit_l2 | 0.167 | 0.100 | 30 |
+| collateral_ctilde | enc_dec_cos | 0.200 | 0.100 | 30 |
 
 Max-vs-mean crowding aggregation (primary control):
 
@@ -76,7 +78,7 @@ Max-vs-mean crowding aggregation (primary control):
 | collateral_raw | -0.004 [-0.124, +0.114] | +0.015 [-0.106, +0.132] |
 | collateral_ctilde | +0.001 [-0.121, +0.124] | +0.014 [-0.107, +0.134] |
 
-Orthogonal-selection demo (median raw collateral within effect_l2 terciles):
+Descriptive selection summary (median raw collateral within effect_l2 terciles):
 
 | effect tercile | low crowding | high crowding |
 |---|---|---|
@@ -93,25 +95,25 @@ Dose-response over alphas [0.5, 1.0, 2.0, 4.0] (n=300 common features):
 
 ## gemma_2_2b
 
-Measurement ceiling (ctxA/ctxB split-half, Spearman-Brown) and attenuation-corrected crowding partial rho:
+Context-pool reproducibility and uncorrected primary partial correlation:
 
-| target | split-half r | SB reliability R | partial rho | corrected |
+| target | split-pool rho | partial rho |
+|---|---|---|
+| collateral_raw | +0.925 | +0.242 |
+| collateral_ctilde | +0.788 | +0.252 |
+
+Top-decile precision on the measured sample; baseline is observed target prevalence:
+
+| target | predictor | precision | baseline | n flagged |
 |---|---|---|---|---|
-| collateral_raw | +0.925 | 0.961 | +0.242 | +0.247 |
-| collateral_ctilde | +0.788 | 0.882 | +0.252 | +0.269 |
-
-Top-decile precision (fraction of predictor-top-decile features in collateral top decile; baseline 0.10):
-
-| target | predictor | precision | n flagged |
-|---|---|---|---|
-| collateral_raw | crowding | 0.267 | 30 |
-| collateral_raw | crowd_max | 0.100 | 30 |
-| collateral_raw | logit_l2 | 0.200 | 30 |
-| collateral_raw | enc_dec_cos | 0.000 | 30 |
-| collateral_ctilde | crowding | 0.033 | 30 |
-| collateral_ctilde | crowd_max | 0.167 | 30 |
-| collateral_ctilde | logit_l2 | 0.033 | 30 |
-| collateral_ctilde | enc_dec_cos | 0.100 | 30 |
+| collateral_raw | crowding | 0.267 | 0.103 | 30 |
+| collateral_raw | crowd_max | 0.100 | 0.103 | 30 |
+| collateral_raw | logit_l2 | 0.200 | 0.103 | 30 |
+| collateral_raw | enc_dec_cos | 0.000 | 0.103 | 30 |
+| collateral_ctilde | crowding | 0.033 | 0.100 | 30 |
+| collateral_ctilde | crowd_max | 0.167 | 0.100 | 30 |
+| collateral_ctilde | logit_l2 | 0.033 | 0.100 | 30 |
+| collateral_ctilde | enc_dec_cos | 0.100 | 0.100 | 30 |
 
 Max-vs-mean crowding aggregation (primary control):
 
@@ -120,7 +122,7 @@ Max-vs-mean crowding aggregation (primary control):
 | collateral_raw | +0.242 [+0.123, +0.362] | +0.136 [+0.018, +0.256] |
 | collateral_ctilde | +0.252 [+0.130, +0.364] | +0.158 [+0.039, +0.272] |
 
-Orthogonal-selection demo (median raw collateral within effect_l2 terciles):
+Descriptive selection summary (median raw collateral within effect_l2 terciles):
 
 | effect tercile | low crowding | high crowding |
 |---|---|---|
@@ -137,25 +139,25 @@ Dose-response over alphas [0.5, 1.0, 2.0] (n=300 common features):
 
 ## llama_3_1_8b
 
-Measurement ceiling (ctxA/ctxB split-half, Spearman-Brown) and attenuation-corrected crowding partial rho:
+Context-pool reproducibility and uncorrected primary partial correlation:
 
-| target | split-half r | SB reliability R | partial rho | corrected |
+| target | split-pool rho | partial rho |
+|---|---|---|
+| collateral_raw | +0.946 | +0.152 |
+| collateral_ctilde | +0.897 | +0.166 |
+
+Top-decile precision on the measured sample; baseline is observed target prevalence:
+
+| target | predictor | precision | baseline | n flagged |
 |---|---|---|---|---|
-| collateral_raw | +0.946 | 0.972 | +0.152 | +0.154 |
-| collateral_ctilde | +0.897 | 0.946 | +0.166 | +0.170 |
-
-Top-decile precision (fraction of predictor-top-decile features in collateral top decile; baseline 0.10):
-
-| target | predictor | precision | n flagged |
-|---|---|---|---|
-| collateral_raw | crowding | 0.300 | 30 |
-| collateral_raw | crowd_max | 0.300 | 30 |
-| collateral_raw | logit_l2 | 0.433 | 30 |
-| collateral_raw | enc_dec_cos | 0.033 | 30 |
-| collateral_ctilde | crowding | 0.233 | 30 |
-| collateral_ctilde | crowd_max | 0.267 | 30 |
-| collateral_ctilde | logit_l2 | 0.233 | 30 |
-| collateral_ctilde | enc_dec_cos | 0.133 | 30 |
+| collateral_raw | crowding | 0.300 | 0.100 | 30 |
+| collateral_raw | crowd_max | 0.300 | 0.100 | 30 |
+| collateral_raw | logit_l2 | 0.433 | 0.100 | 30 |
+| collateral_raw | enc_dec_cos | 0.033 | 0.100 | 30 |
+| collateral_ctilde | crowding | 0.233 | 0.100 | 30 |
+| collateral_ctilde | crowd_max | 0.267 | 0.100 | 30 |
+| collateral_ctilde | logit_l2 | 0.233 | 0.100 | 30 |
+| collateral_ctilde | enc_dec_cos | 0.133 | 0.100 | 30 |
 
 Max-vs-mean crowding aggregation (primary control):
 
@@ -164,7 +166,7 @@ Max-vs-mean crowding aggregation (primary control):
 | collateral_raw | +0.152 [+0.039, +0.266] | +0.086 [-0.049, +0.218] |
 | collateral_ctilde | +0.166 [+0.052, +0.275] | +0.077 [-0.053, +0.206] |
 
-Orthogonal-selection demo (median raw collateral within effect_l2 terciles):
+Descriptive selection summary (median raw collateral within effect_l2 terciles):
 
 | effect tercile | low crowding | high crowding |
 |---|---|---|

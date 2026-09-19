@@ -1,0 +1,22 @@
+{
+  "resumed_utc": "2026-09-18T12:20:44Z",
+  "initial_gemma_development_rows": 1392,
+  "initial_gpt2_development_rows": 2204,
+  "initial_gpt2_test_rows": 3648,
+  "gemma_command": "HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 python run.py --setting gemma_2_2b --stage all --batch-size 64",
+  "frozen_sha256": {
+    "run.py": "bb4bfbdbc20a2d56346fbfcbb09eaf4bb99eeefe9801d9f77691756c4dbf79ef",
+    "PROTOCOL.md": "750ad01d29682f507800e445da0c4e7b9bee2129edb8b83bd0ab2914f161b40b",
+    "prompts.json": "a8b92c515684b89c32789cbf433be3bda572035753cb30d0ce3d755088d187a2",
+    "SECONDARY_JUDGE_PROTOCOL.md": "2c6f93fadaad1cb6dd5f675d18e82dfd9bfeaad2456a00a155727ff26188e6b1",
+    "results/gpt2_small/selection.json": "3cae8ad545fd06bfc2d5ccc9f35611d2d965e3213b91e49a2856c6927b409394",
+    "results/gpt2_small/test.jsonl": "9db51aebeed53b3b15d98447c5cdeee9943f3b3c44c7207c6e03b870dbf73cba"
+  },
+  "initial_gemma_development_prefix_sha256": "ce2193ececeec0bfa66ec17cf2b1802d445de67b980bdada9fbe27f6858c6736",
+  "checkpoint_repair": {
+    "backup": "results/logs/gemma_development_before_tail_repair.bin",
+    "backup_sha256": "dbffe60f26f1ffaafcd8e96047f74c725f91a41591e199ed408942fef5896839",
+    "removed_bytes": 4088,
+    "reason": "Interrupted checkpoint contained 4,088 NUL bytes after the final complete newline. All 1,392 JSON records were retained byte for byte."
+  }
+}

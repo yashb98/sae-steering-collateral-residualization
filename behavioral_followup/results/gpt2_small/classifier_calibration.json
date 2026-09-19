@@ -1,0 +1,172 @@
+{
+  "model": "siebert/sentiment-roberta-large-english",
+  "revision": "74cea614e245b0832c770ec9aa51bd58df965b9c",
+  "label_mapping": {
+    "0": "NEGATIVE",
+    "1": "POSITIVE"
+  },
+  "accuracy": 1.0,
+  "n": 32,
+  "rows": [
+    {
+      "text": "My review of the book: I loved every minute of it.",
+      "label": 1,
+      "positive_probability": 0.9989014863967896
+    },
+    {
+      "text": "My review of the book: It exceeded all my expectations.",
+      "label": 1,
+      "positive_probability": 0.9989200830459595
+    },
+    {
+      "text": "My review of the book: I am very happy with it and would recommend it.",
+      "label": 1,
+      "positive_probability": 0.9989343285560608
+    },
+    {
+      "text": "My review of the book: A fantastic experience that I would gladly repeat.",
+      "label": 1,
+      "positive_probability": 0.9989181756973267
+    },
+    {
+      "text": "My review of the book: I hated every minute of it.",
+      "label": 0,
+      "positive_probability": 0.0005155678372830153
+    },
+    {
+      "text": "My review of the book: It failed to meet my expectations.",
+      "label": 0,
+      "positive_probability": 0.0004961316590197384
+    },
+    {
+      "text": "My review of the book: I am very unhappy with it and cannot recommend it.",
+      "label": 0,
+      "positive_probability": 0.0004947802517563105
+    },
+    {
+      "text": "My review of the book: A dreadful experience that I would never repeat.",
+      "label": 0,
+      "positive_probability": 0.0005062359850853682
+    },
+    {
+      "text": "My review of the restaurant: I loved every minute of it.",
+      "label": 1,
+      "positive_probability": 0.9989070892333984
+    },
+    {
+      "text": "My review of the restaurant: It exceeded all my expectations.",
+      "label": 1,
+      "positive_probability": 0.9989173412322998
+    },
+    {
+      "text": "My review of the restaurant: I am very happy with it and would recommend it.",
+      "label": 1,
+      "positive_probability": 0.9989340901374817
+    },
+    {
+      "text": "My review of the restaurant: A fantastic experience that I would gladly repeat.",
+      "label": 1,
+      "positive_probability": 0.9989237189292908
+    },
+    {
+      "text": "My review of the restaurant: I hated every minute of it.",
+      "label": 0,
+      "positive_probability": 0.00051253626588732
+    },
+    {
+      "text": "My review of the restaurant: It failed to meet my expectations.",
+      "label": 0,
+      "positive_probability": 0.0004956403281539679
+    },
+    {
+      "text": "My review of the restaurant: I am very unhappy with it and cannot recommend it.",
+      "label": 0,
+      "positive_probability": 0.0004946156986989081
+    },
+    {
+      "text": "My review of the restaurant: A dreadful experience that I would never repeat.",
+      "label": 0,
+      "positive_probability": 0.0004982496611773968
+    },
+    {
+      "text": "My review of the product: I loved every minute of it.",
+      "label": 1,
+      "positive_probability": 0.9989103078842163
+    },
+    {
+      "text": "My review of the product: It exceeded all my expectations.",
+      "label": 1,
+      "positive_probability": 0.9989200830459595
+    },
+    {
+      "text": "My review of the product: I am very happy with it and would recommend it.",
+      "label": 1,
+      "positive_probability": 0.9989336133003235
+    },
+    {
+      "text": "My review of the product: A fantastic experience that I would gladly repeat.",
+      "label": 1,
+      "positive_probability": 0.9989228844642639
+    },
+    {
+      "text": "My review of the product: I hated every minute of it.",
+      "label": 0,
+      "positive_probability": 0.000523856608197093
+    },
+    {
+      "text": "My review of the product: It failed to meet my expectations.",
+      "label": 0,
+      "positive_probability": 0.000492806255351752
+    },
+    {
+      "text": "My review of the product: I am very unhappy with it and cannot recommend it.",
+      "label": 0,
+      "positive_probability": 0.0004963476094417274
+    },
+    {
+      "text": "My review of the product: A dreadful experience that I would never repeat.",
+      "label": 0,
+      "positive_probability": 0.0004985796404071152
+    },
+    {
+      "text": "My review of the trip: I loved every minute of it.",
+      "label": 1,
+      "positive_probability": 0.9989169836044312
+    },
+    {
+      "text": "My review of the trip: It exceeded all my expectations.",
+      "label": 1,
+      "positive_probability": 0.9989235997200012
+    },
+    {
+      "text": "My review of the trip: I am very happy with it and would recommend it.",
+      "label": 1,
+      "positive_probability": 0.9989380240440369
+    },
+    {
+      "text": "My review of the trip: A fantastic experience that I would gladly repeat.",
+      "label": 1,
+      "positive_probability": 0.9989206790924072
+    },
+    {
+      "text": "My review of the trip: I hated every minute of it.",
+      "label": 0,
+      "positive_probability": 0.0005136440158821642
+    },
+    {
+      "text": "My review of the trip: It failed to meet my expectations.",
+      "label": 0,
+      "positive_probability": 0.0004994238261133432
+    },
+    {
+      "text": "My review of the trip: I am very unhappy with it and cannot recommend it.",
+      "label": 0,
+      "positive_probability": 0.0004950420698150992
+    },
+    {
+      "text": "My review of the trip: A dreadful experience that I would never repeat.",
+      "label": 0,
+      "positive_probability": 0.0005023302510380745
+    }
+  ]
+}

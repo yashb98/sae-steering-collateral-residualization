@@ -1,5 +1,15 @@
 # Collateral-side residualization for SAE steering side effects
 
+## Revision update, 19 September 2026
+
+The repository includes the completed four-setting residualization, the September 14 robustness runs with September 15 interpretation corrections, and the September 18 behavioral follow-up. Start with the [revision guide](REVISION_GUIDE.md).
+
+- [Four-setting results](RESULTS.md), [proposed manuscript text](PAPER_INSERT_2026-09-15.md), and [LaTeX appendix table](results/analysis/table_collateral_residualized.tex).
+- [Behavioral research update PDF](behavioral_followup/RESEARCH_UPDATE_2026-09-18.pdf), [complete results](behavioral_followup/RESULTS.md), and [manuscript addendum](behavioral_followup/PAPER_ADDENDUM.md).
+
+The behavioral study contains 7,296 held-out outputs across GPT-2-small and Gemma-2-2B. Neither setting demonstrates a factual-preservation advantage under the frozen joint criterion. This exploratory result does not change the original activation-collateral findings. The PDF is supplementary research material for manuscript integration.
+
+
 Code, configs and per-feature results extending the collateral analysis of *Pre-Intervention Prediction of Sparse Autoencoder Steering Side Effects* (Evan Duan, [arXiv:2606.08365](https://arxiv.org/abs/2606.08365)) from GPT-2-small to all four of the paper's model/SAE settings.
 
 The paper residualizes its stability labels against effect magnitude, intervention value and natural activation (Section 3.8) but does not apply that control to its collateral labels, and firing frequency is not in the nuisance set. This repository runs that control. For each setting it measures steering collateral from scratch and asks which pre-intervention predictors, decoder crowding in particular, still predict collateral after partialling out the nuisance variables and firing frequency. Both collateral metrics of the paper are reported everywhere: the raw downstream count C_{f,0.05} (the target of Table 2) and C-tilde = C / (E_f + eps) (the primary metric of Section 3.4).

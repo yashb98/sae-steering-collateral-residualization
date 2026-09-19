@@ -138,11 +138,7 @@ def main():
             lines.append(f"| {PRETTY[s]} | {tau_name} | {r['collateral_raw|none']['rho']:+.3f} | {fmt(r['collateral_raw|primary'])} | "
                          f"{r['collateral_ctilde|none']['rho']:+.3f} | {fmt(r['collateral_ctilde|primary'])} | {df.collateral_raw.median():.1f} |")
     lines += ["",
-              "The GPT-2, Gemma and Llama primary partials change little across the sweep, so the crowding result in those "
-              "settings is not an artifact of the 0.05 choice. Pythia, null at the canonical threshold, shows a small "
-              "positive partial at tau = 0.1 and 0.2 with intervals that exclude zero; at those thresholds the median "
-              "Pythia count falls below 7 of 2,048 panel features, so the label is sparse and the shift should be read "
-              "with that caution.", ""]
+              'GPT-2, Gemma and Llama retain positive primary partial estimates across the tested thresholds, supporting directional robustness beyond tau = 0.05. This does not establish significance at every threshold: Gemma C-tilde at tau = 0.02 has a pointwise interval including zero. Pythia raw-count partials are +0.147 and +0.175 at tau = 0.1 and 0.2, with pointwise intervals excluding zero; its C-tilde interval includes zero at tau = 0.1 and excludes zero at tau = 0.2. The median Pythia counts at these thresholds are 6.2 and 0.9 of 2,048 panel features. These sparse-label, exploratory comparisons have not been corrected across the threshold sweep. The canonical Llama crowding result still does not pass the reported Holm correction.', ""]
 
     lines += ["", "## Llama precision: bfloat16 vs float32", "",
               "The canonical Llama run loads in bfloat16 with TransformerLens weight processing off; the retry loads the same "

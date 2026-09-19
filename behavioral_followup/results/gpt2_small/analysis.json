@@ -1,0 +1,351 @@
+{
+  "setting": "gpt2_small",
+  "n_outputs": 3648,
+  "selection": {
+    "alpha": 1,
+    "pairs": [
+      {
+        "low": 2643,
+        "high": 12636,
+        "low_dev_gain": 0.08316838989655173,
+        "high_dev_gain": 0.0831476306047989,
+        "cost": 0.0010057624054932157
+      },
+      {
+        "low": 9113,
+        "high": 19272,
+        "low_dev_gain": 0.08319658526064211,
+        "high_dev_gain": 0.08293973847563996,
+        "cost": 0.001552800201262583
+      },
+      {
+        "low": 12092,
+        "high": 19662,
+        "low_dev_gain": 0.08092687747557648,
+        "high_dev_gain": 0.08167700520910637,
+        "cost": 0.0019510611759491203
+      },
+      {
+        "low": 16362,
+        "high": 19683,
+        "low_dev_gain": 0.08076125280543545,
+        "high_dev_gain": 0.08262824781316647,
+        "cost": 0.002047064210046301
+      },
+      {
+        "low": 20873,
+        "high": 17906,
+        "low_dev_gain": 0.08301927596524672,
+        "high_dev_gain": 0.082571824833091,
+        "cost": 0.0077412974599535556
+      },
+      {
+        "low": 10518,
+        "high": 23510,
+        "low_dev_gain": 0.12300899602511584,
+        "high_dev_gain": 0.16634468215246068,
+        "cost": 0.07503051410118178
+      }
+    ],
+    "n_effective": 16,
+    "n_low_effective": 10,
+    "n_high_effective": 6,
+    "random": [
+      12265,
+      11303,
+      8156,
+      14072,
+      23092,
+      18325
+    ],
+    "all_strength_options": [
+      {
+        "alpha": 1,
+        "pairs": [
+          {
+            "low": 2643,
+            "high": 12636,
+            "low_dev_gain": 0.08316838989655173,
+            "high_dev_gain": 0.0831476306047989,
+            "cost": 0.0010057624054932157
+          },
+          {
+            "low": 9113,
+            "high": 19272,
+            "low_dev_gain": 0.08319658526064211,
+            "high_dev_gain": 0.08293973847563996,
+            "cost": 0.001552800201262583
+          },
+          {
+            "low": 12092,
+            "high": 19662,
+            "low_dev_gain": 0.08092687747557648,
+            "high_dev_gain": 0.08167700520910637,
+            "cost": 0.0019510611759491203
+          },
+          {
+            "low": 16362,
+            "high": 19683,
+            "low_dev_gain": 0.08076125280543545,
+            "high_dev_gain": 0.08262824781316647,
+            "cost": 0.002047064210046301
+          },
+          {
+            "low": 20873,
+            "high": 17906,
+            "low_dev_gain": 0.08301927596524672,
+            "high_dev_gain": 0.082571824833091,
+            "cost": 0.0077412974599535556
+          },
+          {
+            "low": 10518,
+            "high": 23510,
+            "low_dev_gain": 0.12300899602511584,
+            "high_dev_gain": 0.16634468215246068,
+            "cost": 0.07503051410118178
+          }
+        ],
+        "n_effective": 16,
+        "n_low_effective": 10,
+        "n_high_effective": 6
+      },
+      {
+        "alpha": 2,
+        "pairs": [
+          {
+            "low": 11303,
+            "high": 19272,
+            "low_dev_gain": 0.08298564561603905,
+            "high_dev_gain": 0.0829106513701845,
+            "cost": 0.0004328164081867092
+          },
+          {
+            "low": 2761,
+            "high": 17016,
+            "low_dev_gain": 0.16522808847366832,
+            "high_dev_gain": 0.16492664294977055,
+            "cost": 0.0017818568336261942
+          },
+          {
+            "low": 14224,
+            "high": 9926,
+            "low_dev_gain": 0.08127878715943859,
+            "high_dev_gain": 0.08335531492290704,
+            "cost": 0.002144214054188298
+          },
+          {
+            "low": 8915,
+            "high": 906,
+            "low_dev_gain": 0.08178985965787433,
+            "high_dev_gain": 0.08285213557731674,
+            "cost": 0.01007899850917704
+          }
+        ],
+        "n_effective": 12,
+        "n_low_effective": 8,
+        "n_high_effective": 4
+      },
+      {
+        "alpha": 4,
+        "pairs": [
+          {
+            "low": 24097,
+            "high": 21101,
+            "low_dev_gain": 0.08264689357990085,
+            "high_dev_gain": 0.08252325742796529,
+            "cost": 0.0023914270636377077
+          },
+          {
+            "low": 2761,
+            "high": 18325,
+            "low_dev_gain": 0.08247909796773456,
+            "high_dev_gain": 0.08272285908848664,
+            "cost": 0.005109932469575029
+          },
+          {
+            "low": 9113,
+            "high": 906,
+            "low_dev_gain": 0.08240623323460261,
+            "high_dev_gain": 0.08218758853035979,
+            "cost": 0.012032637115139466
+          },
+          {
+            "low": 6882,
+            "high": 12354,
+            "low_dev_gain": 0.1656456239773737,
+            "high_dev_gain": 0.16602613506256603,
+            "cost": 0.012576016622271369
+          },
+          {
+            "low": 10019,
+            "high": 12636,
+            "low_dev_gain": 0.07636008422802354,
+            "high_dev_gain": 0.0608691867770782,
+            "cost": 0.01990911031548137
+          },
+          {
+            "low": 10518,
+            "high": 19683,
+            "low_dev_gain": 0.16470003602444194,
+            "high_dev_gain": 0.08274129998850788,
+            "cost": 0.08798875790457339
+          }
+        ],
+        "n_effective": 14,
+        "n_low_effective": 7,
+        "n_high_effective": 7
+      },
+      {
+        "alpha": 8,
+        "pairs": [
+          {
+            "low": 5222,
+            "high": 17016,
+            "low_dev_gain": 0.0822098547796486,
+            "high_dev_gain": 0.08401014470534085,
+            "cost": 0.001987139750080247
+          },
+          {
+            "low": 24097,
+            "high": 17906,
+            "low_dev_gain": 0.16595159448722063,
+            "high_dev_gain": 0.16669724859336077,
+            "cost": 0.004388648131861572
+          },
+          {
+            "low": 8915,
+            "high": 906,
+            "low_dev_gain": 0.0840633799574183,
+            "high_dev_gain": 0.08789555519858061,
+            "cost": 0.012848897830896933
+          }
+        ],
+        "n_effective": 9,
+        "n_low_effective": 6,
+        "n_high_effective": 3
+      }
+    ],
+    "baseline_positive_probability": 0.8321429741627071,
+    "baseline_qa_accuracy": 0.96875,
+    "qa_sensitivity_gate": true,
+    "feature_gate": true,
+    "candidate_median_score": 11.46877115346243,
+    "development_sha256": "ed396053356b8657090fc09d7cb4908c5c91b100654a9180d235a8b125ba3b55",
+    "candidates_sha256": "a60cc4481b009ec3395ed05d46c129f1faaae9e62079a873f7b376e83da55ec1",
+    "prompts_sha256": "a8b92c515684b89c32789cbf433be3bda572035753cb30d0ce3d755088d187a2",
+    "protocol_sha256": "750ad01d29682f507800e445da0c4e7b9bee2129edb8b83bd0ab2914f161b40b",
+    "selection_time_utc": "2026-09-18T12:01:41Z"
+  },
+  "arms": {
+    "high": {
+      "positive_probability": 0.7708185995,
+      "positive_rate": 0.7721354167,
+      "nondegenerate_positive_rate": 0.76953125,
+      "degenerate_rate": 0.00390625,
+      "repeated_trigram_fraction": 0.0062111019,
+      "qa_accuracy": 0.96875,
+      "qa_accuracy_loss": 0.0,
+      "sentiment_gain": 0.0056940016,
+      "broken_baseline_correct_rate": 0.0,
+      "n_features": 6
+    },
+    "low": {
+      "positive_probability": 0.8129235532,
+      "positive_rate": 0.8138020833,
+      "nondegenerate_positive_rate": 0.8125,
+      "degenerate_rate": 0.0013020833,
+      "repeated_trigram_fraction": 0.00552284,
+      "qa_accuracy": 0.96875,
+      "qa_accuracy_loss": 0.0,
+      "sentiment_gain": 0.0477989553,
+      "broken_baseline_correct_rate": 0.0,
+      "n_features": 6
+    },
+    "random": {
+      "positive_probability": 0.7853370521,
+      "positive_rate": 0.7864583333,
+      "nondegenerate_positive_rate": 0.78515625,
+      "degenerate_rate": 0.0013020833,
+      "repeated_trigram_fraction": 0.0058803527,
+      "qa_accuracy": 0.96875,
+      "qa_accuracy_loss": 0.0,
+      "sentiment_gain": 0.0202124542,
+      "broken_baseline_correct_rate": 0.0,
+      "n_features": 6
+    },
+    "unsteered": {
+      "positive_probability": 0.7651245979,
+      "positive_rate": 0.765625,
+      "nondegenerate_positive_rate": 0.765625,
+      "degenerate_rate": 0.0,
+      "repeated_trigram_fraction": 0.0026110984,
+      "qa_accuracy": 0.96875,
+      "qa_accuracy_loss": 0.0,
+      "sentiment_gain": 0.0,
+      "broken_baseline_correct_rate": 0.0,
+      "n_features": 1
+    }
+  },
+  "low_minus_high": {
+    "positive_probability": {
+      "difference": 0.04210495373422418,
+      "ci_low": -0.008136333119093323,
+      "ci_high": 0.09242476931684673,
+      "n_pairs": 6,
+      "n_prompts": 64,
+      "n_boot": 5000
+    },
+    "positive_label": {
+      "difference": 0.041666666666666664,
+      "ci_low": -0.009114583333333334,
+      "ci_high": 0.09244791666666667,
+      "n_pairs": 6,
+      "n_prompts": 64,
+      "n_boot": 5000
+    },
+    "nondegenerate_positive": {
+      "difference": 0.04296875,
+      "ci_low": -0.009114583333333334,
+      "ci_high": 0.09505208333333333,
+      "n_pairs": 6,
+      "n_prompts": 64,
+      "n_boot": 5000
+    },
+    "degenerate": {
+      "difference": -0.0026041666666666665,
+      "ci_low": -0.01171875,
+      "ci_high": 0.00390625,
+      "n_pairs": 6,
+      "n_prompts": 64,
+      "n_boot": 5000
+    },
+    "correct": {
+      "difference": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "n_pairs": 6,
+      "n_prompts": 64,
+      "n_boot": 5000
+    }
+  },
+  "exploratory_feature_correlations": {
+    "predicted_collateral": {
+      "qa_accuracy_loss": null,
+      "sentiment_gain": -0.3333333333333333,
+      "degenerate_rate": 0.2271204755349896
+    },
+    "predicted_residual_collateral": {
+      "qa_accuracy_loss": null,
+      "sentiment_gain": -0.35397316821465424,
+      "degenerate_rate": 0.2032130570576223
+    },
+    "crowding": {
+      "qa_accuracy_loss": null,
+      "sentiment_gain": -0.47368421052631576,
+      "degenerate_rate": 0.2271204755349896
+    }
+  },
+  "verdict": "The joint behavioral-transfer criterion is not met; report uncertainty and the observed tradeoff.",
+  "test_sha256": "9db51aebeed53b3b15d98447c5cdeee9943f3b3c44c7207c6e03b870dbf73cba",
+  "selection_sha256": "3cae8ad545fd06bfc2d5ccc9f35611d2d965e3213b91e49a2856c6927b409394"
+}

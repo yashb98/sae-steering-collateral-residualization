@@ -1,0 +1,309 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Behavioral transfer: September 18 research update</title><style>
+    @page { size: A4; margin: 17mm 17mm 16mm; @bottom-right { content: counter(page); font-size: 8pt; color: #64748b; } }
+    * { box-sizing: border-box; }
+    body { font: 10pt/1.43 "DejaVu Sans", sans-serif; color: #1c2838; margin: 0; }
+    .page { break-before: page; }
+    .page:first-child { break-before: auto; }
+    h1 { font-size: 23pt; line-height: 1.15; margin: 0 0 8pt; color: #163b60; }
+    h2 { font-size: 17pt; line-height: 1.2; margin: 0 0 12pt; color: #163b60; }
+    h3 { font-size: 12pt; margin: 15pt 0 6pt; color: #163b60; }
+    p { margin: 7pt 0; }
+    a { color: #245c8e; text-decoration: none; overflow-wrap: anywhere; }
+    .meta { font-size: 8.5pt; color: #64748b; margin-bottom: 13pt; }
+    .notice { background: #eef4f8; border-left: 3pt solid #245c8e; padding: 8pt 10pt; margin: 12pt 0; }
+    table { border-collapse: collapse; table-layout: fixed; width: 100%; margin: 11pt 0; font-size: 8pt; line-height: 1.35; break-inside: avoid; }
+    th { background: #eaf0f5; color: #163b60; font-weight: bold; }
+    th, td { padding: 6pt 4pt; border-bottom: .6pt solid #ccd6e0; overflow-wrap: anywhere; }
+    th:first-child, td:first-child { text-align: left !important; }
+    tbody tr:nth-child(even) { background: #f7f9fb; }
+    thead { display: table-header-group; }
+    img { max-width: 100%; height: auto; }
+    pre { font-size: 8.5pt; white-space: pre-wrap; overflow-wrap: anywhere; background: #f4f6f8; padding: 10pt; }
+    li { margin-bottom: 5pt; }
+    h2, h3 { break-after: avoid; }
+    p, li { orphans: 3; widows: 3; }
+    .manuscript { font-size: 9.2pt; line-height: 1.38; }
+    .manuscript h3 { font-size: 11pt; margin-top: 12pt; }
+    .caption { font-size: 9pt; color: #475569; }
+    </style></head><body><section class="page manuscript"><h1>Behavioral transfer of collateral scores</h1><div class="meta">Research update for arXiv:2606.08365<br>Experiments completed 18 September 2026 · PDF compiled 2026-09-19</div><div class="notice"><strong>Status:</strong> supplementary results and proposed manuscript text. Full manuscript integration is pending. Neither model meets the joint behavioral-transfer criterion.</div><h3>Proposed manuscript addition</h3><p>We evaluated transfer of the collateral predictor to positive-sentiment steering and unrelated synthetic factual retrieval in GPT-2-small and Gemma-2-2B. The predictor was fitted to the 300 canonical activation-collateral labels in each setting, using only unsteered feature statistics as inputs. Candidate features were excluded from all three original feature samples. Development generations selected six low/high predicted-collateral feature pairs matched on sentiment gain, with additive strengths 1 and 2 in GPT-2 and Gemma, respectively. Six remaining sentiment-associated features were sampled as controls. Held-out evaluation used 64 review prompts with two sampling seeds and 64 factual prompts per feature or unsteered baseline, yielding 3,648 outputs per model.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th style="text-align: right;">Low-minus-high positive probability, pp [95% CI]</th>
+<th style="text-align: right;">Low-minus-high factual accuracy, pp</th>
+<th style="text-align: right;">Factual accuracy in every arm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPT-2-small</td>
+<td style="text-align: right;">+4.2 [-0.8, +9.2]</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">96.9%</td>
+</tr>
+<tr>
+<td>Gemma-2-2B</td>
+<td style="text-align: right;">+0.6 [-2.4, +3.9]</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+</tbody>
+</table>
+<p>Intervals resample matched feature pairs and prompt identities, retaining the two review seeds together. Both settings satisfy the exploratory -5 percentage point sentiment noninferiority margin, but neither shows a factual-preservation advantage: correctness is identical across steering arms for every factual prompt. The joint transfer criterion is therefore unmet. In Gemma, neither selected arm improves mean held-out positive probability relative to the unsteered baseline, despite qualifying development gains. These results do not establish useful behavioral steering from this selector.</p>
+<p>A secondary blinded Qwen3-4B assessment covered four fixed product-review prompts per feature and baseline, using one generation seed (76 outputs per model). Only 50% of GPT-2 low- and high-score outputs jointly passed positive-sentiment, coherence and relevance criteria; both Gemma groups scored 100% on this subset. These automated ratings have no human validation and cover a single prefix template. They illustrate why a sentiment score alone cannot establish generation quality.</p>
+<p>The factual benchmark shows no intervention-induced correctness changes, so its zero-width empirical difference intervals do not establish general equivalence or preserved capability. The experiment uses one behavior, two fixed dictionaries, six feature pairs per setting and repeated generation-time steering; it is not a general behavioral validation of the original final-token activation measure. Any harder preservation benchmark or new selection rule should be evaluated in a separately frozen follow-up with fresh held-out prompts.</p></section>
+<section class="page"><h2>GPT-2-small: held-out results</h2><p>The joint behavioral-transfer criterion is not met; report uncertainty and the observed tradeoff.</p>
+<p>Coefficient 1; 6 low/high feature pairs; 6 random candidate features; 3,648 held-out outputs. Each feature has 64 review prompts with two seeds and 64 factual prompts. Development factual accuracy: 96.9%.</p>
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th style="text-align: right;">Features</th>
+<th style="text-align: right;">Positive probability</th>
+<th style="text-align: right;">Positive rate</th>
+<th style="text-align: right;">Positive and nondegenerate</th>
+<th style="text-align: right;">Factual accuracy</th>
+<th style="text-align: right;">Degenerate reviews</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>unsteered</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">76.5%</td>
+<td style="text-align: right;">76.6%</td>
+<td style="text-align: right;">76.6%</td>
+<td style="text-align: right;">96.9%</td>
+<td style="text-align: right;">0.0%</td>
+</tr>
+<tr>
+<td>low</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">81.3%</td>
+<td style="text-align: right;">81.4%</td>
+<td style="text-align: right;">81.2%</td>
+<td style="text-align: right;">96.9%</td>
+<td style="text-align: right;">0.1%</td>
+</tr>
+<tr>
+<td>high</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">77.1%</td>
+<td style="text-align: right;">77.2%</td>
+<td style="text-align: right;">77.0%</td>
+<td style="text-align: right;">96.9%</td>
+<td style="text-align: right;">0.4%</td>
+</tr>
+<tr>
+<td>random</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">78.5%</td>
+<td style="text-align: right;">78.6%</td>
+<td style="text-align: right;">78.5%</td>
+<td style="text-align: right;">96.9%</td>
+<td style="text-align: right;">0.1%</td>
+</tr>
+</tbody>
+</table>
+<p>Low-score minus high-score differences, with 95% pointwise feature/prompt bootstrap intervals:</p>
+<ul>
+<li>Mean positive probability: +4.2 pp [-0.8, +9.2].</li>
+<li>Factual accuracy: +0.0 pp [+0.0, +0.0].</li>
+<li>Positive and nondegenerate output rate: +4.3 pp [-0.9, +9.5].</li>
+<li>Degenerate review rate: -0.3 pp [-1.2, +0.4].</li>
+</ul>
+<p>Intervals resample matched feature pairs and prompt identities, retaining both review seeds together. A promising result requires the lower interval bound for sentiment difference to exceed -5 percentage points and the lower bound for factual accuracy to exceed zero.</p>
+<p>Evidence: <a href="results/gpt2_small/test.jsonl">all generated outputs</a>, <a href="results/gpt2_small/test_features.csv">feature results</a>, <a href="results/gpt2_small/selection.json">frozen selection</a>, <a href="results/gpt2_small/analysis.json">complete analysis</a>, <a href="results/gpt2_small/fixed_output_examples.json">fixed output examples</a>.</p></section>
+<section class="page"><h2>Gemma-2-2B: held-out results</h2><p>The joint behavioral-transfer criterion is not met; report uncertainty and the observed tradeoff.</p>
+<p>Coefficient 2; 6 low/high feature pairs; 6 random candidate features; 3,648 held-out outputs. Each feature has 64 review prompts with two seeds and 64 factual prompts. Development factual accuracy: 100.0%.</p>
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th style="text-align: right;">Features</th>
+<th style="text-align: right;">Positive probability</th>
+<th style="text-align: right;">Positive rate</th>
+<th style="text-align: right;">Positive and nondegenerate</th>
+<th style="text-align: right;">Factual accuracy</th>
+<th style="text-align: right;">Degenerate reviews</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>unsteered</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">78.1%</td>
+<td style="text-align: right;">78.1%</td>
+<td style="text-align: right;">78.1%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">0.0%</td>
+</tr>
+<tr>
+<td>low</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">77.7%</td>
+<td style="text-align: right;">77.7%</td>
+<td style="text-align: right;">77.7%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">0.0%</td>
+</tr>
+<tr>
+<td>high</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">77.0%</td>
+<td style="text-align: right;">77.1%</td>
+<td style="text-align: right;">77.1%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">0.0%</td>
+</tr>
+<tr>
+<td>random</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">76.7%</td>
+<td style="text-align: right;">76.7%</td>
+<td style="text-align: right;">76.7%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">0.0%</td>
+</tr>
+</tbody>
+</table>
+<p>Low-score minus high-score differences, with 95% pointwise feature/prompt bootstrap intervals:</p>
+<ul>
+<li>Mean positive probability: +0.6 pp [-2.4, +3.9].</li>
+<li>Factual accuracy: +0.0 pp [+0.0, +0.0].</li>
+<li>Positive and nondegenerate output rate: +0.7 pp [-2.5, +3.9].</li>
+<li>Degenerate review rate: +0.0 pp [+0.0, +0.0].</li>
+</ul>
+<p>Intervals resample matched feature pairs and prompt identities, retaining both review seeds together. A promising result requires the lower interval bound for sentiment difference to exceed -5 percentage points and the lower bound for factual accuracy to exceed zero.</p>
+<p>Evidence: <a href="results/gemma_2_2b/test.jsonl">all generated outputs</a>, <a href="results/gemma_2_2b/test_features.csv">feature results</a>, <a href="results/gemma_2_2b/selection.json">frozen selection</a>, <a href="results/gemma_2_2b/analysis.json">complete analysis</a>, <a href="results/gemma_2_2b/fixed_output_examples.json">fixed output examples</a>.</p></section>
+<section class="page"><h2>Matched behavioral comparisons</h2><img src="results/figures/behavioral_contrasts.png" alt="Matched low-minus-high behavioral comparisons"><p class="caption">Pointwise 95% bootstrap intervals resample matched feature pairs and prompt identities. Review seeds stay together. Factual correctness is identical across all arms on these prompts.</p><h3>Interpretation</h3><p>The estimated sentiment difference is +4.2 percentage points in GPT-2 (95% CI -0.8 to +9.2) and +0.6 in Gemma (-2.4 to +3.9). Both satisfy the exploratory -5 point noninferiority margin; neither shows an advantage in factual preservation. Zero-width factual difference intervals reflect identical observed outcomes and do not establish general equivalence.</p></section>
+<section class="page"><h2>Secondary blinded assessment</h2><p>Qwen3-4B independently assessed four fixed product-review prompts per evaluated feature, using the first generation seed. These four prompts share one prefix template. Arm labels, feature IDs, intervention strengths and original scores were hidden from the judge. Rates below are descriptive checks on this small fixed subset, not additional success criteria.</p>
+<h3>GPT-2-small</h3>
+<p>Sentiment calibration: 100.0% on 32 separate sentences. Assessed 76 held-out outputs.</p>
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th style="text-align: right;">Outputs</th>
+<th style="text-align: right;">Positive</th>
+<th style="text-align: right;">Coherent</th>
+<th style="text-align: right;">On topic</th>
+<th style="text-align: right;">All three</th>
+<th style="text-align: right;">Sentiment agreement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>unsteered</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">50.0%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">50.0%</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+<tr>
+<td>low</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">91.7%</td>
+<td style="text-align: right;">50.0%</td>
+<td style="text-align: right;">79.2%</td>
+<td style="text-align: right;">50.0%</td>
+<td style="text-align: right;">91.7%</td>
+</tr>
+<tr>
+<td>high</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">95.8%</td>
+<td style="text-align: right;">54.2%</td>
+<td style="text-align: right;">87.5%</td>
+<td style="text-align: right;">50.0%</td>
+<td style="text-align: right;">95.8%</td>
+</tr>
+<tr>
+<td>random</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">91.7%</td>
+<td style="text-align: right;">62.5%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">54.2%</td>
+<td style="text-align: right;">91.7%</td>
+</tr>
+</tbody>
+</table>
+<p><a href="results/gpt2_small/blind_judge.json">Judge scores and provenance</a>.</p>
+<h3>Gemma-2-2B</h3>
+<p>Sentiment calibration: 100.0% on 32 separate sentences. Assessed 76 held-out outputs.</p>
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th style="text-align: right;">Outputs</th>
+<th style="text-align: right;">Positive</th>
+<th style="text-align: right;">Coherent</th>
+<th style="text-align: right;">On topic</th>
+<th style="text-align: right;">All three</th>
+<th style="text-align: right;">Sentiment agreement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>unsteered</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+<tr>
+<td>low</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+<tr>
+<td>high</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+<tr>
+<td>random</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+</tbody>
+</table>
+<p><a href="results/gemma_2_2b/blind_judge.json">Judge scores and provenance</a>.</p></section>
+<section class="page"><h2>Interpretation limits and reproduction</h2><ul>
+<li>Sentiment labels come from one external pretrained classifier. Calibration sentences validate obvious sentiment examples, not semantic adequacy of all generated text. Repetition/length filters are limited quality checks, not human evaluations.</li>
+<li>The factual benchmark is synthetic retrieval from facts in the prompt; it does not establish preservation of general knowledge, reasoning, safety or all unrelated behavior. Identical factual outcomes yield a zero-width empirical difference interval; this does not prove equivalence or preservation outside these prompts.</li>
+<li>The secondary judge checks only four product prompts sharing one template. It is another automated model, has no human validation, and cannot establish broad semantic quality.</li>
+<li>Repeated generation-time steering differs from the original final-token intervention. The transferred label is behavioral correctness, not the original activation-count target.</li>
+<li>Development matching can fail to equalize held-out sentiment success. Both success and collateral must be interpreted together.</li>
+<li>Random controls are other sentiment-associated SAE features, not isotropic random vectors.</li>
+<li>Models use fixed pretrained dictionaries, one behavior and a small selected feature sample. Bootstrap intervals are conditional on this setting and are not corrected across all exploratory comparisons.</li>
+<li>A null or adverse result is retained; no final-test result triggers retuning or re-selection.</li>
+</ul>
+<h2>Reproduction</h2>
+<p>Use the original duan environment and existing model cache. The source repository path is configured in run.py. Read PROTOCOL.md before running.</p>
+<pre><code class="language-bash">python run.py --setting gpt2_small --stage all
+python run.py --setting gemma_2_2b --stage all
+python blind_judge.py
+python analyze.py
+python verify.py
+python -m pytest -q test_followup.py
+</code></pre>
+<p>The runner saves progress per generation and resumes completed jobs. Remove results only in a separate copy to obtain an independent rerun. Prompt generation, score coefficients, source hashes and package versions are saved alongside the results.</p><h3>Verification and source artifacts</h3><p>Both setting audits pass. The saved experiment contains 7,296 held-out outputs and 456 secondary criterion judgments on 152 fixed continuations. Seven regression tests passed on 18 September. Predictor reconstruction errors are below 4 × 10<sup>-15</sup>; all feature ranks agree exactly.</p><p>Source files: RESULTS.md, PAPER_ADDENDUM.md, VERIFICATION.json, PROTOCOL.md, SECONDARY_JUDGE_PROTOCOL.md, AMENDMENTS.md and STATUS_2026-09-18.md.</p></section></body></html>

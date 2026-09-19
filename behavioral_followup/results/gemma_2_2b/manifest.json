@@ -1,0 +1,52 @@
+{
+  "model_revision": "c5ebcd40d208330abc697524c919956e692655cf",
+  "setting": "gemma_2_2b",
+  "config": {
+    "name": "gemma_2_2b",
+    "model_name": "google/gemma-2-2b",
+    "sae_release": "gemma-scope-2b-pt-res-canonical",
+    "primary_sae_id": "layer_12/width_16k/canonical",
+    "downstream_sae_id": "layer_16/width_16k/canonical",
+    "primary_hook": "blocks.12.hook_resid_post",
+    "downstream_hook": "blocks.16.hook_resid_post",
+    "panel_size": 2048,
+    "dtype": "float32",
+    "model_batch": 16,
+    "n_texts": 8000,
+    "n_contexts": 2048,
+    "seq_len": 48,
+    "n_features": 300,
+    "ctx_per_type": 16,
+    "alpha": 1.0,
+    "tau": 0.05,
+    "eps_fire": 1e-06,
+    "topk_crowding": 20,
+    "freq_band": [
+      0.002,
+      0.5
+    ],
+    "min_text_chars": 200
+  },
+  "created_utc": "2026-09-18T12:06:21Z",
+  "protocol_sha256": "750ad01d29682f507800e445da0c4e7b9bee2129edb8b83bd0ab2914f161b40b",
+  "prompts_sha256": "a8b92c515684b89c32789cbf433be3bda572035753cb30d0ce3d755088d187a2",
+  "runner_sha256": "bb4bfbdbc20a2d56346fbfcbb09eaf4bb99eeefe9801d9f77691756c4dbf79ef",
+  "candidates_sha256": "16fa9d5594563d5ae4850c41539c4e30b5b0670db472a262207d98e66bd8de03",
+  "versions": {
+    "torch": "2.12.1",
+    "transformer-lens": "3.8.1",
+    "sae-lens": "6.50.0",
+    "transformers": "5.16.1",
+    "numpy": "2.5.1",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.8.0"
+  },
+  "model_config": {
+    "model_name": "gemma-2-2b",
+    "d_model": "2304",
+    "n_layers": "26",
+    "n_heads": "8",
+    "dtype": "torch.float32",
+    "normalization_type": "RMSPre"
+  }
+}

@@ -1,0 +1,5 @@
+arm,positive,coherent,on_topic,positive_coherent_on_topic,sentiment_agrees,n_outputs
+high,1.0,1.0,1.0,1.0,1.0,24
+low,1.0,1.0,1.0,1.0,1.0,24
+random,1.0,1.0,1.0,1.0,1.0,24
+unsteered,1.0,1.0,1.0,1.0,1.0,4

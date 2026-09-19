@@ -1,0 +1,51 @@
+{
+  "setting": "gpt2_small",
+  "config": {
+    "name": "gpt2_small",
+    "model_name": "gpt2",
+    "sae_release": "gpt2-small-res-jb",
+    "primary_sae_id": "blocks.8.hook_resid_pre",
+    "downstream_sae_id": "blocks.10.hook_resid_pre",
+    "primary_hook": "blocks.8.hook_resid_pre",
+    "downstream_hook": "blocks.10.hook_resid_pre",
+    "panel_size": 2048,
+    "dtype": "float32",
+    "model_batch": 32,
+    "n_texts": 8000,
+    "n_contexts": 2048,
+    "seq_len": 48,
+    "n_features": 300,
+    "ctx_per_type": 16,
+    "alpha": 1.0,
+    "tau": 0.05,
+    "eps_fire": 1e-06,
+    "topk_crowding": 20,
+    "freq_band": [
+      0.002,
+      0.5
+    ],
+    "min_text_chars": 200
+  },
+  "created_utc": "2026-09-18T12:00:33Z",
+  "protocol_sha256": "750ad01d29682f507800e445da0c4e7b9bee2129edb8b83bd0ab2914f161b40b",
+  "prompts_sha256": "a8b92c515684b89c32789cbf433be3bda572035753cb30d0ce3d755088d187a2",
+  "runner_sha256": "5adcfd9bda0ae5e5ba5e104e6117d45bfdd52b3834c901da8488befea610c34f",
+  "candidates_sha256": "a60cc4481b009ec3395ed05d46c129f1faaae9e62079a873f7b376e83da55ec1",
+  "versions": {
+    "torch": "2.12.1",
+    "transformer-lens": "3.8.1",
+    "sae-lens": "6.50.0",
+    "transformers": "5.16.1",
+    "numpy": "2.5.1",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.8.0"
+  },
+  "model_config": {
+    "model_name": "gpt2",
+    "d_model": "768",
+    "n_layers": "12",
+    "n_heads": "12",
+    "dtype": "torch.float32",
+    "normalization_type": "LNPre"
+  }
+}

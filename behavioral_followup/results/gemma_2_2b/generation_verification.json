@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "check": "batched versus individual greedy token IDs",
+  "cases": [
+    {
+      "prompt": "The color of the sky is",
+      "prompt_id": "verify_a",
+      "seed": 0,
+      "feature": -1,
+      "alpha": 0.0,
+      "text": " blue because of the scattering of",
+      "token_ids": [
+        3868,
+        1861,
+        576,
+        573,
+        38497,
+        576
+      ]
+    },
+    {
+      "prompt": "Review: I tried it yesterday and I think it was",
+      "prompt_id": "verify_b",
+      "seed": 0,
+      "feature": 8000,
+      "alpha": 2.0,
+      "text": " a good experience. I was",
+      "token_ids": [
+        476,
+        1426,
+        3281,
+        235265,
+        590,
+        729
+      ]
+    }
+  ]
+}

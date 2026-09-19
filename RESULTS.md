@@ -278,7 +278,7 @@ The canonical threshold is tau = 0.05 on absolute downstream SAE activation chan
 | Llama-3.1-8B | 0.1 | +0.251 | +0.184 [+0.072, +0.288] | +0.229 | +0.185 [+0.070, +0.291] | 1.1 |
 | Llama-3.1-8B | 0.2 | +0.245 | +0.159 [+0.053, +0.265] | +0.232 | +0.157 [+0.044, +0.267] | 0.5 |
 
-The GPT-2, Gemma and Llama primary partials change little across the sweep, so the crowding result in those settings is not an artifact of the 0.05 choice. Pythia, null at the canonical threshold, shows a small positive partial at tau = 0.1 and 0.2 with intervals that exclude zero; at those thresholds the median Pythia count falls below 7 of 2,048 panel features, so the label is sparse and the shift should be read with that caution.
+GPT-2, Gemma and Llama retain positive primary partial estimates across the tested thresholds, supporting directional robustness beyond tau = 0.05. This does not establish significance at every threshold: Gemma C-tilde at tau = 0.02 has a pointwise interval including zero. Pythia raw-count partials are +0.147 and +0.175 at tau = 0.1 and 0.2, with pointwise intervals excluding zero; its C-tilde interval includes zero at tau = 0.1 and excludes zero at tau = 0.2. The median Pythia counts at these thresholds are 6.2 and 0.9 of 2,048 panel features. These sparse-label, exploratory comparisons have not been corrected across the threshold sweep. The canonical Llama crowding result still does not pass the reported Holm correction.
 
 
 ### Llama precision: bfloat16 vs float32

@@ -4,16 +4,14 @@
 Motivated by the 2026-09-13 anchor deep-reads (Ong et al. 2608.11227;
 Upadhyaya and Sikdar 2608.29936). Computes, per setting:
 
-1. Spearman-Brown measurement ceilings from the ctxA/ctxB split-half
-   correlations in variants.json, and attenuation-corrected crowding partial
-   rhos (partial rho / sqrt(R_label)). Corrected values can exceed 1; they are
-   point estimates under a classical measurement-error assumption, reported
-   alongside the uncorrected values.
-2. Precision at the top decile: fraction of a predictor's top-decile features
-   that also land in the collateral top decile (baseline 10%).
+1. Context-pool split correlations alongside uncorrected crowding partial
+   correlations. These estimates do not establish measurement ceilings or
+   justify attenuation correction of a partial rank correlation.
+2. Precision at the top decile on the measured sample, with the observed
+   target prevalence as the random-selection baseline (ties may exceed 10%).
 3. Max-vs-mean aggregation: crowd_max (max |cos|) against crowding (mean
    top-20 |cos|) under the primary control.
-4. Orthogonal-selection demo: within effect_l2 terciles, median collateral in
+4. Descriptive selection summary: within effect_l2 terciles, median collateral in
    the low-crowding vs high-crowding half.
 5. Dose-response across steering coefficients: median collateral per alpha
    and the per-feature Spearman(collateral, alpha) distribution, for every
@@ -36,10 +34,6 @@ CANONICAL = ["gpt2_small", "pythia_70m_deduped", "gemma_2_2b", "llama_3_1_8b"]
 TARGETS = ["collateral_raw", "collateral_ctilde"]
 
 
-def spearman_brown(r):
-    return 2.0 * r / (1.0 + r)
-
-
 def load(setting):
     path = os.path.join(RESULTS, setting, "per_feature.csv")
     return pd.read_csv(path) if os.path.exists(path) else None
@@ -54,7 +48,7 @@ def top_decile_precision(df, predictor, target):
     if px.sum() == 0:
         return None
     return dict(precision=float(py[px].mean()), n_flag=int(px.sum()),
-                overlap=int((px & py).sum()), baseline=0.1)
+                overlap=int((px & py).sum()), baseline=float(py.mean()))
 
 
 def selection_demo(df, target):
@@ -112,19 +106,14 @@ def main():
             continue
         entry = {}
         rel = variants["reliability"].get(s, {}).get("labels", {})
-        ceiling = {}
+        reproducibility = {}
         for tgt in TARGETS:
             r = rel.get(tgt, {}).get("rho")
-            if r and 0 < r < 1:
-                R = spearman_brown(r)
-                row = part[(part.setting == s) & (part.target == tgt)
-                           & (part.control == "primary") & (part.predictor == "crowding")]
-                if len(row):
-                    rho = float(row.iloc[0].rho)
-                    ceiling[tgt] = dict(split_half_r=float(r), spearman_brown_R=float(R),
-                                        partial_rho=rho,
-                                        attenuation_corrected=float(rho / np.sqrt(R)))
-        entry["measurement_ceiling"] = ceiling
+            row = part[(part.setting == s) & (part.target == tgt)
+                       & (part.control == "primary") & (part.predictor == "crowding")]
+            if r is not None and np.isfinite(r) and len(row):
+                reproducibility[tgt] = dict(split_pool_r=float(r), partial_rho=float(row.iloc[0].rho))
+        entry["context_pool_reproducibility"] = reproducibility
         entry["top_decile_precision"] = {
             tgt: {p: top_decile_precision(df, p, tgt)
                   for p in ["crowding", "crowd_max", "logit_l2", "enc_dec_cos"]
@@ -146,25 +135,30 @@ def main():
 
     lines = ["# Derived A/B analyses (2026-09-13, branch ab-battery-2026-09-13)", "",
              "Inputs: canonical per-feature CSVs, alpha-variant CSVs, variants.json,",
-             "partial_correlations.csv. No new GPU measurements.", ""]
+             "partial_correlations.csv. No new GPU measurements.", "",
+             "Reviewed 2026-09-15. Context splits share one corpus pool and dictionary; no measurement ceiling "
+             "or attenuation correction is established. Top-decile precision and the selection summaries are "
+             "descriptive results on the measured sample, without fresh held-out validation. Selection summaries "
+             "group by broad effect-size thirds and do not establish matched effects or causal benefits. Predictor "
+             "rankings are not tests of differences between correlations. Top-decile scores use the upper tail "
+             "of every listed predictor, including negatively associated predictors; they are not optimized selectors.", ""]
     for s, e in report.items():
         lines.append(f"## {s}")
         lines.append("")
-        lines.append("Measurement ceiling (ctxA/ctxB split-half, Spearman-Brown) and attenuation-corrected crowding partial rho:")
+        lines.append("Context-pool reproducibility and uncorrected primary partial correlation:")
         lines.append("")
-        lines.append("| target | split-half r | SB reliability R | partial rho | corrected |")
+        lines.append("| target | split-pool rho | partial rho |")
+        lines.append("|---|---|---|")
+        for tgt, c in e["context_pool_reproducibility"].items():
+            lines.append(f"| {tgt} | {c['split_pool_r']:+.3f} | {c['partial_rho']:+.3f} |")
+        lines.append("")
+        lines.append("Top-decile precision on the measured sample; baseline is observed target prevalence:")
+        lines.append("")
+        lines.append("| target | predictor | precision | baseline | n flagged |")
         lines.append("|---|---|---|---|---|")
-        for tgt, c in e["measurement_ceiling"].items():
-            lines.append(f"| {tgt} | {c['split_half_r']:+.3f} | {c['spearman_brown_R']:.3f} | "
-                         f"{c['partial_rho']:+.3f} | {c['attenuation_corrected']:+.3f} |")
-        lines.append("")
-        lines.append("Top-decile precision (fraction of predictor-top-decile features in collateral top decile; baseline 0.10):")
-        lines.append("")
-        lines.append("| target | predictor | precision | n flagged |")
-        lines.append("|---|---|---|---|")
         for tgt, preds in e["top_decile_precision"].items():
             for p, r in preds.items():
-                lines.append(f"| {tgt} | {p} | {r['precision']:.3f} | {r['n_flag']} |")
+                lines.append(f"| {tgt} | {p} | {r['precision']:.3f} | {r['baseline']:.3f} | {r['n_flag']} |")
         lines.append("")
         lines.append("Max-vs-mean crowding aggregation (primary control):")
         lines.append("")
@@ -178,7 +172,7 @@ def main():
         lines.append("")
         demo = e["orthogonal_selection_demo"]["collateral_raw"]
         if demo:
-            lines.append("Orthogonal-selection demo (median raw collateral within effect_l2 terciles):")
+            lines.append("Descriptive selection summary (median raw collateral within effect_l2 terciles):")
             lines.append("")
             lines.append("| effect tercile | low crowding | high crowding |")
             lines.append("|---|---|---|")

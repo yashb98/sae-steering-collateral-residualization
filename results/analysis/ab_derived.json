@@ -1,17 +1,13 @@
 {
  "gpt2_small": {
-  "measurement_ceiling": {
+  "context_pool_reproducibility": {
    "collateral_raw": {
-    "split_half_r": 0.9595102823831974,
-    "spearman_brown_R": 0.979336817989259,
-    "partial_rho": 0.4754711541076295,
-    "attenuation_corrected": 0.4804609915966671
+    "split_pool_r": 0.9595102823831974,
+    "partial_rho": 0.4754711541076295
    },
    "collateral_ctilde": {
-    "split_half_r": 0.9383419815775731,
-    "spearman_brown_R": 0.968190330185056,
-    "partial_rho": 0.4247557330021986,
-    "attenuation_corrected": 0.4316769693013497
+    "split_pool_r": 0.9383419815775731,
+    "partial_rho": 0.4247557330021986
    }
   },
   "top_decile_precision": {
@@ -189,18 +185,14 @@
   }
  },
  "pythia_70m_deduped": {
-  "measurement_ceiling": {
+  "context_pool_reproducibility": {
    "collateral_raw": {
-    "split_half_r": 0.9059613366044134,
-    "spearman_brown_R": 0.9506607707147291,
-    "partial_rho": -0.0044194990004448,
-    "attenuation_corrected": -0.004532734208152687
+    "split_pool_r": 0.9059613366044134,
+    "partial_rho": -0.0044194990004448
    },
    "collateral_ctilde": {
-    "split_half_r": 0.7586604295603284,
-    "spearman_brown_R": 0.8627707962360832,
-    "partial_rho": 0.0014828374633645,
-    "attenuation_corrected": 0.0015964151170527422
+    "split_pool_r": 0.7586604295603284,
+    "partial_rho": 0.0014828374633645
    }
   },
   "top_decile_precision": {
@@ -378,18 +370,14 @@
   }
  },
  "gemma_2_2b": {
-  "measurement_ceiling": {
+  "context_pool_reproducibility": {
    "collateral_raw": {
-    "split_half_r": 0.9247932988020253,
-    "spearman_brown_R": 0.9609273882838315,
-    "partial_rho": 0.2419657043563863,
-    "attenuation_corrected": 0.2468360162338462
+    "split_pool_r": 0.9247932988020253,
+    "partial_rho": 0.2419657043563863
    },
    "collateral_ctilde": {
-    "split_half_r": 0.7882607584528717,
-    "spearman_brown_R": 0.8815948733727645,
-    "partial_rho": 0.2522211928601848,
-    "attenuation_corrected": 0.26862538275523595
+    "split_pool_r": 0.7882607584528717,
+    "partial_rho": 0.2522211928601848
    }
   },
   "top_decile_precision": {
@@ -398,25 +386,25 @@
      "precision": 0.26666666666666666,
      "n_flag": 30,
      "overlap": 8,
-     "baseline": 0.1
+     "baseline": 0.10333333333333333
     },
     "crowd_max": {
      "precision": 0.1,
      "n_flag": 30,
      "overlap": 3,
-     "baseline": 0.1
+     "baseline": 0.10333333333333333
     },
     "logit_l2": {
      "precision": 0.2,
      "n_flag": 30,
      "overlap": 6,
-     "baseline": 0.1
+     "baseline": 0.10333333333333333
     },
     "enc_dec_cos": {
      "precision": 0.0,
      "n_flag": 30,
      "overlap": 0,
-     "baseline": 0.1
+     "baseline": 0.10333333333333333
     }
    },
    "collateral_ctilde": {
@@ -564,18 +552,14 @@
   }
  },
  "llama_3_1_8b": {
-  "measurement_ceiling": {
+  "context_pool_reproducibility": {
    "collateral_raw": {
-    "split_half_r": 0.9455141416006541,
-    "spearman_brown_R": 0.9719941082748861,
-    "partial_rho": 0.1518937082248635,
-    "attenuation_corrected": 0.15406641200341611
+    "split_pool_r": 0.9455141416006541,
+    "partial_rho": 0.1518937082248635
    },
    "collateral_ctilde": {
-    "split_half_r": 0.8971841909354549,
-    "spearman_brown_R": 0.9458061006644541,
-    "partial_rho": 0.1657728855369996,
-    "attenuation_corrected": 0.1704560583837876
+    "split_pool_r": 0.8971841909354549,
+    "partial_rho": 0.1657728855369996
    }
   },
   "top_decile_precision": {
